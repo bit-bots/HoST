@@ -1,0 +1,7 @@
+name: host
+channels:
+  - defaults
+dependencies:
+  - python=3.8
+  - tensorboard
+  - tqdm

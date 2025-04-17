@@ -106,7 +106,8 @@ class LeggedRobot(BaseTask):
                 force_tensor = torch.zeros([self.num_envs, self.num_bodies, 3], device=self.device)
                 force_tensor[:, self.base_indices, 2] = self.force 
                 force_tensor *= (self.real_episode_length_buf.unsqueeze(1) > self.unactuated_time).unsqueeze(1)
-                force_tensor *= (self.projected_gravity[:, 2] < -0.8).unsqueeze(1).unsqueeze(1)
+                if not self.cfg.curriculum.no_orientation:
+                    force_tensor *= (self.projected_gravity[:, 2] < -0.8).unsqueeze(1).unsqueeze(1)
 
             force_tensor_back = torch.zeros([self.num_envs, self.num_bodies, 3], device=self.device)
             force_tensor_back[:, self.base_indices, 0] = -50

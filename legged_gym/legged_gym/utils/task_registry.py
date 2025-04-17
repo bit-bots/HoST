@@ -117,15 +117,11 @@ class TaskRegistry():
         train_cfg_dict = class_to_dict(train_cfg)
         if train_cfg.runner_class_name == 'OnPolicyRunner':
             runner = OnPolicyRunner(env, env_cfg, train_cfg_dict, log_dir, device=args.rl_device)
-        elif train_cfg.runner_class_name == 'RNDOnPolicyRunner':
-            runner = RNDOnPolicyRunner(env, env_cfg, train_cfg_dict, log_dir, device=args.rl_device)
-        else:
-            runner = AMPOnPolicyRunner(env, env_cfg, train_cfg_dict, log_dir, device=args.rl_device)
         #save resume path before creating a new log_dir
         resume = train_cfg.runner.resume
         if resume:
             # load previously trained model
-            resume_path = get_load_path(log_root, load_run=train_cfg.runner.load_run, checkpoint=train_cfg.runner.checkpoint)
+            resume_path = get_load_path(log_root, load_run=train_cfg.runner.load_run, checkpoint=train_cfg.runner.checkpoint, checkpoint_path=args.checkpoint_path)
             print(f"Loading model from: {resume_path}")
             runner.load(resume_path)
         return runner, train_cfg

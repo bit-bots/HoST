@@ -238,7 +238,7 @@ class G1Cfg( LeggedRobotCfg ):
             style_left_foot_displacement = 2.5
             style_right_foot_displacement = 2.5
             style_knee_deviation = -10
-            style_feet_ori = 10
+            style_shank_orientation = 10
             style_ground_parallel = 20
             style_feet_distance = -10
             style_feet_stumble = -25
@@ -302,6 +302,7 @@ class G1Cfg( LeggedRobotCfg ):
         dof_vel_limit = 300
         base_vel_limit = 20
         threshold_height = 0.9
+        no_orientation = False
 
     class sim:
         dt =  0.005

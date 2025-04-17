@@ -109,7 +109,8 @@ class LeggedRobot(BaseTask):
                 force_tensor[:, self.base_indices, 2] = self.force 
 
                 force_tensor *= (self.real_episode_length_buf.unsqueeze(1) > self.unactuated_time).unsqueeze(1)
-                force_tensor *= (self.projected_gravity[:, 2] < -0.8).unsqueeze(1).unsqueeze(1)
+                if not self.cfg.curriculum.no_orientation:
+                    force_tensor *= (self.projected_gravity[:, 2] < -0.8).unsqueeze(1).unsqueeze(1)
                 force_tensor = gymtorch.unwrap_tensor(force_tensor)
                 self.gym.apply_rigid_body_force_tensors(self.sim, force_tensor)
 
@@ -1204,7 +1205,7 @@ class LeggedRobot(BaseTask):
         reward = (torch.max(torch.abs(self.dof_pos[:, self.knee_joint_indices]), dim=-1)[0] > 2.85) | (torch.min(self.dof_pos[:, self.knee_joint_indices], dim=-1)[0] < -0.05)
         return reward
     
-    def _reward_feet_ori(self):
+    def _reward_shank_orientation(self):
         # Penalize non flat base orientation
         left_knee_pos = self.rigid_body_states[:, self.left_knee_indices, :3].clone()
         right_knee_pos = self.rigid_body_states[:, self.right_knee_indices, :3].clone()

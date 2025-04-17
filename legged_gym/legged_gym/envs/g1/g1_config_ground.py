@@ -203,7 +203,6 @@ class G1Cfg( LeggedRobotCfg ):
             task_orientation = 1
             task_head_height = 1
 
-
     class constraints( LeggedRobotCfg.rewards ):
         is_gaussian = True
         target_head_height = 1
@@ -297,6 +296,7 @@ class G1Cfg( LeggedRobotCfg ):
         dof_vel_limit = 300
         base_vel_limit = 20
         threshold_height = 0.9
+        no_orientation = False
 
     class sim:
         dt =  0.005

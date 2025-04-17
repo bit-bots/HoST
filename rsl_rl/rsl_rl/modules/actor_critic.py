@@ -84,15 +84,11 @@ class ActorCritic(nn.Module):
 
         self.num_critics = num_critics
 
-        print(f"Actor MLP: {self.actor}")
-        print(f"Critics MLPs: {[str(critic) for critic in self.critics]}")
-        
         # Action noise
         self.std = nn.Parameter(init_noise_std * torch.ones(num_actions))
         self.distribution = None
         # disable args validation for speedup
         Normal.set_default_validate_args = False
-        
 
     @staticmethod
     # not used at the moment
@@ -136,6 +132,7 @@ class ActorCritic(nn.Module):
     def evaluate(self, critic_observations, **kwargs):
         values = torch.concat([critic(critic_observations) for critic in self.critics], dim=-1)
         return values
+
 
 def get_activation(act_name):
     if act_name == "elu":

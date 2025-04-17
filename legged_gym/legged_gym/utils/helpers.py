@@ -70,28 +70,31 @@ def parse_sim_params(args, cfg):
 
     return sim_params
 
-def get_load_path(root, load_run=-1, checkpoint=-1):
-    try:
-        runs = os.listdir(root)
-        #TODO sort by date to handle change of month
-        runs.sort()
-        if 'exported' in runs: runs.remove('exported')
-        last_run = os.path.join(root, runs[-1])
-    except:
-        raise ValueError("No runs in this directory: " + root)
-    if load_run==-1:
-        load_run = last_run
+def get_load_path(root, load_run=-1, checkpoint=-1, checkpoint_path=None):
+    if checkpoint_path is not None:
+        load_path = checkpoint_path
     else:
-        load_run = os.path.join(root, load_run)
+        try:
+            runs = os.listdir(root)
+            #TODO sort by date to handle change of month
+            runs.sort()
+            if 'exported' in runs: runs.remove('exported')
+            last_run = os.path.join(root, runs[-1])
+        except:
+            raise ValueError("No runs in this directory: " + root)
+        if load_run==-1:
+            load_run = last_run
+        else:
+            load_run = os.path.join(root, load_run)
 
-    if checkpoint==-1:
-        models = [file for file in os.listdir(load_run) if 'model' in file]
-        models.sort(key=lambda m: '{0:0>15}'.format(m))
-        model = models[-1]
-    else:
-        model = "model_{}.pt".format(checkpoint) 
+        if checkpoint==-1:
+            models = [file for file in os.listdir(load_run) if 'model' in file]
+            models.sort(key=lambda m: '{0:0>15}'.format(m))
+            model = models[-1]
+        else:
+            model = "model_{}.pt".format(checkpoint) 
 
-    load_path = os.path.join(load_run, model)
+        load_path = os.path.join(load_run, model)
     return load_path
 
 def update_cfg_from_args(env_cfg, cfg_train, args):
@@ -127,7 +130,8 @@ def get_args():
         {"name": "--run_name", "type": str,  "help": "Name of the run. Overrides config file if provided."},
         {"name": "--load_run", "type": str,  "help": "Name of the run to load when resume=True. If -1: will load the last run. Overrides config file if provided."},
         {"name": "--checkpoint", "type": int,  "help": "Saved model checkpoint number. If -1: will load the last checkpoint. Overrides config file if provided."},
-        
+        {"name": "--checkpoint_path", "type": str,  "help": "Saved model checkpoint number. If -1: will load the last checkpoint. Overrides config file if provided."},
+
         {"name": "--headless", "action": "store_true", "default": False, "help": "Force display off at all times"},
         {"name": "--horovod", "action": "store_true", "default": False, "help": "Use horovod for multi-gpu training"},
         {"name": "--rl_device", "type": str, "default": "cuda:0", "help": 'Device used by the RL algorithm, (cpu, gpu, cuda:0, cuda:1 etc..)'},

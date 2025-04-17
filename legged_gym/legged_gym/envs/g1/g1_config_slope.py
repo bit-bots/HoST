@@ -31,7 +31,7 @@ class G1Cfg( LeggedRobotCfg ):
             'right_shoulder_yaw_joint' : 0.0,
             'right_elbow_joint' :  0.,
         }
-        default_joint_angles = { 
+        default_joint_angles = { # = target angles [rad] when action = 0.0
            'left_hip_yaw_joint' : 0. ,   
            'left_hip_roll_joint' : 0,               
            'left_hip_pitch_joint' : -0.1,#-0.1,         
@@ -62,11 +62,10 @@ class G1Cfg( LeggedRobotCfg ):
     class env(LeggedRobotCfg.env):
         num_one_step_observations= 76 #+ 3 * 2#+ 3 * 11  # +3*11 actions / -3 commands
         num_actions = 12 + 9 + 2 #+ 2# + 11
-        num_dofs = 23
         num_actor_history = 6
         num_observations = num_actor_history * num_one_step_observations
         episode_length_s = 10 # episode length in seconds
-        unactuated_timesteps = 50
+        unactuated_timesteps = 30
 
     class control( LeggedRobotCfg.control ):
         # PD Drive parameters:
@@ -189,6 +188,8 @@ class G1Cfg( LeggedRobotCfg ):
         soft_dof_pos_limit = 0.9
         soft_dof_vel_limit = 0.9
         base_height_target = 0.70
+        base_height_sigma = 0.25
+        tracking_dof_sigma = 0.25
         only_positive_rewards = False # if true negative total rewards are clipped at zero (avoids early termination problems)
         orientation_sigma = 1
         is_gaussian = True
@@ -225,7 +226,6 @@ class G1Cfg( LeggedRobotCfg ):
         post_task = False
         
         class scales:
-            # regularization reward
             regu_dof_acc = -2.5e-7
             regu_action_rate = -0.01
             regu_smoothness = -0.01 
@@ -236,21 +236,20 @@ class G1Cfg( LeggedRobotCfg ):
             regu_dof_pos_limits = -100.0
             regu_dof_vel_limits = -1 #0.0
 
-            # style reward
             style_waist_deviation = -10
             style_hip_yaw_deviation = -10
             style_hip_roll_deviation = -10
             style_left_foot_displacement = 2.5
             style_right_foot_displacement = 2.5
             style_knee_deviation = -10
-            style_feet_ori = 10
+            style_shank_orientation = 10
             style_ground_parallel = 20
             style_feet_distance = -10
             style_feet_stumble = -25
             style_style_ang_vel_xy = 1
             style_shoulder_roll_deviation = -2.5
 
-            # post-task reward
+            ## for standup
             target_ang_vel_xy = 10
             target_lin_vel_xy = 10
             target_feet_height_var = 2.5
@@ -259,6 +258,13 @@ class G1Cfg( LeggedRobotCfg ):
             target_target_base_height = 10
 
     class domain_rand:
+        randomize_base_mass = False
+        added_mass_range = [-1., 1.]
+        push_robots = False
+        push_interval_s = 2
+        max_push_vel_xy = 2.
+        random_pose = False 
+
         use_random = True
 
         randomize_actuation_offset = use_random
@@ -305,6 +311,7 @@ class G1Cfg( LeggedRobotCfg ):
         dof_vel_limit = 300
         base_vel_limit = 20
         threshold_height = 0.9
+        no_orientation = False
 
     class sim:
         dt =  0.005
@@ -337,6 +344,7 @@ class G1CfgPPO( LeggedRobotCfgPPO ):
         value_smoothness_coef = 0.1
         smoothness_upper_bound = 1.0
         smoothness_lower_bound = 0.1
+    
     class runner( LeggedRobotCfgPPO.runner ):
         run_name = ''
         save_interval = 500 # check for potential saves every this many iterations

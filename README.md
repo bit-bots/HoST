@@ -67,12 +67,12 @@ Regarding potential installation errors, please refer to [this document](docs/ER
             <span style="font-size: 0.9em;">Platform</span>
         </td>
         <td align="center" style="width: 25%; padding: 3px;">
-            <img src="docs/slope_8000.gif" alt="Wall" style="width: 98%; max-width: 100%; height: auto; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); border-radius: 4px;"/><br/>
-            <span style="font-size: 0.9em;">Slope</span>
+            <img src="docs/slope_8000.gif" alt="Platform" style="width: 98%; max-width: 100%; height: auto; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); border-radius: 4px;"/><br/>
+            <span style="font-size: 0.9em;">Platform</span>
         </td>
         <td align="center" style="width: 25%; padding: 3px;">
-            <img src="docs/slope_8000.gif" alt="Wall" style="width: 98%; max-width: 100%; height: auto; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); border-radius: 4px;"/><br/>
-            <span style="font-size: 0.9em;">Slope</span>
+            <img src="docs/slope_8000.gif" alt="Platform" style="width: 98%; max-width: 100%; height: auto; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); border-radius: 4px;"/><br/>
+            <span style="font-size: 0.9em;">Platform</span>
         </td>
     </tr>
 </table>
@@ -99,16 +99,6 @@ Domain randomization is applied during the evaluation to make the results more g
 <p align="left">
   <img width="98%" src="docs/motion_vis.png" style="box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3); border-radius: 4px;">
 </p>
-
-
-<table width="100%" style="width: 100%; border-collapse: collapse; margin: -15px -0px 5px 0px;">
-  <tr>
-    <td width="25%" align="center">Ground</td>
-    <td width="25%" align="center">Platform</td>
-    <td width="25%" align="center">Wall</td>
-    <td width="25%" align="center">Slope</td>
-  </tr>
-</table>
 
 
 First, run the following command to collect produced motion:

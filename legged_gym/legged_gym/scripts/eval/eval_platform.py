@@ -1,18 +1,20 @@
 import sys
 from legged_gym import LEGGED_GYM_ROOT_DIR
 import os
+import sys
+from legged_gym import LEGGED_GYM_ROOT_DIR
 
 import isaacgym
 from legged_gym.envs import *
 from legged_gym.utils import  get_args, export_policy_as_jit, task_registry, Logger
 
 import numpy as np
+import torch
 import time
 
 import matplotlib.pyplot as plt
 from collections import defaultdict
 from multiprocessing import Process, Value
-import torch
 
 
 class EvalLogger:
@@ -61,8 +63,8 @@ class EvalLogger:
 
         # common
         self.base_height_buffer[:] = self.env.root_states[:, 2].clone()
-        self.ever_standingup[:] = self.ever_standingup | (self.base_height_buffer > 0.6) & (self.env.real_episode_length_buf > self.env.unactuated_time)
-        self.falldown_after_standup[:] = self.falldown_after_standup | (self.ever_standingup & (self.base_height_buffer < 0.1))
+        self.ever_standingup[:] = self.ever_standingup | (self.base_height_buffer > 0.7) & (self.env.real_episode_length_buf > self.env.unactuated_time)
+        self.falldown_after_standup[:] = self.falldown_after_standup | (self.ever_standingup & (self.base_height_buffer < 0.3))
         self.standingup_times += self.ever_standingup
         self.action_times += self.env.real_episode_length_buf > self.env.unactuated_time
         self.before_standingup_times[:] +=  ~self.ever_standingup.clone()
@@ -115,8 +117,9 @@ class EvalLogger:
 
 def play(args):
     env_cfg, train_cfg = task_registry.get_cfgs(name=args.task)
-    env_cfg.env.num_envs = 100
-    env_cfg.terrain.num_rows = 9
+    # override some parameters for testing
+    env_cfg.env.num_envs = min(env_cfg.env.num_envs, 100)
+    env_cfg.terrain.num_rows = 7
     env_cfg.terrain.num_cols = 1
     env_cfg.terrain.curriculum = False
     env_cfg.noise.add_noise = False
@@ -128,29 +131,26 @@ def play(args):
     # prepare environment
     env, _ = task_registry.make_env(name=args.task, args=args, env_cfg=env_cfg)
     obs = env.get_observations()
-
     # load policy
     train_cfg.runner.resume = True
     ppo_runner, train_cfg = task_registry.make_alg_runner(env=env, env_cfg=env_cfg, name=args.task, args=args, train_cfg=train_cfg)
     policy = ppo_runner.get_inference_policy(device=env.device)
-    
+
     num_episodes = 5
     evalogger = EvalLogger(env, num_episodes)
     evalogger.log()
 
     for i in range(num_episodes):
         for j in range(int(env.max_episode_length + 1)):
-            env.commands[:, 0] = 0.1
             actions = policy(obs.detach())
             obs, _, rews, dones, infos = env.step(actions.detach())
-
             if j != int(env.max_episode_length): evalogger.log()
 
         evalogger.reset()
     evalogger.plot_terminal_metrics()
 
-
 if __name__ == '__main__':
+    EXPORT_POLICY = True
     RECORD_FRAMES = False
     MOVE_CAMERA = False
     args = get_args()

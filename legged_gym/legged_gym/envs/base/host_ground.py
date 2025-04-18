@@ -203,8 +203,8 @@ class LeggedRobot(BaseTask):
         # reset buffers
         self.last_actions[env_ids] = 0.
         self.last_last_actions[env_ids] = 0.
-        self.last_last_dof_pos[:] = self.last_dof_pos[:]
-        self.last_dof_pos[:] = self.dof_pos[:]
+        self.last_last_dof_pos[env_ids] = 0
+        self.last_dof_pos[env_ids] = 0
         self.last_dof_vel[env_ids] = 0.
         self.feet_air_time[env_ids] = 0.
         self.episode_length_buf[env_ids] = 0
@@ -590,7 +590,6 @@ class LeggedRobot(BaseTask):
         self.action_rescale = self.cfg.control.action_scale * torch.ones(self.num_envs, dtype=torch.float, device=self.device, requires_grad=False).unsqueeze(1)
         self.delay_buffer = torch.zeros(self.cfg.domain_rand.max_delay_timesteps, self.num_envs, self.num_actions, dtype=torch.float, device=self.device, requires_grad=False)
         
-
         # joint positions offsets and PD gains
         self.default_dof_pos = torch.zeros(self.num_dof, dtype=torch.float, device=self.device, requires_grad=False)
         self.target_dof_pos = torch.zeros(self.num_envs, self.num_dof, dtype=torch.float, device=self.device, requires_grad=False)

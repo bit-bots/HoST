@@ -203,8 +203,8 @@ class LeggedRobot(BaseTask):
         self.last_actions[env_ids] = 0.
         self.last_last_actions[env_ids] = 0.
         self.last_dof_vel[env_ids] = 0.
-        self.last_last_dof_pos[:] = self.last_dof_pos[:]
-        self.last_dof_pos[:] = self.dof_pos[:]
+        self.last_last_dof_pos[env_ids] = 0
+        self.last_dof_pos[env_ids] = 0
         self.feet_air_time[env_ids] = 0.
         self.episode_length_buf[env_ids] = 0
         self.real_episode_length_buf[env_ids] = 0
@@ -1421,17 +1421,17 @@ class LeggedRobot(BaseTask):
 
     def _reward_hip_yaw_deviation(self):
         hip_yaw_dof = self.dof_pos[:, self.hip_joint_indices]
-        reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_joint_indices]), dim=-1)[0] > 0.8) | (torch.min(torch.abs(self.dof_pos[:, self.hip_joint_indices]), dim=-1)[0] > 0.5)
+        reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_joint_indices]), dim=-1)[0] > 0.6) | (torch.min(torch.abs(self.dof_pos[:, self.hip_joint_indices]), dim=-1)[0] > 0.5)
         return reward
 
     def _reward_hip_roll_deviation(self):
         hip_roll_dof = self.dof_pos[:, self.hip_roll_joint_indices]
-        reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_roll_joint_indices]), dim=-1)[0] >  1.4) | (torch.min(torch.abs(self.dof_pos[:, self.hip_roll_joint_indices]), dim=-1)[0] > 0.9)
+        reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_roll_joint_indices]), dim=-1)[0] >  0.7) | (torch.min(torch.abs(self.dof_pos[:, self.hip_roll_joint_indices]), dim=-1)[0] > 0.6)
         return reward
 
     def _reward_hip_pitch_deviation(self):
         hip_pitch_dof = self.dof_pos[:, self.hip_pitch_joint_indices]
-        reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_pitch_joint_indices]), dim=-1)[0] > 0.8) | (torch.min(torch.abs(self.dof_pos[:, self.hip_pitch_joint_indices]), dim=-1)[0] > 0.5)
+        reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_pitch_joint_indices]), dim=-1)[0] > 0.6) | (torch.min(torch.abs(self.dof_pos[:, self.hip_pitch_joint_indices]), dim=-1)[0] > 0.5)
         return reward
 
     def _reward_knee_deviation(self):

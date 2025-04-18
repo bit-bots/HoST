@@ -1,4 +1,4 @@
-# HoST: <u>H</u>uman<u>o</u>id <u>St</u>anding-up Control
+# HoST: Humanoid Standing-up Control
 
 [![arXiv](https://img.shields.io/badge/arXiv-2502.08378-brown)](https://arxiv.org/abs/2502.08378)
 [![](https://img.shields.io/badge/Website-%F0%9F%9A%80-yellow)](https://taohuang13.github.io/humanoid-standingup.github.io/)
@@ -6,7 +6,8 @@
 [![](https://img.shields.io/badge/bilibili-📹-blue)](https://www.bilibili.com/video/BV1o2KPeUEob/?spm_id_from=333.337.search-card.all.click&vd_source=ef6a9a20816968cc19099a3f662afd86)
 [![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)]()
 
-This is the official PyTorch implementation of the RSS paper "[**Learning Humanoid Standing-up Control across Diverse Postures**](https://arxiv.org/abs/2502.08378)" by 
+
+This is the official PyTorch implementation of the RSS conference paper "[**Learning Humanoid Standing-up Control across Diverse Postures**](https://arxiv.org/abs/2502.08378)" by 
 
 [Tao Huang](https://taohuang13.github.io/), [Junli Ren](https://renjunli99.github.io/), [Huayi Wang](https://why618188.github.io/), [Zirui Wang](https://scholar.google.com/citations?user=Vc3DCUIAAAAJ&hl=zh-TW), [Qingwei Ben](https://www.qingweiben.com/), [Muning Wen](https://scholar.google.com/citations?user=Zt1WFtQAAAAJ&hl=en), [Xiao Chen](https://xiao-chen.tech/), [Jianan Li](https://github.com/OpenRobotLab/HoST), [Jiangmiao Pang](https://oceanpang.github.io/)
 
@@ -14,19 +15,40 @@ This is the official PyTorch implementation of the RSS paper "[**Learning Humano
   <img width="98%" src="docs/teaser.png" style="box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3); border-radius: 4px;">
 </p>
 
-# 🔥 News
+
+## 📑 Table of Contents
+- [News](#-news)
+- [TODO List](#todo-list)
+- [Installation Instructions](#installation-instructions)
+  - [Error Catching](#error-catching)
+- [Run HoST on Unitree G1](#run-host-on-unitree-g1)
+  - [Overview of Main Simulation Motions](#overview-of-main-simulation-motions)
+  - [Policy Training](#policy-training)
+  - [Policy Evaluation](#policy-evaluation)
+  - [Motion Visualization](#motion-visualization)
+  - [Train from Prone Postures](#train-from-prone-postures)
+- [Extend HoST to Other Humanoid Robots](#extend-host-to-other-humanoid-robots)
+  - [Lessons Learned from Unitree H1 and H1-2](#lessons-learned-from-unitree-h1-and-h1-2)
+  - [Potential Tips for Hardware Deployment](#potential-tips-for-hardware-deployment)
+- [Contact](#contact)
+- [License](#license)
+- [Acknowledgments](#acknowledgments)
+- [Citation](#citation)
+
+## 🔥 News
 - \[2025-04\] We release traning code of G1, evaluation scripts, and visualization tools.
 - \[2025-04\] HoST was accepted to RSS 2025!
 - \[2025-02\] We release the [paper](https://arxiv.org/abs/2502.13013) and [demos](https://taohuang13.github.io/humanoid-standingup.github.io/) of HoST.
 
-# 📝 TODO List 
+
+## 📝 TODO List 
 - [x] Training code of G1 from prone postures.
-- [x] Training code of H1 and H1-2.
+- [x] Training code of H1.
 - [ ] Joint training of supine and prone postures.
 - [ ] Joint training over all terrains.
 
 
-# 🛠️ Installation Instructions
+## 🛠️ Installation Instructions
 Clone this repository:
 ```bash
 git clone https://github.com/OpenRobotLab/HoST.git
@@ -54,25 +76,25 @@ cd legged_gym &&  pip install -e . && cd ..
 ### Erorr Catching
 Regarding potential installation errors, please refer to [this document](docs/ERROR.md) for solutions. 
 
-# 🤖 Run HoST on Unitree G1
+## 🤖 Run HoST on Unitree G1
 ### Overview of Main Simulation Motions
 <table style="width: 100%; border-collapse: collapse; margin: -5px -0px -12px 0px;">
     <tr>
         <td align="center" style="width: 25%; padding: 3px;">
-            <img src="docs/ground_10000.gif" alt="Ground" style="width: 98%; max-width: 100%; height: auto; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); border-radius: 4px;"/><br/>
+            <img src="docs/results_ground_10000.gif" alt="Ground" style="width: 98%; max-width: 100%; height: auto; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); border-radius: 4px;"/><br/>
             <span style="font-size: 0.9em;">Ground</span>
         </td>
         <td align="center" style="width: 25%; padding: 3px;">
-            <img src="docs/platform_12000.gif" alt="Platform" style="width: 98%; max-width: 100%; height: auto; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); border-radius: 4px;"/><br/>
+            <img src="docs/results_platform_12000.gif" alt="Platform" style="width: 98%; max-width: 100%; height: auto; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); border-radius: 4px;"/><br/>
             <span style="font-size: 0.9em;">Platform</span>
         </td>
         <td align="center" style="width: 25%; padding: 3px;">
-            <img src="docs/slope_8000.gif" alt="Platform" style="width: 98%; max-width: 100%; height: auto; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); border-radius: 4px;"/><br/>
-            <span style="font-size: 0.9em;">Platform</span>
+            <img src="docs/results_wall_4000.gif" alt="Wall" style="width: 98%; max-width: 100%; height: auto; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); border-radius: 4px;"/><br/>
+            <span style="font-size: 0.9em;">Wall</span>
         </td>
         <td align="center" style="width: 25%; padding: 3px;">
-            <img src="docs/slope_8000.gif" alt="Platform" style="width: 98%; max-width: 100%; height: auto; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); border-radius: 4px;"/><br/>
-            <span style="font-size: 0.9em;">Platform</span>
+            <img src="docs/results_slope_8000.gif" alt="Slope" style="width: 98%; max-width: 100%; height: auto; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); border-radius: 4px;"/><br/>
+            <span style="font-size: 0.9em;">Slope</span>
         </td>
     </tr>
 </table>
@@ -136,24 +158,24 @@ python legged_gym/scripts/train.py --task g1_ground_prone --run_name test_g1_gro
 ```
 The learned policies can also handle side-lying postures. However, when training from posture postures, harder constraints on hip joints are necessary to prevent violent motions. This issue make the feasibility of joint training from prone and supine postures unclear currently. Address it would be valuable in the future.
 
-# 🧭 Extend HoST to Other Humanoid Robots: Tips 
+## 🧭 Extend HoST to Other Humanoid Robots: Tips 
 ### Lessons Learned from Unitree H1 and H1-2
 <p align="left">
   <img width="98%" src="docs/results_sim_h1_h12.png" style="box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3); border-radius: 4px;">
 </p>
 To try other robots, these steps should be followed to work the algorithm:
 
-* [Add keyframes in urdf](./legged_gym/resources/robots/g1/g1_23dof.urdf#L970): it is suggested to add the same keyframes (including keypoints around ankles) as ours to strengthen the compatibility with new robots. These keyframes are designed for reward computation.
+* [Add keyframes in urdf](./legged_gym/resources/robots/g1/g1_23dof.urdf#L970): It is suggested to add the same keyframes (including keypoints around ankles) as ours to strengthen the compatibility with new robots. These keyframes are designed for reward computation.
 * [Pulling force](./legged_gym/legged_gym/envs/g1/g1_config_ground.py#L296): ~60% gravity of the robot. Note that we have two torso link (one real, one virtual) in G1's urdf, so the force will be multiplied by 2 during training. Besides, you may modify the condition of applying force, e.g., remove the base orientation condition.
 * [Height for curriculum](./legged_gym/legged_gym/envs/g1/g1_config_ground.py#L299): ~70% height of the robot.
 * [Height for stage division](./legged_gym/legged_gym/envs/g1/g1_config_ground.py#L189): ~35% height of the robot for stage 1 and 2, and ~70% height of the robot for stage 3.
 * [Height for reward](./legged_gym/legged_gym/envs/g1/g1_config_ground.py#L187): ~75% for target_head_height. Regarding the [target base height](./legged_gym/legged_gym/envs/g1/g1_config_ground.py#L183) after success a standing up, it depends on your preference.
-* [Misc](./legged_gym/legged_gym/envs/g1/g1_config_ground.py): you should also modify the default/target postures, PD controllers, observation/action spaces, body names, and etc.
+* [Joint deviation rewards](./legged_gym/legged_gym/envs/g1/g1_config_ground.py#L231): You can adjust the style reward functions, particularly the joint deviation penalties, to better constrain the motion style. Lightweight robots typically require narrower desired joint angle ranges, as they are more prone to reaching extreme joint angles.
+* [Misc](./legged_gym/legged_gym/envs/g1/g1_config_ground.py): You should also modify the default/target postures, PD controllers, observation/action spaces, body names, and etc.
 
-As examples, we provied the training code of Unitree H1 and H1-2 on the ground:
+As as example, we provied the training code of Unitree H1 over the ground:
 ```bash
 python legged_gym/scripts/train.py --task h1_ground --run_name test_h1_ground 
-python legged_gym/scripts/train.py --task h12_ground --run_name test_h12_ground 
 ```
 
 ### Potential Tips for Hardware Deployment
@@ -162,17 +184,25 @@ python legged_gym/scripts/train.py --task h12_ground --run_name test_h12_ground
 </p>
 We found some useful tips for working G1 and H1-2 hardware systems:
 
-* **High stiffness for knee and hip joints:** we found that improving the kp coefficients of these joints to ~1.5x of the simulation ones significantly helps. We posit that this is caused by the sim-to-real gap between the joint torques. See more analysis in the [paper](https://arxiv.org/abs/2502.08378).
-* **High action rescaler**: while default action rescaler (0.25) already produces good motions, we found that a slight improvement of this coefficient (0.3) can mitigate jerky motions noticeably.
-* **Check collision models**: we found that using full meshes as the collision models for ankles will cause huge sim-to-real gap. To solve this issue, we use discrete points to approximate the collision, following the [official code of Unitree](https://github.com/unitreerobotics/unitree_rl_gym). That said, it is suggested to be more careful to collision models. 
+* **High stiffness for knee and hip joints:** We found that improving the kp coefficients of these joints to ~1.5x of the simulation ones significantly helps. We posit that this is caused by the sim-to-real gap between the joint torques. See more analysis in the [paper](https://arxiv.org/abs/2502.08378).
+* **High action rescaler**: While default action rescaler (0.25) already produces good motions, we found that a slight improvement of this coefficient (0.3) can mitigate jerky motions noticeably.
+* **Check collision models**: We found that using full meshes as the collision models for ankles will cause huge sim-to-real gap. To solve this issue, we use discrete points to approximate the collision, following the [official code of Unitree](https://github.com/unitreerobotics/unitree_rl_gym). That being said, it is highly suggested to be more careful about collision models. 
 
-# ✉️ Contact
+## ✉️ Contact
 For any questions, please feel free to email taou.cs13@gmail.com.
 
-# 🏷️ License
+## 🏷️ License
 This repository is released under the MIT license. See [LICENSE](LICENSE) for additional details.
 
-# 📝 Citation
+## 🎉 Acknowledgments
+This repository is built upon the support and contributions of the following open-source projects. Special thanks to:
+
+* [legged_gym](https://github.com/leggedrobotics/legged_gym) and [HIMLoco](https://github.com/OpenRobotLab/HIMLoco): The foundation for training and running codes.
+* [rsl_rl](https://github.com/leggedrobotics/rsl_rl.git): Reinforcement learning algorithm implementation.
+* [walk these ways](https://github.com/Improbable-AI/walk-these-ways): Hardware code backbone.
+* [unitree_sdk2_python](https://github.com/unitreerobotics/unitree_sdk2_python): Hardware communication interface.
+
+## 📝 Citation
 
 If you find our work useful, please consider citing:
 ```

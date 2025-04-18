@@ -168,6 +168,8 @@ class LeggedRobot(BaseTask):
         self.last_actions[:] = self.actions[:]
         self.last_dof_vel[:] = self.dof_vel[:]
         self.last_root_vel[:] = self.root_states[:, 7:13]
+        self.last_last_dof_pos[:] = self.last_dof_pos[:]
+        self.last_dof_pos[:] = self.dof_pos[:]
 
     def check_termination(self):
         """ Check if environments need to be reset
@@ -210,6 +212,8 @@ class LeggedRobot(BaseTask):
         # reset buffers
         self.last_actions[env_ids] = 0.
         self.last_last_actions[env_ids] = 0.
+        self.last_last_dof_pos[env_ids] = 0
+        self.last_dof_pos[env_ids] = 0
         self.last_dof_vel[env_ids] = 0.
         self.feet_air_time[env_ids] = 0.
         self.episode_length_buf[env_ids] = 0
@@ -622,6 +626,8 @@ class LeggedRobot(BaseTask):
         self.actions = torch.zeros(self.num_envs, self.num_actions, dtype=torch.float, device=self.device, requires_grad=False)
         self.last_actions = torch.zeros(self.num_envs, self.num_actions, dtype=torch.float, device=self.device, requires_grad=False)
         self.last_last_actions = torch.zeros(self.num_envs, self.num_actions, dtype=torch.float, device=self.device, requires_grad=False)
+        self.last_dof_pos = torch.zeros_like(self.dof_pos)
+        self.last_last_dof_pos = torch.zeros_like(self.dof_pos)
         self.last_dof_vel = torch.zeros_like(self.dof_vel)
         self.last_root_vel = torch.zeros_like(self.root_states[:, 7:13])
         self.commands = torch.zeros(self.num_envs, self.cfg.commands.num_commands, dtype=torch.float, device=self.device, requires_grad=False) # x vel, y vel, yaw vel, heading

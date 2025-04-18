@@ -15,25 +15,24 @@ This is the official PyTorch implementation of the RSS conference paper "[**Lear
   <img width="98%" src="docs/teaser.png" style="box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3); border-radius: 4px;">
 </p>
 
-
 ## 📑 Table of Contents
-- [News](#-news)
-- [TODO List](#todo-list)
-- [Installation Instructions](#installation-instructions)
-  - [Error Catching](#error-catching)
-- [Run HoST on Unitree G1](#run-host-on-unitree-g1)
-  - [Overview of Main Simulation Motions](#overview-of-main-simulation-motions)
-  - [Policy Training](#policy-training)
-  - [Policy Evaluation](#policy-evaluation)
-  - [Motion Visualization](#motion-visualization)
-  - [Train from Prone Postures](#train-from-prone-postures)
-- [Extend HoST to Other Humanoid Robots](#extend-host-to-other-humanoid-robots)
-  - [Lessons Learned from Unitree H1 and H1-2](#lessons-learned-from-unitree-h1-and-h1-2)
-  - [Potential Tips for Hardware Deployment](#potential-tips-for-hardware-deployment)
-- [Contact](#contact)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
-- [Citation](#citation)
+- [🔥 News](#-news)
+- [📝 TODO List](#-todo-list)
+- [🛠️ Installation Instructions](#-installation-instructions)
+  <!-- - [Error Catching](#-error-catching) -->
+- [🤖 Run HoST on Unitree G1](#-run-host-on-unitree-g1)
+  <!-- - [Overview of Main Simulation Motions](#-overview-of-main-simulation-motions)
+  - [Policy Training](#-policy-training)
+  - [Policy Evaluation](#-policy-evaluation)
+  - [Motion Visualization](#-motion-visualization)
+  - [Train from Prone Postures](#-train-from-prone-postures) -->
+- [🧭 Extend HoST to Other Humanoid Robots](#-extend-host-to-other-humanoid-robots)
+  <!-- - [Lessons Learned from Unitree H1 and H1-2](#-lessons-learned-from-unitree-h1-and-h1-2)
+  - [Potential Tips for Hardware Deployment](#-potential-tips-for-hardware-deployment) -->
+- [✉️ Contact](#-contact)
+- [🏷️ License](#-license)
+- [🎉 Acknowledgments](#-acknowledgments)
+- [📝 Citation](#-citation)
 
 ## 🔥 News
 - \[2025-04\] We release traning code of G1, evaluation scripts, and visualization tools.
@@ -42,8 +41,8 @@ This is the official PyTorch implementation of the RSS conference paper "[**Lear
 
 
 ## 📝 TODO List 
-- [x] Training code of G1 from prone postures.
-- [x] Training code of H1.
+- [x] Training code of Unitree G1 across prone postures.
+- [x] Training code of Unitree H1.
 - [ ] Joint training of supine and prone postures.
 - [ ] Joint training over all terrains.
 

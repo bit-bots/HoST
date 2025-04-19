@@ -3,7 +3,7 @@
 [![arXiv](https://img.shields.io/badge/arXiv-2502.08378-brown)](https://arxiv.org/abs/2502.08378)
 [![](https://img.shields.io/badge/Website-%F0%9F%9A%80-yellow)](https://taohuang13.github.io/humanoid-standingup.github.io/)
 [![](https://img.shields.io/badge/Youtube-🎬-red)](https://www.youtube.com/watch?v=Yruh-3CFwE4)
-[![](https://img.shields.io/badge/bilibili-📹-blue)](https://www.bilibili.com/video/BV1o2KPeUEob/?spm_id_from=333.337.search-card.all.click&vd_source=ef6a9a20816968cc19099a3f662afd86)
+[![](https://img.shields.io/badge/Bilibili-📹-blue)](https://www.bilibili.com/video/BV1o2KPeUEob/?spm_id_from=333.337.search-card.all.click&vd_source=ef6a9a20816968cc19099a3f662afd86)
 [![License: MIT](https://img.shields.io/badge/License-MIT-purple.svg)]()
 
 
@@ -19,16 +19,8 @@ This is the official PyTorch implementation of the RSS conference paper "[**Lear
 - [🔥 News](#-news)
 - [📝 TODO List](#-todo-list)
 - [🛠️ Installation Instructions](#-installation-instructions)
-  <!-- - [Error Catching](#-error-catching) -->
 - [🤖 Run HoST on Unitree G1](#-run-host-on-unitree-g1)
-  <!-- - [Overview of Main Simulation Motions](#-overview-of-main-simulation-motions)
-  - [Policy Training](#-policy-training)
-  - [Policy Evaluation](#-policy-evaluation)
-  - [Motion Visualization](#-motion-visualization)
-  - [Train from Prone Postures](#-train-from-prone-postures) -->
 - [🧭 Extend HoST to Other Humanoid Robots](#-extend-host-to-other-humanoid-robots-tips)
-  <!-- - [Lessons Learned from Unitree H1 and H1-2](#-lessons-learned-from-unitree-h1-and-h1-2)
-  - [Potential Tips for Hardware Deployment](#-potential-tips-for-hardware-deployment) -->
 - [✉️ Contact](#-contact)
 - [🏷️ License](#-license)
 - [🎉 Acknowledgments](#-acknowledgments)
@@ -206,10 +198,10 @@ This repository is built upon the support and contributions of the following ope
 
 If you find our work useful, please consider citing:
 ```
-@article{huang2025host,
+@article{huang2025learning,
   title={Learning Humanoid Standing-up Control across Diverse Postures},
-  author={Huang, Tao and Ren, Junli and Wang, Huayi and Wang, Zirui and Ben, Qingwei and Wen Muning and Chen, Xiao and Li, Jianan and Pang, Jiangmiao},
-  journal={Robotics: Science and Systems},
-  year={2025},
+  author={Huang, Tao and Ren, Junli and Wang, Huayi and Wang, Zirui and Ben, Qingwei and Wen, Muning and Chen, Xiao and Li, Jianan and Pang, Jiangmiao},
+  journal={arXiv preprint arXiv:2502.08378},
+  year={2025}
 }
 ```

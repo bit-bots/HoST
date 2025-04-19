@@ -26,7 +26,7 @@ This is the official PyTorch implementation of the RSS conference paper "[**Lear
   - [Policy Evaluation](#-policy-evaluation)
   - [Motion Visualization](#-motion-visualization)
   - [Train from Prone Postures](#-train-from-prone-postures) -->
-- [🧭 Extend HoST to Other Humanoid Robots](#-extend-host-to-other-humanoid-robots)
+- [🧭 Extend HoST to Other Humanoid Robots](#-extend-host-to-other-humanoid-robots-tips)
   <!-- - [Lessons Learned from Unitree H1 and H1-2](#-lessons-learned-from-unitree-h1-and-h1-2)
   - [Potential Tips for Hardware Deployment](#-potential-tips-for-hardware-deployment) -->
 - [✉️ Contact](#-contact)
@@ -35,7 +35,7 @@ This is the official PyTorch implementation of the RSS conference paper "[**Lear
 - [📝 Citation](#-citation)
 
 ## 🔥 News
-- \[2025-04\] We release traning code of G1, evaluation scripts, and visualization tools.
+- \[2025-04\] We release traning code, evaluation scripts, and visualization tools.
 - \[2025-04\] HoST was accepted to RSS 2025!
 - \[2025-02\] We release the [paper](https://arxiv.org/abs/2502.13013) and [demos](https://taohuang13.github.io/humanoid-standingup.github.io/) of HoST.
 
@@ -155,7 +155,7 @@ We also support the training from prone postures:
 ```bash
 python legged_gym/scripts/train.py --task g1_ground_prone --run_name test_g1_ground_prone
 ```
-The learned policies can also handle side-lying postures. However, when training from posture postures, harder constraints on hip joints are necessary to prevent violent motions. This issue make the feasibility of joint training from prone and supine postures unclear currently. Address it would be valuable in the future.
+The learned policies can also handle side-lying postures. However, when training from posture postures, harder constraints on hip joints and are necessary to prevent violent motions. This issue make the feasibility of joint training from prone and supine postures unclear currently. Address it would be valuable in the future.
 
 ## 🧭 Extend HoST to Other Humanoid Robots: Tips 
 ### Lessons Learned from Unitree H1 and H1-2
@@ -170,9 +170,10 @@ To try other robots, these steps should be followed to work the algorithm:
 * [Height for stage division](./legged_gym/legged_gym/envs/g1/g1_config_ground.py#L189): ~35% height of the robot for stage 1 and 2, and ~70% height of the robot for stage 3.
 * [Height for reward](./legged_gym/legged_gym/envs/g1/g1_config_ground.py#L187): ~75% for target_head_height. Regarding the [target base height](./legged_gym/legged_gym/envs/g1/g1_config_ground.py#L183) after success a standing up, it depends on your preference.
 * [Joint deviation rewards](./legged_gym/legged_gym/envs/g1/g1_config_ground.py#L231): You can adjust the style reward functions, particularly the joint deviation penalties, to better constrain the motion style. Lightweight robots typically require narrower desired joint angle ranges, as they are more prone to reaching extreme joint angles.
+* [Reward group weights](./legged_gym/legged_gym/envs/g1/g1_config_ground.py#L200): Your 
 * [Misc](./legged_gym/legged_gym/envs/g1/g1_config_ground.py): You should also modify the default/target postures, PD controllers, observation/action spaces, body names, and etc.
 
-As as example, we provied the training code of Unitree H1 over the ground:
+As an example, we provied the training code of Unitree H1 over the ground:
 ```bash
 python legged_gym/scripts/train.py --task h1_ground --run_name test_h1_ground 
 ```

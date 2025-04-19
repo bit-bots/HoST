@@ -1421,17 +1421,17 @@ class LeggedRobot(BaseTask):
 
     def _reward_hip_yaw_deviation(self):
         hip_yaw_dof = self.dof_pos[:, self.hip_joint_indices]
-        reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_joint_indices]), dim=-1)[0] > 0.6) | (torch.min(torch.abs(self.dof_pos[:, self.hip_joint_indices]), dim=-1)[0] > 0.5)
+        reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_joint_indices]), dim=-1)[0] > 0.9) | (torch.min(torch.abs(self.dof_pos[:, self.hip_joint_indices]), dim=-1)[0] > 0.8)
         return reward
 
     def _reward_hip_roll_deviation(self):
         hip_roll_dof = self.dof_pos[:, self.hip_roll_joint_indices]
-        reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_roll_joint_indices]), dim=-1)[0] >  0.7) | (torch.min(torch.abs(self.dof_pos[:, self.hip_roll_joint_indices]), dim=-1)[0] > 0.6)
+        reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_roll_joint_indices]), dim=-1)[0] >  0.9) | (torch.min(torch.abs(self.dof_pos[:, self.hip_roll_joint_indices]), dim=-1)[0] > 0.8)
         return reward
 
     def _reward_hip_pitch_deviation(self):
         hip_pitch_dof = self.dof_pos[:, self.hip_pitch_joint_indices]
-        reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_pitch_joint_indices]), dim=-1)[0] > 0.6) | (torch.min(torch.abs(self.dof_pos[:, self.hip_pitch_joint_indices]), dim=-1)[0] > 0.5)
+        reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_pitch_joint_indices]), dim=-1)[0] > 0.9) | (torch.min(torch.abs(self.dof_pos[:, self.hip_pitch_joint_indices]), dim=-1)[0] > 0.8)
         return reward
 
     def _reward_knee_deviation(self):

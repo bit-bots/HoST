@@ -197,6 +197,7 @@ This repository is built upon the support and contributions of the following ope
 * [rsl_rl](https://github.com/leggedrobotics/rsl_rl.git): Reinforcement learning algorithm implementation.
 * [walk these ways](https://github.com/Improbable-AI/walk-these-ways): Hardware code backbone.
 * [unitree_sdk2_python](https://github.com/unitreerobotics/unitree_sdk2_python): Hardware communication interface.
+* [HoST-pytorch](https://github.com/lucidrains/HoST-pytorch): We thank [Phil Wang](https://github.com/lucidrains) for reproducing our codebase and point out some typos in the paper.
 
 ## 📝 Citation
 

@@ -29,7 +29,7 @@ This is the official PyTorch implementation of the RSS conference paper "[**Lear
 ## 🔥 News
 - \[2025-04\] We release traning code, evaluation scripts, and visualization tools.
 - \[2025-04\] HoST was accepted to RSS 2025!
-- \[2025-02\] We release the [paper](https://arxiv.org/abs/2502.08378) and [demos](https://taohuang13.github.io/humanoid-standingup.github.io/) of HoST.
+- \[2025-02\] We release the [paper](https://taohuang13.github.io/humanoid-standingup.github.io/assets/paper.pdf) and [demos](https://taohuang13.github.io/humanoid-standingup.github.io/) of HoST.
 
 
 ## 📝 TODO List 

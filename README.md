@@ -29,7 +29,7 @@ This is the official PyTorch implementation of the RSS conference paper "[**Lear
 ## 🔥 News
 - \[2025-04\] We release traning code, evaluation scripts, and visualization tools.
 - \[2025-04\] HoST was accepted to RSS 2025!
-- \[2025-02\] We release the [paper](https://arxiv.org/abs/2502.13013) and [demos](https://taohuang13.github.io/humanoid-standingup.github.io/) of HoST.
+- \[2025-02\] We release the [paper](https://arxiv.org/abs/2502.08378) and [demos](https://taohuang13.github.io/humanoid-standingup.github.io/) of HoST.
 
 
 ## 📝 TODO List 
@@ -181,7 +181,11 @@ We found some useful tips for working G1 and H1-2 hardware systems:
 * **Check collision models**: We found that using full meshes as the collision models for ankles will cause huge sim-to-real gap. To solve this issue, we use discrete points to approximate the collision, following the [official code of Unitree](https://github.com/unitreerobotics/unitree_rl_gym). That being said, it is highly suggested to be more careful about collision models. 
 
 ## ✉️ Contact
-For any questions, please feel free to email taou.cs13@gmail.com.
+For any questions, please feel free to email taou.cs13@gmail.com. We will respond to it as soon as possible. Or, you can join our discussion wechat group:
+
+<p align="center">
+  <img width="40%" src="docs/wechat.jpg" style="box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3); border-radius: 4px;">
+</p>
 
 ## 🏷️ License
 This repository is released under the MIT license. See [LICENSE](LICENSE) for additional details.

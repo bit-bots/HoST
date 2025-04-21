@@ -162,7 +162,7 @@ To try other robots, these steps should be followed to work the algorithm:
 * [Height for stage division](./legged_gym/legged_gym/envs/g1/g1_config_ground.py#L189): ~35% height of the robot for stage 1 and 2, and ~70% height of the robot for stage 3.
 * [Height for reward](./legged_gym/legged_gym/envs/g1/g1_config_ground.py#L187): ~75% for target_head_height. Regarding the [target base height](./legged_gym/legged_gym/envs/g1/g1_config_ground.py#L183) after success a standing up, it depends on your preference.
 * [Joint deviation rewards](./legged_gym/legged_gym/envs/g1/g1_config_ground.py#L231): You can adjust the style reward functions, particularly the joint deviation penalties, to better constrain the motion style. Lightweight robots typically require narrower desired joint angle ranges, as they are more prone to reaching extreme joint angles.
-* [Reward group weights](./legged_gym/legged_gym/envs/g1/g1_config_ground.py#L200): Your 
+* [Reward group weights](./legged_gym/legged_gym/envs/g1/g1_config_ground.py#L200): For instance, improving the weight of style rewards may priotirize the optimization on the motion. This is helpful on learning H1-2 or across prone postures.
 * [Misc](./legged_gym/legged_gym/envs/g1/g1_config_ground.py): You should also modify the default/target postures, PD controllers, observation/action spaces, body names, and etc.
 
 As an example, we provied the training code of Unitree H1 over the ground:

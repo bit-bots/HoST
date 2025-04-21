@@ -72,19 +72,19 @@ Regarding potential installation errors, please refer to [this document](docs/ER
 <table style="width: 100%; border-collapse: collapse; margin: -5px -0px -12px 0px;">
     <tr>
         <td align="center" style="width: 24%; padding: 2px;">
-            <img src="docs/results_ground_10000.gif" alt="Ground" style="width: 98%; max-width: 100%; height: auto; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); border-radius: 3px;"/><br/>
+            <img src="docs/results_ground_10000.gif" alt="Ground" style="width: 98%; max-width: 100%;"/><br/>
             <span style="font-size: 0.9em;">Ground</span>
         </td>
         <td align="center" style="width: 24%; padding: 2px;">
-            <img src="docs/results_platform_12000.gif" alt="Platform" style="width: 98%; max-width: 100%; height: auto; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); border-radius: 3px;"/><br/>
+            <img src="docs/results_platform_12000.gif" alt="Platform" style="width: 98%; max-width: 100%;"/><br/>
             <span style="font-size: 0.9em;">Platform</span>
         </td>
         <td align="center" style="width: 24%; padding: 2px;">
-            <img src="docs/results_wall_4000.gif" alt="Platform" style="width: 98%; max-width: 100%; height: auto; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); border-radius: 3px;"/><br/>
+            <img src="docs/results_wall_4000.gif" alt="Platform" style="width: 98%; max-width: 100%;"/><br/>
             <span style="font-size: 0.9em;">Wall</span>
         </td>
         <td align="center" style="width: 24%; padding: 2px;">
-            <img src="docs/results_slope_8000.gif" alt="Slope" style="width: 98%; max-width: 100%; height: auto; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3); border-radius: 3px;"/><br/>
+            <img src="docs/results_slope_8000.gif" alt="Slope" style="width: 98%; max-width: 100%;"/><br/>
             <span style="font-size: 0.9em;">Slope</span>
         </td>
     </tr>

@@ -176,7 +176,7 @@ python legged_gym/scripts/train.py --task h1_ground --run_name test_h1_ground
 </p>
 We found some useful tips for working G1 and H1-2 hardware systems:
 
-* **High stiffness for knee and hip joints:** We found that improving the kp coefficients of these joints to ~1.5x of the simulation ones significantly helps. We posit that this is caused by the sim-to-real gap between the joint torques. See more analysis in the [paper](https://arxiv.org/abs/2502.08378).
+* **High stiffness for knee and hip joints:** We found that improving the kp coefficients of these joints to 1.33x~1.5x of the simulation ones significantly helps. We posit that this is caused by the sim-to-real gap between the joint torques. See more analysis in the [paper](https://arxiv.org/abs/2502.08378).
 * **High action rescaler**: While default action rescaler (0.25) already produces good motions, we found that a slight improvement of this coefficient (0.3) can mitigate jerky motions noticeably.
 * **Check collision models**: We found that using full meshes as the collision models for ankles will cause huge sim-to-real gap. To solve this issue, we use discrete points to approximate the collision, following the [official code of Unitree](https://github.com/unitreerobotics/unitree_rl_gym). That being said, it is highly suggested to be more careful about collision models. 
 

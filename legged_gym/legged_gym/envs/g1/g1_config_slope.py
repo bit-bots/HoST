@@ -65,7 +65,7 @@ class G1Cfg( LeggedRobotCfg ):
         num_actor_history = 6
         num_observations = num_actor_history * num_one_step_observations
         episode_length_s = 10 # episode length in seconds
-        unactuated_timesteps = 30
+        add_force = True
 
     class control( LeggedRobotCfg.control ):
         # PD Drive parameters:
@@ -211,6 +211,8 @@ class G1Cfg( LeggedRobotCfg ):
         class scales:
             task_orientation = 1
             task_head_height = 1
+            # task_low_base_vel = 1
+            # task_feet_distance = 1
 
     class constraints( LeggedRobotCfg.rewards ):
         is_gaussian = True
@@ -241,8 +243,13 @@ class G1Cfg( LeggedRobotCfg ):
             style_hip_roll_deviation = -10
             style_left_foot_displacement = 2.5
             style_right_foot_displacement = 2.5
+            # style_hip_pitch_deviation = -10
             style_knee_deviation = -10
-            style_shank_orientation = 10
+            # style_hip_roll_deviation = -10
+            style_feet_ori = 10
+            # style_hip_yaw_var = 10
+            # style_hip_roll_var = -10
+            # style_hip_pitch_var = 10
             style_ground_parallel = 20
             style_feet_distance = -10
             style_feet_stumble = -25
@@ -252,17 +259,45 @@ class G1Cfg( LeggedRobotCfg ):
             ## for standup
             target_ang_vel_xy = 10
             target_lin_vel_xy = 10
+            # target_tracking_lin_vel = 10
+            # target_tracking_ang_vel = 10
             target_feet_height_var = 2.5
             target_target_upper_dof_pos = 10
+            # target_target_lower_dof_pos = 10
+            # target_lower_body_deviation = 2.5
+            # target_lower_body_var = 10
+            # target_upper_body_var = 10
             target_target_orientation = 10
             target_target_base_height = 10
+            # target_target_waist_dof_pos = 10
+            # target_feet_parallel = 0.25
+
+
+            # # target_ang_vel_xy = 10
+            # # target_lin_vel_xy = 10
+            # target_tracking_lin_vel = 2.5
+            # target_tracking_ang_vel = 2.5
+            # # target_feet_height_var = 2.5
+            # target_target_upper_dof_pos = 10
+            # # target_target_lower_dof_pos = 10
+            # # target_lower_body_var = 10
+            # # target_upper_body_var = 10
+            # target_target_orientation = 10
+            # target_target_base_height = 10
 
     class domain_rand:
+        # randomize_friction = True
+        # friction_range = [0.5, 1.25]
         randomize_base_mass = False
         added_mass_range = [-1., 1.]
         push_robots = False
         push_interval_s = 2
         max_push_vel_xy = 2.
+        pull_force = True
+        force = 100
+        th_height = 0.9
+        dof_vel_limit = 300
+        base_vel_limit = 20
         random_pose = False 
 
         use_random = True
@@ -305,13 +340,6 @@ class G1Cfg( LeggedRobotCfg ):
         delay = use_random
         max_delay_timesteps = 5
 
-    class curriculum:
-        pull_force = True
-        force = 100 # 100*2=200 is the actuatl force because of a extra keyframe torso link
-        dof_vel_limit = 300
-        base_vel_limit = 20
-        threshold_height = 0.9
-        no_orientation = False
 
     class sim:
         dt =  0.005
@@ -351,4 +379,4 @@ class G1CfgPPO( LeggedRobotCfgPPO ):
         experiment_name = 'g1_slope'
         algorithm_class_name = 'PPO'
         init_at_random_ep_len = True
-        max_iterations = 12000 # number of policy updates
+        max_iterations = 10000 # number of policy updates

@@ -108,8 +108,9 @@ class PiCfg( LeggedRobotCfg ):
         terminate_after_contacts_on = []    #'torse'
 
 
-        left_leg_joints = ['l_thigh_joint', 'l_hip_roll_joint', 'l_hip_pitch_joint', 'l_calf_joint', 'l_ankle_pitch_joint', 'l_ankle_roll_joint']
-        right_leg_joints = ['r_thigh_joint', 'r_hip_roll_joint', 'r_hip_pitch_joint', 'r_calf_joint', 'r_ankle_pitch_joint', 'r_ankle_roll_joint']
+        left_leg_joints = [ 'l_hip_pitch_joint', 'l_hip_roll_joint','l_thigh_joint', 'l_calf_joint', 'l_ankle_pitch_joint', 'l_ankle_roll_joint']
+        right_leg_joints = [  'r_hip_pitch_joint','r_hip_roll_joint', 'r_thigh_joint','r_calf_joint', 'r_ankle_pitch_joint', 'r_ankle_roll_joint']
+       
         left_hip_joints = ['l_thigh_joint']
         right_hip_joints = ['r_thigh_joint']
         left_hip_roll_joints = ['l_hip_roll_joint']

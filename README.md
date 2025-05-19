@@ -27,6 +27,16 @@ This is the official PyTorch implementation of the RSS conference paper "[**Lear
 - [📝 Citation](#-citation)
 
 ## 🔥 News
+- \[2025-04\] [High Torque Mini Pi](https://www.hightorquerobotics.com/pi/) is now supported by HoST! Code is available.
+<table>
+  <tr>
+    <td width="25%"><img src="docs/pi_gym.gif"></td>
+    <td width="25%"><img src="docs/pi_ground.gif"></td>
+    <td width="25%"><img src="docs/pi_prone.gif"></td>
+    <td width="25%"><img src="docs/pi_side.gif"></td>
+  </tr>
+</table>
+
 - \[2025-04\] We release traning code, evaluation scripts, and visualization tools.
 - \[2025-04\] HoST was accepted to RSS 2025!
 - \[2025-02\] We release the [paper](https://taohuang13.github.io/humanoid-standingup.github.io/assets/paper.pdf) and [demos](https://taohuang13.github.io/humanoid-standingup.github.io/) of HoST.
@@ -165,9 +175,10 @@ To try other robots, these steps should be followed to work the algorithm:
 * [Reward group weights](./legged_gym/legged_gym/envs/g1/g1_config_ground.py#L200): For instance, improving the weight of style rewards may priotirize the optimization on the motion. This is helpful on learning H1-2 or across prone postures.
 * [Misc](./legged_gym/legged_gym/envs/g1/g1_config_ground.py): You should also modify the default/target postures, PD controllers, observation/action spaces, body names, and etc.
 
-As an example, we provied the training code of Unitree H1 over the ground:
+As an example, we provied the training code of Unitree H1 and [High Torque Mini Pi](https://www.hightorquerobotics.com/pi/) over the ground:
 ```bash
 python legged_gym/scripts/train.py --task h1_ground --run_name test_h1_ground 
+python legged_gym/scripts/train.py --task pi_ground --run_name test_minipi_ground
 ```
 
 ### Potential Tips for Hardware Deployment
@@ -181,11 +192,7 @@ We found some useful tips for working G1 and H1-2 hardware systems:
 * **Check collision models**: We found that using full meshes as the collision models for ankles will cause huge sim-to-real gap. To solve this issue, we use discrete points to approximate the collision, following the [official code of Unitree](https://github.com/unitreerobotics/unitree_rl_gym). That being said, it is highly suggested to be more careful about collision models. 
 
 ## ✉️ Contact
-For any questions, please feel free to email taou.cs13@gmail.com. We will respond to it as soon as possible. Or, you can join our discussion wechat group:
-
-<p align="center">
-  <img width="40%" src="docs/wechat.jpg" style="box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3); border-radius: 4px;">
-</p>
+For any questions, please feel free to email taou.cs13@gmail.com. We will respond to it as soon as possible.
 
 ## 🏷️ License
 This repository is released under the MIT license. See [LICENSE](LICENSE) for additional details.

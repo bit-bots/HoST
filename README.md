@@ -32,19 +32,19 @@ This is the official PyTorch implementation of the RSS conference paper "[**Lear
     <tr>
         <td align="center" style="width: 24%; padding: 2px;">
             <img src="docs/pi_gym.gif" alt="IsaacGym" style="width: 98%; max-width: 100%;"/><br/>
-            <span style="font-size: 0.9em;">Ground</span>
+            <span style="font-size: 0.9em;">IsaacGym</span>
         </td>
         <td align="center" style="width: 24%; padding: 2px;">
             <img src="docs/pi_ground.gif" alt="Supine" style="width: 98%; max-width: 100%;"/><br/>
-            <span style="font-size: 0.9em;">Platform</span>
+            <span style="font-size: 0.9em;">Supine</span>
         </td>
         <td align="center" style="width: 24%; padding: 2px;">
             <img src="docs/pi_prone.gif" alt="Prone" style="width: 98%; max-width: 100%;"/><br/>
-            <span style="font-size: 0.9em;">Wall</span>
+            <span style="font-size: 0.9em;">Prone</span>
         </td>
         <td align="center" style="width: 24%; padding: 2px;">
             <img src="docs/pi_side.gif" alt="Side" style="width: 98%; max-width: 100%;"/><br/>
-            <span style="font-size: 0.9em;">Slope</span>
+            <span style="font-size: 0.9em;">Side</span>
         </td>
     </tr>
 </table>

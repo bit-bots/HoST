@@ -28,13 +28,25 @@ This is the official PyTorch implementation of the RSS conference paper "[**Lear
 
 ## 🔥 News
 - \[2025-04\] [High Torque Mini Pi](https://www.hightorquerobotics.com/pi/) is now supported by HoST! Code is available.
-<table>
-  <tr>
-    <td width="25%"><img src="docs/pi_gym.gif"></td>
-    <td width="25%"><img src="docs/pi_ground.gif"></td>
-    <td width="25%"><img src="docs/pi_prone.gif"></td>
-    <td width="25%"><img src="docs/pi_side.gif"></td>
-  </tr>
+<table style="width: 100%; border-collapse: collapse; margin: -5px -0px -0px 0px;">
+    <tr>
+        <td align="center" style="width: 24%; padding: 2px;">
+            <img src="docs/pi_gym.gif" alt="IsaacGym" style="width: 98%; max-width: 100%;"/><br/>
+            <span style="font-size: 0.9em;">Ground</span>
+        </td>
+        <td align="center" style="width: 24%; padding: 2px;">
+            <img src="docs/pi_ground.gif" alt="Supine" style="width: 98%; max-width: 100%;"/><br/>
+            <span style="font-size: 0.9em;">Platform</span>
+        </td>
+        <td align="center" style="width: 24%; padding: 2px;">
+            <img src="docs/pi_prone.gif" alt="Prone" style="width: 98%; max-width: 100%;"/><br/>
+            <span style="font-size: 0.9em;">Wall</span>
+        </td>
+        <td align="center" style="width: 24%; padding: 2px;">
+            <img src="docs/pi_side.gif" alt="Side" style="width: 98%; max-width: 100%;"/><br/>
+            <span style="font-size: 0.9em;">Slope</span>
+        </td>
+    </tr>
 </table>
 
 - \[2025-04\] We release traning code, evaluation scripts, and visualization tools.

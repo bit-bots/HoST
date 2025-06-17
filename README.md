@@ -27,6 +27,7 @@ This is the official PyTorch implementation of the RSS conference paper "[**Lear
 - [📝 Citation](#-citation)
 
 ## 🔥 News
+- \[2025-06\] HoST is selected as a Best Systems Paper Finalist at RSS 2025!
 - \[2025-05\] [DroidUp](https://droidup.com/) is now supported by HoST! Code is coming soon.
 <p align="center">
   <img width="26%" src="docs/droidup.gif" style="box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3); border-radius: 4px; margin: -5px -0px -10px 0px;">

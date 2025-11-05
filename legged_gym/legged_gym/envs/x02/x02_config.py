@@ -36,19 +36,13 @@ from legged_gym.envs.base.legged_robot_config import LeggedRobotCfg, LeggedRobot
 class x02Cfg(LeggedRobotCfg):
 
     class env(LeggedRobotCfg.env):
-        num_one_step_observations= 76
-        num_actions = 23
-        num_dofs = 23
+        num_one_step_observations= 64
+        num_actions = 19
+        num_dofs = 19
         num_actor_history = 6
         num_observations = num_actor_history * num_one_step_observations
         episode_length_s = 10 # episode length in seconds
         unactuated_timesteps = 30
-
-    class safety:
-        # safety factors
-        pos_limit = 0.9
-        vel_limit = 0.9
-        torque_limit = 0.85
 
     class asset(LeggedRobotCfg.asset):
         file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/x02/urdf/x02.urdf'
@@ -133,63 +127,80 @@ class x02Cfg(LeggedRobotCfg):
         flip_visual_attachments = False
 
     class terrain(LeggedRobotCfg.terrain):
-        mesh_type = 'plane'
-        # mesh_type = 'trimesh'
-        curriculum = False
+        mesh_type = 'plane' # "heightfield" # none, plane, heightfield or trimesh
+        horizontal_scale = 0.1 # [m]
+        vertical_scale = 0.005 # [m]
+        border_size = 25 # [m]
+        curriculum = True
+        static_friction = 0.8
+        dynamic_friction = 0.7
+        restitution = 0.3
         # rough terrain only:
-        measure_heights = False
-        static_friction = 0.6
-        dynamic_friction = 0.6
+        measure_heights = True
+        measured_points_x = [-0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8] # 1mx1.6m rectangle (without center line)
+        measured_points_y = [-0.5, -0.4, -0.3, -0.2, -0.1, 0., 0.1, 0.2, 0.3, 0.4, 0.5]
+        selected = False # select a unique terrain type and pass all arguments
+        terrain_kwargs = None # Dict of arguments for selected terrain
+        max_init_terrain_level = 5 # starting curriculum state
         terrain_length = 8.
         terrain_width = 8.
-        num_rows = 20  # number of terrain rows (levels)
-        num_cols = 20  # number of terrain cols (types)
-        max_init_terrain_level = 10  # starting curriculum state
-        # plane; obstacles; uniform; slope_up; slope_down, stair_up, stair_down
-        terrain_proportions = [0.2, 0.2, 0.4, 0.1, 0.1, 0, 0]
-        restitution = 0.
-
-    class noise:
-        add_noise = True
-        noise_level = 1.    # scales other values
-
-        class noise_scales:
-            dof_pos = 0.05
-            dof_vel = 1.5
-            ang_vel = 0.3
-            lin_vel = 0.05
-            quat = 0.05
-            height_measurements = 0.1
+        num_rows = 1 # number of terrain rows (levels)
+        num_cols = 20 # number of terrain cols (types)
+        # terrain types: [smooth slope, rough slope, stairs up, stairs down, discrete]
+        terrain_proportions = [1, 0., 0, 0, 0]
+        # trimesh only:
+        slope_treshold = 0.75 # slopes above this threshold will be corrected to vertical surfaces
 
     class init_state(LeggedRobotCfg.init_state):
         # pos = [0.0, 0.0, 1.08]
         pos = [0.0, 0.0, 0.95]
 
-        # default_joint_angles = {  # = target angles [rad] when action = 0.0
-        #     'L_hip_yaw': 0.,
-        #     'L_hip_roll': 0.,
-        #     'L_hip_pitch': 0.5,
-        #     'L_knee_pitch': -1.0,
-        #     'L_ankle_pitch': 0.5,
-        #     'R_hip_yaw': 0.,
-        #     'R_hip_roll': 0.,
-        #     'R_hip_pitch': 0.5,
-        #     'R_knee_pitch': -1.0,
-        #     'R_ankle_pitch': 0.5,
-        # }
+         target_joint_angles = {  # = target angles [rad] when action = 0.0
+             'L_hip_yaw_joint': 0.,
+             'L_hip_roll_joint': 0.,
+             'L_hip_pitch_joint': -0.1,
+             'L_knee_pitch_joint': 0.3,
+             'L_ankle_pitch_joint': -0.2,
+             'L_shoulder_yaw_joint':0.0,
+             'L_shoulder_roll_joint':0.3,
+             'L_shoulder_pitch_joint':0.0,
+             'L_elbow_joint':0.7,
+
+             'R_hip_yaw_joint': 0.,
+             'R_hip_roll_joint': 0.,
+             'R_hip_pitch_joint': -0.1,
+             'R_knee_pitch_joint': -0.1,
+             'R_ankle_pitch_joint': -0.2,
+             'R_shoulder_yaw_joint':0.0;
+             'R_shoulder_roll_joint':-0.3,
+             'R_shoulder_pitch_joint':0.0,
+             'R_elbow_joint':0.7,
+
+             'torso_joint':0.0,
+         }
 
         default_joint_angles = {  # = target angles [rad] when action = 0.0
-            'L_hip_yaw': 0.,
-            'L_hip_roll': 0.,
-            'L_hip_pitch': 0.4,
-            'L_knee_pitch': -0.8,
-            'L_ankle_pitch': 0.4,
-            'R_hip_yaw': 0.,
-            'R_hip_roll': 0.,
-            'R_hip_pitch': 0.4,
-            'R_knee_pitch': -0.8,
-            'R_ankle_pitch': 0.4,
-        }
+            'L_hip_yaw_joint': 0.,
+            'L_hip_roll_joint': 0.,
+            'L_hip_pitch_joint': 0.5,
+            'L_knee_pitch_joint': -1.0,
+            'L_ankle_pitch_joint': 0.5,
+            'L_shoulder_yaw_joint':0.0,
+            'L_shoulder_roll_joint':0.0,
+            'L_shoulder_pitch_joint':0.0,
+            'L_elbow_joint':0.0,
+
+            'R_hip_yaw_joint': 0.,
+            'R_hip_roll_joint': 0.,
+            'R_hip_pitch_joint': 0.5,
+            'R_knee_pitch_joint': -1.0,
+            'R_ankle_pitch_joint': 0.5,
+            'R_shoulder_yaw_joint':0.0,
+            'R_shoulder_roll_joint':0.0,
+            'R_shoulder_pitch_joint':0.0,
+            'R_elbow_joint':0.0,
+
+            'torso_joint':0.0,
 
     class control(LeggedRobotCfg.control):
         # PD Drive parameters:

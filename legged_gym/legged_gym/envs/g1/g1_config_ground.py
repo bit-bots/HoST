@@ -12,7 +12,7 @@ class G1Cfg( LeggedRobotCfg ):
            'left_knee_joint' : 0.3, #0.3,       
            'left_ankle_pitch_joint' : -0.2,#-0.2,     
            'left_ankle_roll_joint' : 0,
-           'left_wrist_roll_joint' : 0,         
+           'left_wrist_roll_joint' : 0,            
            'right_hip_yaw_joint' : 0., 
            'right_hip_roll_joint' : 0, 
            'right_hip_pitch_joint' : -0.1, #-0.1,                                       
@@ -21,8 +21,8 @@ class G1Cfg( LeggedRobotCfg ):
            'right_ankle_roll_joint' : 0,     
            'right_wrist_roll_joint' : 0,
             'waist_yaw_joint' : 0.0, 
-            'waist_pitch_joint' : 0.0, 
-            'waist_roll_joint' : 0.0, 
+            'waist_pitch_joint' : 0.0, #existiert nicht in Urdf
+            'waist_roll_joint' : 0.0,  #existiert nicht in Urdf
             'left_shoulder_pitch_joint' : 0.0,
             'left_shoulder_roll_joint' : 0.3, 
             'left_shoulder_yaw_joint' : 0.0,
@@ -40,7 +40,7 @@ class G1Cfg( LeggedRobotCfg ):
            'left_knee_joint' : 0.3,  
            'left_ankle_pitch_joint' : -0.2,    
            'left_ankle_roll_joint' : 0,     
-            'left_wrist_roll_joint' : 0,    
+           'left_wrist_roll_joint' : 0,    
            'right_hip_yaw_joint' : 0., 
            'right_hip_roll_joint' : 0, 
            'right_hip_pitch_joint' : -0.1,                                      

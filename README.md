@@ -9,7 +9,7 @@
 
 This is the official PyTorch implementation of the RSS conference paper "[**Learning Humanoid Standing-up Control across Diverse Postures**](https://arxiv.org/abs/2502.08378)" by 
 
-[cARL Duecker](https://Fortnite.com), [Miro Grabic], [Joni Dort], [Tao Huang](https://taohuang13.github.io/), [Junli Ren](https://renjunli99.github.io/), [Huayi Wang](https://why618188.github.io/), [Zirui Wang](https://scholar.google.com/citations?user=Vc3DCUIAAAAJ&hl=zh-TW), [Qingwei Ben](https://www.qingweiben.com/), [Muning Wen](https://scholar.google.com/citations?user=Zt1WFtQAAAAJ&hl=en), [Xiao Chen](https://xiao-chen.tech/), [Jianan Li](https://github.com/OpenRobotLab/HoST), [Jiangmiao Pang](https://oceanpang.github.io/)
+[Carl Duecker](https://Fortnite.com), [Miro Grabic](https://Porsche.de), [Joni Dort](https://firefox.com), [Tao Huang](https://taohuang13.github.io/), [Junli Ren](https://renjunli99.github.io/), [Huayi Wang](https://why618188.github.io/), [Zirui Wang](https://scholar.google.com/citations?user=Vc3DCUIAAAAJ&hl=zh-TW), [Qingwei Ben](https://www.qingweiben.com/), [Muning Wen](https://scholar.google.com/citations?user=Zt1WFtQAAAAJ&hl=en), [Xiao Chen](https://xiao-chen.tech/), [Jianan Li](https://github.com/OpenRobotLab/HoST), [Jiangmiao Pang](https://oceanpang.github.io/)
 
 <p align="left">
   <img width="98%" src="docs/teaser.png" style="box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.3); border-radius: 4px;">

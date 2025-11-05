@@ -30,7 +30,9 @@
 # Copyright (c) 2024,Shanghai Droid Robot CO.,LTD. All rights reserved.
 
 
-from humanoid.envs.base.legged_robot_config import LeggedRobotCfg, LeggedRobotCfgPPO
+from legged_gym.envs.base.legged_robot_config import LeggedRobotCfg, LeggedRobotCfgPPO
+
+
 class x02Cfg(LeggedRobotCfg):
 
     class env(LeggedRobotCfg.env):
@@ -53,9 +55,9 @@ class x02Cfg(LeggedRobotCfg):
         torque_limit = 0.85
 
     class asset(LeggedRobotCfg.asset):
-        # file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/X02Lite/X02Lite.urdf'
-        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/X02Lite/X02Lite.xml'
-        name = "X02Lite"
+        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/x02/urdf/x02.urdf'
+        # file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/X02Lite/X02Lite.xml'
+        name = "x02"
         foot_name = "ankle"
         knee_name = "knee"
 
@@ -65,6 +67,72 @@ class x02Cfg(LeggedRobotCfg):
         flip_visual_attachments = False
         replace_cylinder_with_capsule = False
         fix_base_link = False
+
+        ################################################ ab hier kopiert aus h1
+        left_foot_name = "L_ankle"
+        right_foot_name = "R_ankle"
+        left_knee_name = 'L_knee'
+        right_knee_name = 'R_knee'
+        left_thigh_name = 'L_hip_pitch'
+        right_thigh_name = 'R_hip_pitch'
+        foot_name = "ankle"
+        penalize_contacts_on = ["elbow", 'shoulder', 'torso', 'knee', 'hip']
+        terminate_after_contacts_on = []    #'torse'
+        self_collisions = 0 # 1 to disable, 0 to enable...bitwise filter
+        flip_visual_attachments = False
+
+        left_shoulder_name = "L_shoulder"
+        right_shoulder_name = "R_shoulder"
+
+        ####### -- bereits geschafft bis hier 
+        ###### Die Joints in der Urdf Joints nennen weil Substrings genommen werden
+        left_leg_joints = ['L_hip_yaw_joint', 'L_hip_roll', 'L_hip_pitch', 'L_knee_pitch', 'left_ankle_joint', 'left_ankle_joint']
+        right_leg_joints = ['R_hip_yaw_joint', 'R_hip_roll', 'R_hip_pitch', 'R_knee_pitch', 'right_ankle_joint', 'right_ankle_joint']
+        left_hip_joints = ['left_hip_yaw_joint']
+        right_hip_joints = ['right_hip_yaw_joint']
+
+        left_hip_roll_joints = ['left_hip_roll_joint']
+        right_hip_roll_joints = ['right_hip_roll_joint']    
+
+        left_hip_pitch_joints = ['left_hip_pitch_joint']
+        right_hip_pitch_joints = ['right_hip_pitch_joint']    
+
+        left_shoulder_roll_joints = ['left_shoulder_roll_joint']
+        right_shoulder_roll_joints = ['right_shoulder_roll_joint']    
+
+
+        left_knee_joints = ['left_knee_joint']
+        right_knee_joints = ['right_knee_joint']    
+
+        left_arm_joints = ['left_shoulder_pitch_joint', 'left_shoulder_roll_joint', 'left_shoulder_yaw_joint', 'left_elbow_joint']
+        right_arm_joints = ['right_shoulder_pitch_joint', 'right_shoulder_roll_joint', 'right_shoulder_yaw_joint', 'right_elbow_joint']
+        waist_joints = ["torso_joint"]
+        knee_joints = ['left_knee_joint', 'right_knee_joint']
+        ankle_joints = ['left_ankle_joint', 'right_ankle_joint']
+
+        keyframe_name = "keyframe"
+        head_name = 'keyframe_head'
+        armature = 0
+
+        trunk_names = ["pelvis", "torso"]
+        base_name = 'torso_link'
+        tracking_body_names =  ['pelvis']
+
+        left_upper_body_names = ['left_shoulder_pitch', 'left_elbow']
+        right_upper_body_names = ['right_shoulder_pitch', 'right_elbow']
+        left_lower_body_names = ['left_hip_pitch', 'left_ankle', 'left_knee']
+        right_lower_body_names = ['right_hip_pitch', 'right_ankle', 'right_knee']
+
+        left_ankle_names = ['left_ankle']
+        right_ankle_names = ['right_ankle']
+
+        density = 0.001
+        angular_damping = 0.01
+        linear_damping = 0.01
+        max_angular_velocity = 1000.
+        max_linear_velocity = 1000.
+        armature = 0.01
+        thickness = 0.01
 
     class terrain(LeggedRobotCfg.terrain):
         mesh_type = 'plane'

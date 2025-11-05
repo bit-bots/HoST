@@ -36,17 +36,15 @@ from legged_gym.envs.base.legged_robot_config import LeggedRobotCfg, LeggedRobot
 class x02Cfg(LeggedRobotCfg):
 
     class env(LeggedRobotCfg.env):
-        # change the observation dim
-        frame_stack = 15
-        c_frame_stack = 3
-        num_single_obs = 40
-        num_observations = int(frame_stack * num_single_obs)
-        single_num_privileged_obs = 52
-        num_privileged_obs = int(c_frame_stack * single_num_privileged_obs)
-        num_actions = 10
-        num_envs = 4096
-        episode_length_s = 24  # episode length in seconds
-        use_ref_actions = False
+        # Änderung der Env Klasse 
+        num_one_step_observations=  76 #+ 3 * 2#+ 3 * 11  # +3*11 actions / -3 commands  i
+        num_actions = 23#+ 2# + 11
+        num_dofs = 23
+        num_actor_history = 6
+        num_observations = num_actor_history * num_one_step_observations
+        episode_length_s = 10 # episode length in seconds
+        unactuated_timesteps = 30
+
 
     class safety:
         # safety factors
@@ -68,7 +66,7 @@ class x02Cfg(LeggedRobotCfg):
         replace_cylinder_with_capsule = False
         fix_base_link = False
 
-        ################################################ ab hier kopiert aus h1
+        ################################################ ab hier kopiert aus g1
         left_foot_name = "L_ankle"
         right_foot_name = "R_ankle"
         left_knee_name = 'L_knee'
@@ -86,8 +84,8 @@ class x02Cfg(LeggedRobotCfg):
 
         ####### -- bereits geschafft bis hier 
         ###### Die Joints in der Urdf Joints nennen weil Substrings genommen werden
-        left_leg_joints = ['L_hip_yaw_joint', 'L_hip_roll', 'L_hip_pitch', 'L_knee_pitch', 'left_ankle_joint', 'left_ankle_joint']
-        right_leg_joints = ['R_hip_yaw_joint', 'R_hip_roll', 'R_hip_pitch', 'R_knee_pitch', 'right_ankle_joint', 'right_ankle_joint']
+        left_leg_joints = ['L_hip_yaw_joint', 'L_hip_roll_joint', 'L_hip_pitch_joint', 'L_knee_pitch', 'left_ankle_joint', 'left_ankle_joint']
+        right_leg_joints = ['R_hip_yaw_joint', 'R_hip_roll_joint', 'R_hip_pitch', 'R_knee_pitch', 'right_ankle_joint', 'right_ankle_joint']
         left_hip_joints = ['left_hip_yaw_joint']
         right_hip_joints = ['right_hip_yaw_joint']
 

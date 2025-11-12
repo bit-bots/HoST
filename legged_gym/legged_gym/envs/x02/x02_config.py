@@ -46,7 +46,7 @@ class x02Cfg(LeggedRobotCfg):
 
     class asset(LeggedRobotCfg.asset):
         file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/x02/urdf/x02.urdf'
-        # file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/X02Lite/X02Lite.xml'
+        # file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/X02Lite/X02Lite.xml' das ist der alte pfad
         name = "x02"
         foot_name = "ankle"
         knee_name = "knee"
@@ -124,17 +124,12 @@ class x02Cfg(LeggedRobotCfg):
         armature = 0.01
         thickness = 0.01
         self_collisions = 0 # 1 to disable, 0 to enable...bitwise filter
-        flip_visual_attachments = False
+        flip_visual_attachments = Falsefixed
 
     class terrain(LeggedRobotCfg.terrain):
-        mesh_type = 'plane' # "heightfield" # none, plane, heightfield or trimesh
-        horizontal_scale = 0.1 # [m]
-        vertical_scale = 0.005 # [m]
-        border_size = 25 # [m]
-        curriculum = True
-        static_friction = 0.8
-        dynamic_friction = 0.7
-        restitution = 0.3
+        mesh_type = 'plane'
+        # mesh_type = 'trimesh'
+        curriculum = False
         # rough terrain only:
         measure_heights = True
         measured_points_x = [-0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8] # 1mx1.6m rectangle (without center line)
@@ -144,86 +139,143 @@ class x02Cfg(LeggedRobotCfg):
         max_init_terrain_level = 5 # starting curriculum state
         terrain_length = 8.
         terrain_width = 8.
-        num_rows = 1 # number of terrain rows (levels)
-        num_cols = 20 # number of terrain cols (types)
-        # terrain types: [smooth slope, rough slope, stairs up, stairs down, discrete]
-        terrain_proportions = [1, 0., 0, 0, 0]
-        # trimesh only:
-        slope_treshold = 0.75 # slopes above this threshold will be corrected to vertical surfaces
+        num_rows = 20  # number of terrain rows (levels)
+        num_cols = 20  # number of terrain cols (types)
+        max_init_terrain_level = 10  # starting curriculum state
+        # plane; obstacles; uniform; slope_up; slope_down, stair_up, stair_down
+        terrain_proportions = [0.2, 0.2, 0.4, 0.1, 0.1, 0, 0]
+        restitution = 0.
+
+    class noise:
+        add_noise = True
+        noise_level = 1.    # scales other values
+
+        class noise_scales:
+            dof_pos = 0.05
+            dof_vel = 1.5
+            ang_vel = 0.3
+            lin_vel = 0.05
+            quat = 0.05
+            height_measurements = 0.1
 
     class init_state(LeggedRobotCfg.init_state):
         # pos = [0.0, 0.0, 1.08]
         pos = [0.0, 0.0, 0.95]
 
-         target_joint_angles = {  # = target angles [rad] when action = 0.0
-             'L_hip_yaw_joint': 0.,
-             'L_hip_roll_joint': 0.,
-             'L_hip_pitch_joint': -0.1,
-             'L_knee_pitch_joint': 0.3,
-             'L_ankle_pitch_joint': -0.2,
-             'L_shoulder_yaw_joint':0.0,
-             'L_shoulder_roll_joint':0.3,
-             'L_shoulder_pitch_joint':0.0,
-             'L_elbow_joint':0.7,
-
-             'R_hip_yaw_joint': 0.,
-             'R_hip_roll_joint': 0.,
-             'R_hip_pitch_joint': -0.1,
-             'R_knee_pitch_joint': -0.1,
-             'R_ankle_pitch_joint': -0.2,
-             'R_shoulder_yaw_joint':0.0;
-             'R_shoulder_roll_joint':-0.3,
-             'R_shoulder_pitch_joint':0.0,
-             'R_elbow_joint':0.7,
-
-             'torso_joint':0.0,
-         }
+        # default_joint_angles = {  # = target angles [rad] when action = 0.0
+        #     'L_hip_yaw': 0.,
+        #     'L_hip_roll': 0.,
+        #     'L_hip_pitch': 0.5,
+        #     'L_knee_pitch': -1.0,
+        #     'L_ankle_pitch': 0.5,
+        #     'R_hip_yaw': 0.,
+        #     'R_hip_roll': 0.,
+        #     'R_hip_pitch': 0.5,
+        #     'R_knee_pitch': -1.0,
+        #     'R_ankle_pitch': 0.5,
+        # }
 
         default_joint_angles = {  # = target angles [rad] when action = 0.0
-            'L_hip_yaw_joint': 0.,
-            'L_hip_roll_joint': 0.,
-            'L_hip_pitch_joint': 0.5,
-            'L_knee_pitch_joint': -1.0,
-            'L_ankle_pitch_joint': 0.5,
-            'L_shoulder_yaw_joint':0.0,
-            'L_shoulder_roll_joint':0.0,
-            'L_shoulder_pitch_joint':0.0,
-            'L_elbow_joint':0.0,
-
-            'R_hip_yaw_joint': 0.,
-            'R_hip_roll_joint': 0.,
-            'R_hip_pitch_joint': 0.5,
-            'R_knee_pitch_joint': -1.0,
-            'R_ankle_pitch_joint': 0.5,
-            'R_shoulder_yaw_joint':0.0,
-            'R_shoulder_roll_joint':0.0,
-            'R_shoulder_pitch_joint':0.0,
-            'R_elbow_joint':0.0,
-
-            'torso_joint':0.0,
+            'L_hip_yaw': 0.,
+            'L_hip_roll': 0.,
+            'L_hip_pitch': 0.4,
+            'L_knee_pitch': -0.8,
+            'L_ankle_pitch': 0.4,
+            'R_hip_yaw': 0.,
+            'R_hip_roll': 0.,
+            'R_hip_pitch': 0.4,
+            'R_knee_pitch': -0.8,
+            'R_ankle_pitch': 0.4,
+        }
 
     class control(LeggedRobotCfg.control):
         # PD Drive parameters:
-        stiffness = {'hip_yaw': 160.0, 'hip_roll': 200.0, 'hip_pitch': 200.0,
-                     'knee': 200.0, 'ankle': 30}
-        damping = {'hip_yaw': 4, 'hip_roll': 5, 'hip_pitch': 5, 'knee': 5, 'ankle': 1}
+        control_type = 'P'   # das kann man noch auf PD ändern     
+        stiffness = {'hip': 150,
+                     'knee': 200,
+                     'ankle': 40,
+                     'shoulder': 100,
+                     'elbow': 100,
+                     'waist': 100,
+                     'wrist': 100,
+                     }  # [N*m/rad]
+        damping = {  'hip': 4,
+                     'knee': 6,
+                     'ankle': 2,
+                     'shoulder': 4,
+                     'elbow': 4,
+                     'waist': 4,
+                     'wrist': 4,
+                     }  # [N*m/rad]  # [N*m*s/rad]
+        # action scale: target angle = actionRescale * action + cur_dof_pos
+        action_scale = 1
+        # decimation: Number of control action updates @ sim DT per policy DT
+        decimation = 4    
 
-        action_scale = 0.25
-        decimation = 10
 
-    class sim(LeggedRobotCfg.sim):
-        dt = 0.001  # 1000 Hz
+
+    class constraints( LeggedRobotCfg.rewards ):
+        is_gaussian = True
+        target_head_height = 1.22
+        target_head_margin = 1
+        orientation_height_threshold = 0.9
+        target_base_height = 0.45   # was ist das? # soll warscheinlich so sein also 50 % von finaler höhe
+
+        left_foot_displacement_sigma = -2
+        right_foot_displacement_sigma = -2
+        hip_yaw_var_sigma = -2
+        target_dof_pos_sigma = -0.1
+        post_task = False
+        
+        class scales:
+            # regularization reward
+            regu_dof_acc = -2.5e-7
+            regu_action_rate = -0.01
+            regu_smoothness = -0.01 
+            regu_torques = -2.5e-6
+            regu_joint_power = -2.5e-5
+            regu_dof_vel = -1e-3
+            regu_joint_tracking_error = -0.00025
+            regu_dof_pos_limits = -100.0
+            regu_dof_vel_limits = -1 
+
+            # style reward
+            style_waist_deviation = -10
+            style_hip_yaw_deviation = -10
+            style_hip_roll_deviation = -10
+            style_shoulder_roll_deviation = -2.5
+            style_left_foot_displacement = 2.5
+            style_right_foot_displacement = 2.5
+            style_knee_deviation = -0.25
+            style_shank_orientation = 10
+            style_ground_parallel = 20
+            style_feet_distance = -10
+            style_style_ang_vel_xy = 1
+
+            # post-task reward   ich glaube das halr eh aus
+            target_ang_vel_xy = 10
+            target_lin_vel_xy = 10
+            target_feet_height_var = 2.5
+            target_target_upper_dof_pos = 10
+            target_target_orientation = 10
+            target_target_base_height = 10
+
+
+
+    class sim:
+        dt = 0.005  
         substeps = 1  # 2
+        gravity = [0., 0. ,-9.81]  # [m/s^2]
         up_axis = 1  # 0 is y, 1 is z
 
-        class physx(LeggedRobotCfg.sim.physx):
+        class physx:
             num_threads = 10
             solver_type = 1  # 0: pgs, 1: tgs
-            num_position_iterations = 4
-            num_velocity_iterations = 0
+            num_position_iterations = 8
+            num_velocity_iterations = 1
             contact_offset = 0.01  # [m]
             rest_offset = 0.0   # [m]
-            bounce_threshold_velocity = 0.1  # [m/s]
+            bounce_threshold_velocity = 0.5  # [m/s]
             max_depenetration_velocity = 1.0
             max_gpu_contact_pairs = 2**23  # 2**24 -> needed for 8000 envs and more
             default_buffer_size_multiplier = 5
@@ -231,135 +283,105 @@ class x02Cfg(LeggedRobotCfg):
             contact_collection = 2
 
     class domain_rand:
-        push_robots = True
-        push_interval_s = 3
-        max_push_vel_xy = 0.5
-        max_push_ang_vel = 0.3
-        disturbance = False
-        disturbance_range = [-10.0, 10.0]
-        disturbance_interval = 3
-        dynamic_randomization = 0.02
+        use_random = True
 
-        randomize_friction = True
-        friction_range = [0.5, 1.5]
-        randomize_base_mass = True
-        added_mass_range = [-5., 5.]
-        randomize_all_com = False
-        rd_com_range = [-0.03, 0.03]
-        randomize_base_com = True
-        added_com_range = [-0.10, 0.10]
-        randomize_Kp_factor = True
-        Kp_factor_range = [0.8, 1.2]
-        randomize_Kd_factor = True
-        Kd_factor_range = [0.8, 1.2]
-        randomize_motor_strength = True
+        randomize_actuation_offset = use_random
+        actuation_offset_range = [-0.05, 0.05]
+
+        randomize_motor_strength = use_random
         motor_strength_range = [0.9, 1.1]
-        randomize_motor_offset = True
-        motor_offset_range = [-0.035, 0.035]
 
+        randomize_payload_mass = use_random
+        payload_mass_range = [-2, 5]
 
-    class commands(LeggedRobotCfg.commands):
-        # Vers: lin_vel_x, lin_vel_y, ang_vel_yaw, heading (in heading mode ang_vel_yaw is recomputed from heading error)
-        num_commands = 4
-        resampling_time = 8.  # time before command are changed[s]
-        heading_command = False  # if true: compute ang vel command from heading error
+        randomize_com_displacement = use_random
+        com_displacement_range = [-0.03, 0.03]
 
-        class ranges:
-            lin_vel_x = [-1.0, 1.0]  # min max [m/s]
-            lin_vel_y = [-0.5, 0.5]   # min max [m/s]
-            ang_vel_yaw = [-0.3, 0.3]    # min max [rad/s]
-            heading = [-1., 1.]
+        randomize_link_mass = use_random
+        link_mass_range = [0.8, 1.2]
+        
+        randomize_friction = use_random
+        friction_range = [0.1, 1]
+        
+        randomize_restitution = use_random
+        restitution_range = [0.0, 1.0]
+        
+        randomize_kp = use_random
+        kp_range = [0.85, 1.15]
+        
+        randomize_kd = use_random
+        kd_range = [0.85, 1.15]
+        
+        randomize_initial_joint_pos = True
+        initial_joint_pos_scale = [0.9, 1.1]
+        initial_joint_pos_offset = [-0.1, 0.1]
+        
+        push_robots = False
+        push_interval_s = 10
+        max_push_vel_xy = 0.5
 
-    class rewards:
-        # base_height_target = 0.96
-        base_height_target = 0.89
-        min_dist = 0.13
-        max_dist = 0.45
-        # put some settings here for LLM parameter tuning
-        target_joint_pos_scale = 0.12    # rad
-        target_feet_height = 0.03       # m
-        cycle_time = 0.6                # sec
-        target_air_time = 0.3
-        stand_still = True
-        run = False
-        # if true negative total rewards are clipped at zero (avoids early termination problems)
-        only_positive_rewards = True
-        # tracking reward = exp(error*sigma)
-        tracking_sigma = 0.5
-        max_contact_force = 400  # Forces above this value are penalized
+        delay = use_random
+        max_delay_timesteps = 5
+
+    
+
+    class rewards( LeggedRobotCfg.rewards ):
+        soft_dof_pos_limit = 0.9
+        soft_dof_vel_limit = 0.9
+        base_height_target = 0.89 # haben wir übernommen
+        only_positive_rewards = False # if true negative total rewards are clipped at zero (avoids early termination problems)
+        orientation_sigma = 1
+        is_gaussian = True
+        target_head_height = 1.27 # angespasst sind 75% der Höhe vom x02
+        target_head_margin = 1
+        target_base_height_phase1 = 0.45
+        target_base_height_phase2 = 0.45
+        target_base_height_phase3 = 0.65
+        orientation_threshold = 0.99
+        left_foot_displacement_sigma = -2
+        right_foot_displacement_sigma = -2
+        target_dof_pos_sigma = -0.1
+        tracking_sigma = 0.25 # tracking reward = exp(-error^2/sigma)
+
+        reward_groups = ['task', 'regu', 'style', 'target']
+        num_reward_groups = len(reward_groups)
+        reward_group_weights = [2.5, 0.1, 1, 1]
 
         class scales:
-            # reference motion tracking
-            feet_contact = 1.2   # 1.2
-            no_fly = 1.
-            feet_contact_time = 0.
-            feet_height =  1.
-            feet_air_time = 1.
-            foot_slip = -0.05
-            feet_contact_forces = -0.01
-            # vel tracking
-            tracking_lin_vel = 2.
-            tracking_ang_vel = 1.2
-            vel_mismatch_exp = 0.5  # lin_z; ang x,y
-            low_speed = 0.2
-            track_vel_hard = 0.5
-            # base pos
-            hip_pos = 0.5
-            default_joint_pos = -0.01
-            joint_regularization = 0.0
-            ankle_regularization = 0.1
-            orientation = 1.
-            base_height = 0.5
-            base_acc = 0.2
-            foot_mirror_up = -1.
-            # energy
-            action_smoothness = -0.01
-            torques = -1e-5
-            dof_vel = -1e-5
-            dof_acc = -1e-7
-            collision = -1.
+            task_orientation = 1
+            task_head_height = 1
+    
+    
+    
+   
 
-    class normalization:
-        class obs_scales:
-            lin_vel = 2.
-            ang_vel = 1.
-            dof_pos = 1.
-            dof_vel = 0.05
-            quat = 1.
-            height_measurements = 5.0
-        clip_observations = 4.
-        clip_actions = 4.
+   
 
+ class curriculum:
+        pull_force = True
+        force = 100 # 100*2=200 is the actuatl force because of a extra keyframe torso link # haben wir jetzt so gelassen aber kp so wirklich
+        dof_vel_limit = 300
+        base_vel_limit = 20
+        threshold_height = 1.17    # ist aus rewarsd targets_head_height minus 0.1
+        no_orientation = True # ist einfacher weil mehr unterstützunh 
 
 class x02CfgPPO(LeggedRobotCfgPPO):
-    seed = 5
-    runner_class_name = 'OnPolicyRunner'   # DWLOnPolicyRunner
-
+    runner_class_name = 'OnPolicyRunner'
     class policy:
-        init_noise_std = 1.0
+        init_noise_std = 0.8
         actor_hidden_dims = [512, 256, 128]
-        critic_hidden_dims = [768, 256, 128]
-
-    class algorithm(LeggedRobotCfgPPO.algorithm):
-        entropy_coef = 0.005
-        learning_rate = 1e-5
-        num_learning_epochs = 2
-        gamma = 0.995
-        lam = 0.9
-        num_mini_batches = 4
-
-    class runner:
-        policy_class_name = 'ActorCritic'
-        algorithm_class_name = 'PPO'
-        num_steps_per_env = 50  # per iteration
-        max_iterations = 3000  # number of policy updates
-
-        # logging
-        save_interval = 100  # Please check for potential savings every `save_interval` iterations.
-        experiment_name = 'x02_ppo'
+        critic_hidden_dims = [512, 256]
+    class algorithm( LeggedRobotCfgPPO.algorithm ):
+        entropy_coef = 0.01
+        # smoothness
+        value_smoothness_coef = 0.1
+        smoothness_upper_bound = 1.0
+        smoothness_lower_bound = 0.1
+    
+    class runner( LeggedRobotCfgPPO.runner ):
         run_name = ''
-        # Load and resume
-        resume = False
-        load_run = -1  # -1 = last run
-        checkpoint = -1  # -1 = last saved model
-        resume_path = None  # updated from load_run and chkpt
+        save_interval = 500 # check for potential saves every this many iterations
+        experiment_name = 'g1_ground'
+        algorithm_class_name = 'PPO'
+        init_at_random_ep_len = True
+        max_iterations = 12000 # number of policy updates

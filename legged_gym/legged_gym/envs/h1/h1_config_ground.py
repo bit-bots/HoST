@@ -92,12 +92,31 @@ class H1Cfg( LeggedRobotCfg ):
         dynamic_friction = 0.7
         restitution = 0.3
         # rough terrain only:
-        measure_heights = True
-        measured_points_x = [-0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8] # 1mx1.6m rectangle (without center line)
-        measured_points_y = [-0.5, -0.4, -0.3, -0.2, -0.1, 0., 0.1, 0.2, 0.3, 0.4, 0.5]
-        selected = False # select a unique terrain type and pass all arguments
-        terrain_kwargs = None # Dict of arguments for selected terrain
-        max_init_terrain_level = 5 # starting curriculum state
+        measure_heights = Trueleft_hip_yaw_joint' : 0. ,   
+           'left_hip_roll_joint' : 0,               
+           'left_hip_pitch_joint' : -0.1,#-0.1,         
+           'left_knee_joint' : 0.3, #0.3,       
+           'left_ankle_pitch_joint' : -0.2,#-0.2,     
+           'left_ankle_roll_joint' : 0,
+           'left_wrist_roll_joint' : 0,         
+           'right_hip_yaw_joint' : 0., 
+           'right_hip_roll_joint' : 0, 
+           'right_hip_pitch_joint' : -0.1, #-0.1,                                       
+           'right_knee_joint' : 0.3, #0.3,                                             
+           'right_ankle_pitch_joint': -0.2,#-0.2,                              
+           'right_ankle_roll_joint' : 0,     
+           'right_wrist_roll_joint' : 0,
+            'waist_yaw_joint' : 0.0, 
+            'waist_pitch_joint' : 0.0, 
+            'waist_roll_joint' : 0.0, 
+            'left_shoulder_pitch_joint' : 0.0,
+            'left_shoulder_roll_joint' : 0.3, 
+            'left_shoulder_yaw_joint' : 0.0,
+            'left_elbow_joint' : 0,
+            'right_shoulder_pitch_joint' : 0,
+            'right_shoulder_roll_joint' : -0.3,
+            'right_shoulder_yaw_joint' : 0.0,
+            'right_elbow_joint' : 0,culum state
         terrain_length = 8.
         terrain_width = 8.
         num_rows = 1 # number of terrain rows (levels)
@@ -140,6 +159,14 @@ class H1Cfg( LeggedRobotCfg ):
         left_shoulder_roll_joints = ['left_shoulder_roll_joint']
         right_shoulder_roll_joints = ['right_shoulder_roll_joint']    
 
+    class control(LeggedRobotCfg.control):
+        # PD Drive parameters:
+        stiffness = {'hip_yaw': 160.0, 'hip_roll': 200.0, 'hip_pitch': 200.0,
+                     'knee': 200.0, 'ankle': 30}
+        damping = {'hip_yaw': 4, 'hip_roll': 5, 'hip_pitch': 5, 'knee': 5, 'ankle': 1}
+
+        action_scale = 0.25
+        decimation = 10
 
         left_knee_joints = ['left_knee_joint']
         right_knee_joints = ['right_knee_joint']    
@@ -277,7 +304,7 @@ class H1Cfg( LeggedRobotCfg ):
         randomize_kd = use_random
         kd_range = [0.85, 1.15]
         
-        randomize_initial_joint_pos = True
+        randomize_initial_joint_pos = Truearget_head_height
         initial_joint_pos_scale = [0.9, 1.1]
         initial_joint_pos_offset = [-0.1, 0.1]
         

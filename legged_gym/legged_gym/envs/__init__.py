@@ -5,6 +5,9 @@ from .base.host_ground import LeggedRobot as LeggedRobotGround
 from legged_gym.envs.g1.g1_config_ground import G1Cfg as G1CfgGround
 from legged_gym.envs.g1.g1_config_ground import G1CfgPPO as G1CfgPPOGround
 
+from legged_gym.envs.x02.x02_config import x02Cfg as X02CfgGround   # das von und
+from legged_gym.envs.x02.x02_config import x02CfgPPO as X02CfgPPOGround
+
 from .base.host_platform import LeggedRobot as LeggedRobotPlatform
 from legged_gym.envs.g1.g1_config_platform import G1Cfg as G1CfgPlatform
 from legged_gym.envs.g1.g1_config_platform import G1CfgPPO as G1CfgPPOPlatform
@@ -34,5 +37,7 @@ task_registry.register( "g1_wall", LeggedRobotWall, G1WallCfgWall(), G1WallCfgPP
 task_registry.register( "g1_slope", LeggedRobotSlope, G1CfgSlope(), G1CfgPPOSlope())
 task_registry.register( "g1_ground_prone", LeggedRobotGroundProne, G1CfgGroundProne(), G1CfgPPOGroundProne())
 task_registry.register( "h1_ground", LeggedRobotGround, H1CfgGround(), H1CfgPPOGround())
+task_registry.register( "x02_ground", LeggedRobotGround, X02CfgGround(), X02CfgPPOGround())    # das von uns
+
 
 task_registry.register( "pi_ground", LeggedRobot_Pi, PiCfgGround(), PiCfgPPOGround())

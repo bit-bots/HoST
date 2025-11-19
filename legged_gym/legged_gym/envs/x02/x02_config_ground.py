@@ -124,7 +124,7 @@ class x02Cfg(LeggedRobotCfg):
         armature = 0.01
         thickness = 0.01
         self_collisions = 0 # 1 to disable, 0 to enable...bitwise filter
-        flip_visual_attachments = Falsefixed
+        flip_visual_attachments = False
 
     class terrain(LeggedRobotCfg.terrain):
         mesh_type = 'plane' # "heightfield" # none, plane, heightfield or trimesh
@@ -207,11 +207,11 @@ class x02Cfg(LeggedRobotCfg):
                      'elbow': 100,
                      'torso': 100,}
 
-        damping = {'hip_yaw': 4, 
-                   'hip_roll': 5, 
-                   'hip_pitch': 5, 
+        damping = { 'hip_yaw': 4, 
+                    'hip_roll': 5, 
+                    'hip_pitch': 5, 
                    'knee': 5, 
-                   'ankle': 1
+                   'ankle': 1,
                    'shoulder': 4,
                    'elbow': 4,
                    'torso': 4}
@@ -361,7 +361,7 @@ class x02Cfg(LeggedRobotCfg):
             task_head_height = 1
     
     
- class curriculum:
+    class curriculum:
         pull_force = True
         force = 100 # 100*2=200 is the actuatl force because of a extra keyframe torso link # haben wir jetzt so gelassen aber kp so wirklich
         dof_vel_limit = 300
@@ -385,7 +385,7 @@ class x02CfgPPO(LeggedRobotCfgPPO):
     class runner( LeggedRobotCfgPPO.runner ):
         run_name = ''
         save_interval = 500 # check for potential saves every this many iterations
-        experiment_name = 'g1_ground'
+        experiment_name = 'x02_ground'
         algorithm_class_name = 'PPO'
         init_at_random_ep_len = True
-        max_iterations = 12000 # number of policy updates
+        max_iterations = 1000 # number of policy updates

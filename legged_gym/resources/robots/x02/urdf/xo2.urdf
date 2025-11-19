@@ -29,12 +29,12 @@
         <color rgba="1 1 1 1" />
       </material>
     </visual>
-    <!-- <collision> -->
+    <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
       <mesh filename="meshes/pelvis.STL" />
     </geometry>
-    <!-- </collision> -->
+    </collision>
   </link>
   <link name="L_hip_yaw_Link">
     <inertial>
@@ -51,12 +51,12 @@
         <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
       </material>
     </visual>
-    <!-- <collision> -->
+    <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
       <mesh filename="meshes/L_hip_yaw_Link.STL" />
     </geometry>
-    <!-- </collision> -->
+    </collision>
   </link>
   <joint name="L_hip_yaw_joint" type="revolute">
     <origin xyz="0 0 -0.06" rpy="0 0 0" />
@@ -80,12 +80,12 @@
         <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
       </material>
     </visual>
-    <!-- <collision> -->
+    <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
       <mesh filename="meshes/L_hip_roll_Link.STL" />
     </geometry>
-    <!-- </collision> -->
+    </collision>
   </link>
   <joint name="L_hip_roll_joint" type="revolute">
     <origin xyz="0 0.09 -0.0474" rpy="3.14159265358979 1.5707963267949 0" />
@@ -109,12 +109,12 @@
         <color rgba="1 1 1 1" />
       </material>
     </visual>
-    <!-- <collision> -->
+    <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
       <mesh filename="meshes/L_hip_pitch_Link.STL" />
     </geometry>
-    <!-- </collision> -->
+    </collision>
   </link>
   <joint name="L_hip_pitch_joint" type="revolute">
     <origin xyz="0.092 -0.001 -2.97932823952292E-05" rpy="-1.5707963267949 0 0" />
@@ -138,12 +138,12 @@
         <color rgba="0.419607843137255 0.419607843137255 0.419607843137255 1" />
       </material>
     </visual>
-    <!-- <collision> -->
+    <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
       <mesh filename="meshes/L_knee_Link.STL" />
     </geometry>
-    <!-- </collision> -->
+    </collision>
   </link>
   <joint name="L_knee_pitch_joint" type="revolute">
     <origin xyz="0.349999998731943 -2.9793282395241E-05 0" rpy="0 0 0" />
@@ -170,7 +170,7 @@
     <collision>
       <origin xyz="0.041 0.02 0" rpy="1.5707963267948966 0 0" />
       <geometry>
-        <!-- <mesh --> filename="meshes/L_ankle_pitch_Link.STL" />
+        <!-- <mesh filename="meshes/L_ankle_pitch_Link.STL" />--> 
         <cylinder length="0.249" radius="0.018" />
       </geometry>
     </collision>
@@ -197,12 +197,12 @@
         <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
       </material>
     </visual>
-    <!-- <collision> -->
+    <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
       <mesh filename="meshes/R_hip_yaw_Link.STL" />
     </geometry>
-    <!-- </collision> -->
+    </collision>
   </link>
   <joint name="R_hip_yaw_joint" type="revolute">
     <origin xyz="0 0 -0.1074" rpy="0 0 0" />
@@ -226,12 +226,12 @@
         <color rgba="1 1 1 1" />
       </material>
     </visual>
-    <!-- <collision> -->
+    <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
       <mesh filename="meshes/R_hip_roll_Link.STL" />
     </geometry>
-    <!-- </collision> -->
+    </collision>
   </link>
   <joint name="R_hip_roll_joint" type="revolute">
     <origin xyz="0 -0.09 0" rpy="0 1.5707963267949 0" />
@@ -255,12 +255,12 @@
         <color rgba="1 1 1 1" />
       </material>
     </visual>
-    <!-- <collision> -->
+    <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
       <mesh filename="meshes/R_hip_pitch_Link.STL" />
     </geometry>
-    <!-- </collision> -->
+    </collision>
   </link>
   <joint name="R_hip_pitch_joint" type="revolute">
     <origin xyz="0.092 -0.00100000000000001 2.97932823952229E-05" rpy="-1.5707963267949 0 0" />
@@ -284,12 +284,12 @@
         <color rgba="0.419607843137255 0.419607843137255 0.419607843137255 1" />
       </material>
     </visual>
-    <!-- <collision> -->
+    <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
       <mesh filename="meshes/R_knee_Link.STL" />
     </geometry>
-    <!-- </collision> -->
+    </collision>
   </link>
   <joint name="R_knee_pitch_joint" type="revolute">
     <origin xyz="0.349999998731943 2.97932823952059E-05 0" rpy="0 0 0" />
@@ -316,7 +316,7 @@
     <collision>
       <origin xyz="0.041 -0.02 0" rpy="1.5707963267948966 0 0" />
       <geometry>
-        <!-- <mesh --> filename="meshes/R_ankle_pitch_Link.STL" />
+        <!-- <mesh filename="meshes/R_ankle_pitch_Link.STL" /> -->
         <cylinder length="0.249" radius="0.018"/>
       </geometry>
     </collision>
@@ -328,7 +328,7 @@
     <axis xyz="0 0 -1" />
     <limit lower="-1.3962634015954636" upper="1.0471975511965976" effort="45" velocity="14.660765716752369"/>
   </joint>
-  <link name="torso_Link">
+  <link name="torso_link">
     <inertial>
       <origin xyz="0.0031437 0.0003242 0.1851956" rpy="0 0 0" />
       <mass value="9.2618" />
@@ -343,17 +343,17 @@
         <color rgba="1 1 1 1" />
       </material>
     </visual>
-    <!-- <collision> -->
+    <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
       <mesh filename="meshes/torso_link.STL" />
     </geometry>
-    <!-- </collision> -->
+    </collision>
   </link>
-  <joint name="torso_joint" type="revolute">
+  <joint name="torso_joint" type="fixed">
     <origin xyz="0 0 0" rpy="0 0 0" />
     <parent link="pelvis" />
-    <child link="torso_Link" />
+    <child link="torso_link" />
     <axis xyz="0 0 1" />
     <limit lower="-0.785" upper="0.785" effort="50" velocity="10.471975511965978"/>
   </joint>
@@ -372,16 +372,16 @@
         <color rgba="0.2 0.2 0.2 0.9" />
       </material>
     </visual>
-    <!-- <collision> -->
+    <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
       <mesh filename="meshes/L_shoulder_pitch_Link.STL" />
     </geometry>
-    <!-- </collision> -->
+    </collision>
   </link>
   <joint name="L_shoulder_pitch_joint" type="revolute">
     <origin xyz="0 0.136078524596347 0.306812038248655" rpy="0 1.30899693899577 1.5707963267949" />
-    <parent link="torso_Link" />
+    <parent link="torso_link" />
     <child link="L_shoulder_pitch_Link" />
     <axis xyz="0 0 -1" />
     <limit lower="-1.5707963267948966" upper="3.141592653589793" effort="18" velocity="5.235987755982989"/>
@@ -401,12 +401,12 @@
         <color rgba="1 1 1 1" />
       </material>
     </visual>
-    <!-- <collision> -->
+    <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
       <mesh filename="meshes/L_shoulder_roll_Link.STL" />
     </geometry>
-    <!-- </collision> -->
+    </collision>
   </link>
   <joint name="L_shoulder_roll_joint" type="revolute">
     <origin xyz="0 0 0.0609999999999959" rpy="-1.5707963267949 0.261799387799122 0" />
@@ -430,12 +430,12 @@
         <color rgba="0.2 0.2 0.2 0.9" />
       </material>
     </visual>
-    <!-- <collision> -->
+    <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
       <mesh filename="meshes/L_shoulder_yaw_Link.STL" />
     </geometry>
-    <!-- </collision> -->
+    </collision>
   </link>
   <joint name="L_shoulder_yaw_joint" type="revolute">
     <origin xyz="0.112 0 0" rpy="1.57079632679458 0 1.5707963267949" />
@@ -459,12 +459,12 @@
         <color rgba="1 1 1 1" />
       </material>
     </visual>
-    <!-- <collision> -->
+    <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
       <mesh filename="meshes/L_elbow_Link.STL" />
     </geometry>
-    <!-- </collision> -->
+    </collision>
   </link>
   <joint name="L_elbow_joint" type="revolute">
     <origin xyz="0 -0.0100000000001793 0.172999999999993" rpy="1.5707963267949 3.1416 1.5707963267949" />
@@ -488,16 +488,16 @@
         <color rgba=".2 .2 .2 .9" />
       </material>
     </visual>
-    <!-- <collision> -->
+    <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
       <mesh filename="meshes/R_shoulder_pitch_Link.STL" />
     </geometry>
-    <!-- </collision> -->
+    </collision>
   </link>
   <joint name="R_shoulder_pitch_joint" type="revolute">
     <origin xyz="0 -0.136078524596347 0.306812038248655" rpy="0 1.30899693899578 -1.5707963267949" />
-    <parent link="torso_Link" />
+    <parent link="torso_link" />
     <child link="R_shoulder_pitch_Link" />
     <axis xyz="0 0 1" />
     <limit lower="-1.5707963267948966" upper="3.141592653589793" effort="18" velocity="5.235987755982989"/>
@@ -517,12 +517,12 @@
         <color rgba="1 1 1 1" />
       </material>
     </visual>
-    <!-- <collision> -->
+    <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
       <mesh filename="meshes/R_shoulder_roll_Link.STL" />
     </geometry>
-    <!-- </collision> -->
+    </collision>
   </link>
   <joint name="R_shoulder_roll_joint" type="revolute">
     <origin xyz="0 0 0.060999999999996" rpy="-1.5707963267949 0.261799387799122 0" />
@@ -546,12 +546,12 @@
         <color rgba=".2 .2 .2 .9" />
       </material>
     </visual>
-    <!-- <collision> -->
+    <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
       <mesh filename="meshes/R_shoulder_yaw_Link.STL" />
     </geometry>
-    <!-- </collision> -->
+    </collision>
   </link>
   <joint name="R_shoulder_yaw_joint" type="revolute">
     <origin xyz="0.112 0 0" rpy="1.57079632679458 0 1.5707963267949" />
@@ -575,12 +575,12 @@
         <color rgba="1 1 1 1" />
       </material>
     </visual>
-    <!-- <collision> -->
+    <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
       <mesh filename="meshes/R_elbow_Link.STL" />
     </geometry>
-    <!-- </collision> -->
+    </collision>
   </link>
   <joint name="R_elbow_joint" type="revolute">
     <origin xyz="0 0.00999999999896754 0.173000000000008" rpy="1.5707963267949 0 1.5707963267949" />
@@ -604,16 +604,16 @@
         <color rgba=".2 .2 .2 .9" />
       </material>
     </visual>
-    <!-- <collision> -->
+    <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
       <mesh filename="meshes/Head_Link.STL" />
     </geometry>
-    <!-- </collision> -->
+    </collision>
   </link>
   <joint name="Head" type="fixed">
     <origin xyz="0 0 0.355" rpy="0 0 0" />
-    <parent link="torso_Link" />
+    <parent link="torso_link" />
     <child link="Head_Link" />
     <axis xyz="0 0 0" />
   </joint>
@@ -621,7 +621,7 @@
   </link>
   <joint name="imu_joint" type="fixed">
     <origin xyz="0 0 0.1625" rpy="0 0 0" />
-    <parent link="torso_Link" />
+    <parent link="torso_link" />
     <child link="imu_link" />
   </joint>
   <link name="Logo_Link">
@@ -639,16 +639,16 @@
         <color rgba="1 0 0 .8" />
       </material>
     </visual>
-    <!-- <collision> -->
+    <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
       <mesh filename="meshes/Logo_Link.STL" />
     </geometry>
-    <!-- </collision> -->
+    </collision>
   </link>
   <joint name="Logo" type="fixed">
     <origin xyz="0 0 0" rpy="0 0 0" />
-    <parent link="torso_Link" />
+    <parent link="torso_link" />
     <child link="Logo_Link" />
     <axis xyz="0 0 0" />
   </joint>
@@ -666,7 +666,7 @@
   </link>
   <joint name="keyframe_head_joint" type="fixed" dont_collapse="true">
     <origin xyz="0 0 0.45" rpy="0 0 0"/>
-    <parent link="torso_Link"/>
+    <parent link="torso_link"/>
     <child link="keyframe_head_link"/>
   </joint>
   <link name="keyframe_torso_link">
@@ -679,7 +679,7 @@
   </link>
   <joint name="keyframe_torso_joint" type="fixed" dont_collapse="true">
     <origin xyz="0 0 0.2" rpy="0 0 0"/>
-    <parent link="torso_Link"/>
+    <parent link="torso_link"/>
     <child link="keyframe_torso_link"/>
   </joint>
   <link name="keyframe_pelvis_link">
@@ -695,7 +695,7 @@
     <parent link="pelvis"/>
     <child link="keyframe_pelvis_link"/>
   </joint>
-  <link name="keyframe_left_collar_link">git config --global user.name "
+  <link name="keyframe_left_collar_link"/>
   <joint name="keyframe_left_collar_joint" type="fixed" dont_collapse="true">
     <origin xyz="0 0 0.02" rpy="0 0 0"/>
     <parent link="L_shoulder_pitch_Link"/>

@@ -127,10 +127,14 @@ class x02Cfg(LeggedRobotCfg):
         flip_visual_attachments = Falsefixed
 
     class terrain(LeggedRobotCfg.terrain):
-        mesh_type = 'plane'
-        # mesh_type = 'trimesh'
-        curriculum = False
-        # rough terrain only:
+        mesh_type = 'plane' # "heightfield" # none, plane, heightfield or trimesh
+        horizontal_scale = 0.1 # [m]
+        vertical_scale = 0.005 # [m]
+        border_size = 25 # [m]
+        curriculum = True
+        static_friction = 0.8
+        dynamic_friction = 0.7
+        restitution = 0.3
         measure_heights = True
         measured_points_x = [-0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 0., 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8] # 1mx1.6m rectangle (without center line)
         measured_points_y = [-0.5, -0.4, -0.3, -0.2, -0.1, 0., 0.1, 0.2, 0.3, 0.4, 0.5]
@@ -139,12 +143,13 @@ class x02Cfg(LeggedRobotCfg):
         max_init_terrain_level = 5 # starting curriculum state
         terrain_length = 8.
         terrain_width = 8.
-        num_rows = 20  # number of terrain rows (levels)
+        num_rows = 1   # number of terrain rows (levels)
         num_cols = 20  # number of terrain cols (types)
         max_init_terrain_level = 10  # starting curriculum state
         # plane; obstacles; uniform; slope_up; slope_down, stair_up, stair_down
-        terrain_proportions = [0.2, 0.2, 0.4, 0.1, 0.1, 0, 0]
-        restitution = 0.
+        terrain_proportions = [1, 0., 0, 0, 0]
+        # trimesh only:
+        slope_treshold = 0.75 # slopes above this threshold will be corrected to vertical surfaces
 
     class noise:
         add_noise = True
@@ -191,22 +196,26 @@ class x02Cfg(LeggedRobotCfg):
     class control(LeggedRobotCfg.control):
         # PD Drive parameters:
         control_type = 'P'   # das kann man noch auf PD ändern     
-        stiffness = {'hip': 150,
-                     'knee': 200,
-                     'ankle': 40,
+        
+        
+        stiffness = {'hip_yaw': 160.0, 
+                     'hip_roll': 200.0, 
+                     'hip_pitch': 200.0,
+                     'knee': 200.0, 
+                     'ankle': 30, 
                      'shoulder': 100,
                      'elbow': 100,
-                     'waist': 100,
-                     'wrist': 100,
-                     }  # [N*m/rad]
-        damping = {  'hip': 4,
-                     'knee': 6,
-                     'ankle': 2,
-                     'shoulder': 4,
-                     'elbow': 4,
-                     'waist': 4,
-                     'wrist': 4,
-                     }  # [N*m/rad]  # [N*m*s/rad]
+                     'torso': 100,}
+
+        damping = {'hip_yaw': 4, 
+                   'hip_roll': 5, 
+                   'hip_pitch': 5, 
+                   'knee': 5, 
+                   'ankle': 1
+                   'shoulder': 4,
+                   'elbow': 4,
+                   'torso': 4}
+        
         # action scale: target angle = actionRescale * action + cur_dof_pos
         action_scale = 1
         # decimation: Number of control action updates @ sim DT per policy DT
@@ -352,11 +361,6 @@ class x02Cfg(LeggedRobotCfg):
             task_head_height = 1
     
     
-    
-   
-
-   
-
  class curriculum:
         pull_force = True
         force = 100 # 100*2=200 is the actuatl force because of a extra keyframe torso link # haben wir jetzt so gelassen aber kp so wirklich

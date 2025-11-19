@@ -23,7 +23,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/pelvis.STL" />
+        <mesh filename="../meshes/pelvis.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -32,7 +32,7 @@
     <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/pelvis.STL" />
+      <mesh filename="../meshes/pelvis.STL" />
     </geometry>
     </collision>
   </link>
@@ -45,7 +45,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/L_hip_yaw_Link.STL" />
+        <mesh filename="../meshes/L_hip_yaw_Link.STL" />
       </geometry>
       <material name="">
         <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
@@ -54,7 +54,7 @@
     <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/L_hip_yaw_Link.STL" />
+      <mesh filename="../meshes/L_hip_yaw_Link.STL" />
     </geometry>
     </collision>
   </link>
@@ -74,7 +74,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/L_hip_roll_Link.STL" />
+        <mesh filename="../meshes/L_hip_roll_Link.STL" />
       </geometry>
       <material name="">
         <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
@@ -83,7 +83,7 @@
     <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/L_hip_roll_Link.STL" />
+      <mesh filename="../meshes/L_hip_roll_Link.STL" />
     </geometry>
     </collision>
   </link>
@@ -103,7 +103,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/L_hip_pitch_Link.STL" />
+        <mesh filename="../meshes/L_hip_pitch_Link.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -112,7 +112,7 @@
     <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/L_hip_pitch_Link.STL" />
+      <mesh filename="../meshes/L_hip_pitch_Link.STL" />
     </geometry>
     </collision>
   </link>
@@ -132,7 +132,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/L_knee_Link.STL" />
+        <mesh filename="../meshes/L_knee_Link.STL" />
       </geometry>
       <material name="">
         <color rgba="0.419607843137255 0.419607843137255 0.419607843137255 1" />
@@ -141,7 +141,7 @@
     <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/L_knee_Link.STL" />
+      <mesh filename="../meshes/L_knee_Link.STL" />
     </geometry>
     </collision>
   </link>
@@ -161,7 +161,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/L_ankle_pitch_Link.STL" />
+        <mesh filename="../meshes/L_ankle_pitch_Link.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -170,7 +170,7 @@
     <collision>
       <origin xyz="0.041 0.02 0" rpy="1.5707963267948966 0 0" />
       <geometry>
-        <!-- <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/L_ankle_pitch_Link.STL" />--> 
+        <!-- <mesh filename="../meshes/L_ankle_pitch_Link.STL" />--> 
         <cylinder length="0.249" radius="0.018" />
       </geometry>
     </collision>
@@ -191,7 +191,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/R_hip_yaw_Link.STL" />
+        <mesh filename="../meshes/R_hip_yaw_Link.STL" />
       </geometry>
       <material name="">
         <color rgba="0.898039215686275 0.917647058823529 0.929411764705882 1" />
@@ -200,7 +200,7 @@
     <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/R_hip_yaw_Link.STL" />
+      <mesh filename="../meshes/R_hip_yaw_Link.STL" />
     </geometry>
     </collision>
   </link>
@@ -220,7 +220,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/R_hip_roll_Link.STL" />
+        <mesh filename="../meshes/R_hip_roll_Link.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -229,7 +229,7 @@
     <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/R_hip_roll_Link.STL" />
+      <mesh filename="../meshes/R_hip_roll_Link.STL" />
     </geometry>
     </collision>
   </link>
@@ -249,7 +249,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/R_hip_pitch_Link.STL" />
+        <mesh filename="../meshes/R_hip_pitch_Link.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -258,7 +258,7 @@
     <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/R_hip_pitch_Link.STL" />
+      <mesh filename="../meshes/R_hip_pitch_Link.STL" />
     </geometry>
     </collision>
   </link>
@@ -278,7 +278,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/R_knee_Link.STL" />
+        <mesh filename="../meshes/R_knee_Link.STL" />
       </geometry>
       <material name="">
         <color rgba="0.419607843137255 0.419607843137255 0.419607843137255 1" />
@@ -287,7 +287,7 @@
     <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/R_knee_Link.STL" />
+      <mesh filename="../meshes/R_knee_Link.STL" />
     </geometry>
     </collision>
   </link>
@@ -307,7 +307,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/R_ankle_pitch_Link.STL" />
+        <mesh filename="../meshes/R_ankle_pitch_Link.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -316,7 +316,7 @@
     <collision>
       <origin xyz="0.041 -0.02 0" rpy="1.5707963267948966 0 0" />
       <geometry>
-        <!-- <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/R_ankle_pitch_Link.STL" /> -->
+        <!-- <mesh filename="../meshes/R_ankle_pitch_Link.STL" /> -->
         <cylinder length="0.249" radius="0.018"/>
       </geometry>
     </collision>
@@ -337,7 +337,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/torso_link.STL" />
+        <mesh filename="../meshes/torso_link.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -346,7 +346,7 @@
     <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/torso_link.STL" />
+      <mesh filename="../meshes/torso_link.STL" />
     </geometry>
     </collision>
   </link>
@@ -366,7 +366,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/L_shoulder_pitch_Link.STL" />
+        <mesh filename="../meshes/L_shoulder_pitch_Link.STL" />
       </geometry>
       <material name="">
         <color rgba="0.2 0.2 0.2 0.9" />
@@ -375,7 +375,7 @@
     <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/L_shoulder_pitch_Link.STL" />
+      <mesh filename="../meshes/L_shoulder_pitch_Link.STL" />
     </geometry>
     </collision>
   </link>
@@ -395,7 +395,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/L_shoulder_roll_Link.STL" />
+        <mesh filename="../meshes/L_shoulder_roll_Link.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -404,7 +404,7 @@
     <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/L_shoulder_roll_Link.STL" />
+      <mesh filename="../meshes/L_shoulder_roll_Link.STL" />
     </geometry>
     </collision>
   </link>
@@ -424,7 +424,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/L_shoulder_yaw_Link.STL" />
+        <mesh filename="../meshes/L_shoulder_yaw_Link.STL" />
       </geometry>
       <material name="">
         <color rgba="0.2 0.2 0.2 0.9" />
@@ -433,7 +433,7 @@
     <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/L_shoulder_yaw_Link.STL" />
+      <mesh filename="../meshes/L_shoulder_yaw_Link.STL" />
     </geometry>
     </collision>
   </link>
@@ -453,7 +453,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/L_elbow_Link.STL" />
+        <mesh filename="../meshes/L_elbow_Link.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -462,7 +462,7 @@
     <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/L_elbow_Link.STL" />
+      <mesh filename="../meshes/L_elbow_Link.STL" />
     </geometry>
     </collision>
   </link>
@@ -482,7 +482,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/R_shoulder_pitch_Link.STL" />
+        <mesh filename="../meshes/R_shoulder_pitch_Link.STL" />
       </geometry>
       <material name="">
         <color rgba=".2 .2 .2 .9" />
@@ -491,7 +491,7 @@
     <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/R_shoulder_pitch_Link.STL" />
+      <mesh filename="../meshes/R_shoulder_pitch_Link.STL" />
     </geometry>
     </collision>
   </link>
@@ -511,7 +511,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/R_shoulder_roll_Link.STL" />
+        <mesh filename="../meshes/R_shoulder_roll_Link.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -520,7 +520,7 @@
     <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/R_shoulder_roll_Link.STL" />
+      <mesh filename="../meshes/R_shoulder_roll_Link.STL" />
     </geometry>
     </collision>
   </link>
@@ -540,7 +540,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/R_shoulder_yaw_Link.STL" />
+        <mesh filename="../meshes/R_shoulder_yaw_Link.STL" />
       </geometry>
       <material name="">
         <color rgba=".2 .2 .2 .9" />
@@ -549,7 +549,7 @@
     <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/R_shoulder_yaw_Link.STL" />
+      <mesh filename="../meshes/R_shoulder_yaw_Link.STL" />
     </geometry>
     </collision>
   </link>
@@ -569,7 +569,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/R_elbow_Link.STL" />
+        <mesh filename="../meshes/R_elbow_Link.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -578,7 +578,7 @@
     <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/R_elbow_Link.STL" />
+      <mesh filename="../meshes/R_elbow_Link.STL" />
     </geometry>
     </collision>
   </link>
@@ -598,7 +598,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/Head_Link.STL" />
+        <mesh filename="../meshes/Head_Link.STL" />
       </geometry>
       <material name="">
         <color rgba=".2 .2 .2 .9" />
@@ -607,7 +607,7 @@
     <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/Head_Link.STL" />
+      <mesh filename="../meshes/Head_Link.STL" />
     </geometry>
     </collision>
   </link>
@@ -633,7 +633,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/Logo_Link.STL" />
+        <mesh filename="../meshes/Logo_Link.STL" />
       </geometry>
       <material name="">
         <color rgba="1 0 0 .8" />
@@ -642,7 +642,7 @@
     <collision>
     <origin xyz="0 0 0" rpy="0 0 0" />
     <geometry>
-      <mesh filename="/homes/23grabic/HoST/legged_gym/resources/robots/x02/meshes/Logo_Link.STL" />
+      <mesh filename="../meshes/Logo_Link.STL" />
     </geometry>
     </collision>
   </link>

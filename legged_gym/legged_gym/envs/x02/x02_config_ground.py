@@ -48,16 +48,7 @@ class x02Cfg(LeggedRobotCfg):
         file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/x02/urdf/x02.urdf'
         # file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/X02Lite/X02Lite.xml' das ist der alte pfad
         name = "x02"
-        foot_name = "ankle"
-        knee_name = "knee"
-
-        terminate_after_contacts_on = ['pelvis']
-        penalize_contacts_on = ["pelvis", "L_knee_Link", "R_knee_Link", "L_hip_pitch_Link", "R_hip_pitch_Link"]
-        self_collisions = 0
-        flip_visual_attachments = False
-        replace_cylinder_with_capsule = False
-        fix_base_link = False
-
+        
         ################################################ ab hier kopiert aus g1
         left_foot_name = "L_ankle"
         right_foot_name = "R_ankle"
@@ -100,13 +91,14 @@ class x02Cfg(LeggedRobotCfg):
         knee_joints = ['L_knee_pitch_joint', 'R_knee_pitch_joint']
         ankle_joints = ['L_ankle_pitch_joint', 'R_ankle_pitch_joint']
 
+
+        trunk_names = ["pelvis", "torso"]
+        base_name = 'torso_link' 
+
         keyframe_name = "keyframe"
         head_name = 'keyframe_head'
         armature = 0
 
-        trunk_names = ["pelvis", "torso"]
-        base_name = 'torso_link'
-        
 
         left_upper_body_names = ['L_shoulder_pitch', 'L_elbow']
         right_upper_body_names = ['R_shoulder_pitch', 'R_elbow']
@@ -151,46 +143,69 @@ class x02Cfg(LeggedRobotCfg):
         # trimesh only:
         slope_treshold = 0.75 # slopes above this threshold will be corrected to vertical surfaces
 
-    class noise:
-        add_noise = True
-        noise_level = 1.    # scales other values
+    #class noise:
+        # add_noise = True
+        # noise_level = 1.    # scales other values
 
-        class noise_scales:
-            dof_pos = 0.05
-            dof_vel = 1.5
-            ang_vel = 0.3
-            lin_vel = 0.05
-            quat = 0.05
-            height_measurements = 0.1
+        # class noise_scales:
+        #     dof_pos = 0.05
+        #     dof_vel = 1.5
+        #     ang_vel = 0.3
+        #     lin_vel = 0.05
+        #     quat = 0.05
+        #     gravity = 0.05
+        #     height_measurements = 0.1
 
     class init_state(LeggedRobotCfg.init_state):
         # pos = [0.0, 0.0, 1.08]
         pos = [0.0, 0.0, 0.95]
 
-        # default_joint_angles = {  # = target angles [rad] when action = 0.0
-        #     'L_hip_yaw': 0.,
-        #     'L_hip_roll': 0.,
-        #     'L_hip_pitch': 0.5,
-        #     'L_knee_pitch': -1.0,
-        #     'L_ankle_pitch': 0.5,
-        #     'R_hip_yaw': 0.,
-        #     'R_hip_roll': 0.,
-        #     'R_hip_pitch': 0.5,
-        #     'R_knee_pitch': -1.0,
-        #     'R_ankle_pitch': 0.5,
-        # }
+        target_joint_angles = {  # = target angles [rad] when action = 0.0
+            'L_hip_yaw_joint': 0.,
+            'L_hip_roll_joint': 0.,
+            'L_hip_pitch_joint': -0.1,
+            'L_knee_pitch_joint': 0.3,
+            'L_ankle_pitch_joint': -0.2,
+            'L_shoulder_yaw_joint':0.0,
+            'L_shoulder_roll_joint':0.3,
+            'L_shoulder_pitch_joint':0.0,
+            'L_elbow_joint':0.7,
+
+            'R_hip_yaw_joint': 0.,
+            'R_hip_roll_joint': 0.,
+            'R_hip_pitch_joint': -0.1,
+            'R_knee_pitch_joint': -0.1,
+            'R_ankle_pitch_joint': -0.2,
+            'R_shoulder_yaw_joint':0.0,
+            'R_shoulder_roll_joint': -0.3,
+            'R_shoulder_pitch_joint':0.0,
+            'R_elbow_joint':0.7,
+
+            'torso_joint':0.0,
+        }
 
         default_joint_angles = {  # = target angles [rad] when action = 0.0
-            'L_hip_yaw': 0.,
-            'L_hip_roll': 0.,
-            'L_hip_pitch': 0.4,
-            'L_knee_pitch': -0.8,
-            'L_ankle_pitch': 0.4,
-            'R_hip_yaw': 0.,
-            'R_hip_roll': 0.,
-            'R_hip_pitch': 0.4,
-            'R_knee_pitch': -0.8,
-            'R_ankle_pitch': 0.4,
+            'L_hip_yaw_joint': 0.,
+            'L_hip_roll_joint': 0.,
+            'L_hip_pitch_joint': 0.5,
+            'L_knee_pitch_joint': -1.0,
+            'L_ankle_pitch_joint': 0.5,
+            'L_shoulder_yaw_joint':0.0,
+            'L_shoulder_roll_joint':0.0,
+            'L_shoulder_pitch_joint':0.0,
+            'L_elbow_joint':0.0,
+
+            'R_hip_yaw_joint': 0.,
+            'R_hip_roll_joint': 0.,
+            'R_hip_pitch_joint': 0.5,
+            'R_knee_pitch_joint': -1.0,
+            'R_ankle_pitch_joint': 0.5,
+            'R_shoulder_yaw_joint':0.0,
+            'R_shoulder_roll_joint':0.0,
+            'R_shoulder_pitch_joint':0.0,
+            'R_elbow_joint':0.0,
+
+            'torso_joint':0.0
         }
 
     class control(LeggedRobotCfg.control):
@@ -335,6 +350,7 @@ class x02Cfg(LeggedRobotCfg):
     
 
     class rewards( LeggedRobotCfg.rewards ):
+        #Die anderen Hyperparameter leigen in der legged_robot_config (mehr oder weniger fest)
         soft_dof_pos_limit = 0.9
         soft_dof_vel_limit = 0.9
         base_height_target = 0.89 # haben wir übernommen

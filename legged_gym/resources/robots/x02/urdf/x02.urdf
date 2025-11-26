@@ -350,7 +350,7 @@
     </geometry>
     </collision>
   </link>
-  <joint name="torso_joint" type="fixed">
+  <joint name="torso_joint" type="revolute">
     <origin xyz="0 0 0" rpy="0 0 0" />
     <parent link="pelvis" />
     <child link="torso_link" />

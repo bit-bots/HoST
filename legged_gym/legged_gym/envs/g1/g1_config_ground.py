@@ -63,8 +63,8 @@ class G1Cfg( LeggedRobotCfg ):
 
     class env(LeggedRobotCfg.env):
         num_one_step_observations= 76
-        num_actions = 23
-        num_dofs = 23
+        num_actions = 24
+        num_dofs = 24
         num_actor_history = 6
         num_observations = num_actor_history * num_one_step_observations
         episode_length_s = 10 # episode length in seconds

@@ -160,6 +160,7 @@ class x02Cfg(LeggedRobotCfg):
         pos = [0.0, 0.0, 0.5]
         rot = [0.0, -1, 0, 1.0]
 
+        #Hier nochmal die Target-Pose anschauen
         target_joint_angles = {  # = target angles [rad] when action = 0.0
             'L_hip_yaw_joint': 0.,
             'L_hip_roll_joint': 0.,
@@ -404,4 +405,4 @@ class x02CfgPPO(LeggedRobotCfgPPO):
         experiment_name = 'x02_ground'
         algorithm_class_name = 'PPO'
         init_at_random_ep_len = True
-        max_iterations = 1000 # number of policy updates
+        max_iterations = 12000 # number of policy updates

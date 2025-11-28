@@ -63,8 +63,8 @@ class G1Cfg( LeggedRobotCfg ):
 
     class env(LeggedRobotCfg.env):
         num_one_step_observations= 76
-        num_actions = 24
-        num_dofs = 24
+        num_actions = 23
+        num_dofs = 23
         num_actor_history = 6
         num_observations = num_actor_history * num_one_step_observations
         episode_length_s = 10 # episode length in seconds
@@ -337,4 +337,4 @@ class G1CfgPPO( LeggedRobotCfgPPO ):
         experiment_name = 'g1_ground'
         algorithm_class_name = 'PPO'
         init_at_random_ep_len = True
-        max_iterations = 12 # number of policy updates
+        max_iterations = 12000 # number of policy updates

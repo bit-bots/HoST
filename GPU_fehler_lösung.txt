@@ -1,12 +1,14 @@
 Wenn der GPU Fehler wieder kommt RuntimeError: nvrtc: error: invalid value for --gpu-architecture (-arch)
-Auf der 4090 folgende Umgebungsvariablen setzen
-export CUDA_HOME=/usr/local/cuda-13.0
-export CUDA_PATH=$CUDA_HOME
-export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
-export PYTORCH JIT=0
-export TORCH_CUDA_ARCH_LIST="8.0;8.6" 
-export CUDA_FORCE_PTX_JIT=1
-export CUDA_LAUNCH_BLOCKING=0
+Auf der 4090 folgende Umgebungsvariablen setzen, müssten aber durch ~/.zshrc schon gesetzt sein
 
+export PYTORCH_JIT=0
+export TORCH_CUDA_ARCH_LIST="8.0;8.6;8.9"
 
-vllt geht auch noch sourcen der Shell
+Weitere Variablen die mal eine Rolle gespielt haben
+#export CUDA_HOME=/usr/local/cuda-13.0
+#export CUDA_PATH=$CUDA_HOME
+#export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
+#export CUDA_LAUNCH_BLOCKING=0 
+
+Löst ->  RuntimeError: CUDA error: no kernel image is available for execution on the device 
+#export CUDA_FORCE_PTX_JIT=1

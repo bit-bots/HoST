@@ -173,7 +173,7 @@ class x02Cfg(LeggedRobotCfg):
             'L_elbow_joint':0.7,
 
             'R_hip_yaw_joint': 0.,
-            'R_hip_roll_joint': 0.,
+            'R_hip_roll_joint': 0., #0.0
             'R_hip_pitch_joint': -0.1,
             'R_knee_pitch_joint': -0.1,
             'R_ankle_pitch_joint': -0.2,
@@ -199,7 +199,7 @@ class x02Cfg(LeggedRobotCfg):
             'R_hip_yaw_joint': 0.,
             'R_hip_roll_joint': 0.,
             'R_hip_pitch_joint': 0.5,
-            'R_knee_pitch_joint': -1.0,
+            'R_knee_pitch_joint': -1.0, # -1.0
             'R_ankle_pitch_joint': 0.5,
             'R_shoulder_yaw_joint':0.0,
             'R_shoulder_roll_joint':0.0,
@@ -241,10 +241,10 @@ class x02Cfg(LeggedRobotCfg):
 
     class constraints( LeggedRobotCfg.rewards ):
         is_gaussian = True
-        target_head_height = 1.22
+        target_head_height = 1
         target_head_margin = 1
         orientation_height_threshold = 0.9
-        target_base_height = 0.45   # was ist das? # soll warscheinlich so sein also 50 % von finaler höhe
+        target_base_height = 0.8   # was ist das? # soll warscheinlich so sein also 50 % von finaler höhe
 
         left_foot_displacement_sigma = -2
         right_foot_displacement_sigma = -2
@@ -304,8 +304,8 @@ class x02Cfg(LeggedRobotCfg):
             max_depenetration_velocity = 1.0
             max_gpu_contact_pairs = 2**23  # 2**24 -> needed for 8000 envs and more
             default_buffer_size_multiplier = 5
-            # 0: never, 1: last sub-step, 2: all sub-steps (default=2)
-            contact_collection = 2
+            contact_collection = 2 # 0: never, 1: last sub-step, 2: all sub-steps (default=2)
+            
 
     class domain_rand:
         use_random = True
@@ -358,11 +358,11 @@ class x02Cfg(LeggedRobotCfg):
         only_positive_rewards = False # if true negative total rewards are clipped at zero (avoids early termination problems)
         orientation_sigma = 1
         is_gaussian = True
-        target_head_height = 1.27 # angespasst sind 75% der Höhe vom x02
+        target_head_height = 1 # angespasst sind 75% der Höhe vom x02
         target_head_margin = 1
-        target_base_height_phase1 = 0.45
-        target_base_height_phase2 = 0.45
-        target_base_height_phase3 = 0.65
+        target_base_height_phase1 = 0.45 #ursprünglich 0.45, dann 0.6
+        target_base_height_phase2 = 0.45 #ursprünglich 0.45, dann 0.6
+        target_base_height_phase3 = 0.7 # hab ich bischen kleiner gemacht
         orientation_threshold = 0.99
         left_foot_displacement_sigma = -2
         right_foot_displacement_sigma = -2
@@ -371,7 +371,7 @@ class x02Cfg(LeggedRobotCfg):
 
         reward_groups = ['task', 'regu', 'style', 'target']
         num_reward_groups = len(reward_groups)
-        reward_group_weights = [2.5, 0.1, 1, 1]
+        reward_group_weights = [2.5, 0.1, 1, 1] #task ehem. 2.5, #regu ehem. 0.1
 
         class scales:
             task_orientation = 1
@@ -384,7 +384,7 @@ class x02Cfg(LeggedRobotCfg):
         dof_vel_limit = 300
         base_vel_limit = 20
         threshold_height = 1.17    # ist aus rewarsd targets_head_height minus 0.1
-        no_orientation = True # ist einfacher weil mehr unterstützunh 
+        no_orientation = False # ist einfacher weil mehr unterstützung
 
 class x02CfgPPO(LeggedRobotCfgPPO):
     runner_class_name = 'OnPolicyRunner'

@@ -1,4 +1,4 @@
-name: host2
+name: host
 channels:
   - defaults
 dependencies:

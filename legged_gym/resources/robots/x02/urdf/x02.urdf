@@ -161,7 +161,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="../meshes/L_ankle_pitch_Link_x02.STL" />
+        <mesh filename="../meshes/L_ankle_pitch_Link.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -307,7 +307,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0" />
       <geometry>
-        <mesh filename="../meshes/R_ankle_pitch_Link_x02.STL" />
+        <mesh filename="../meshes/R_ankle_pitch_Link.STL" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />

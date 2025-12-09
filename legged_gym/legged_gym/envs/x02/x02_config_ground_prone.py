@@ -389,7 +389,7 @@ class x02Cfg(LeggedRobotCfg):
         dof_vel_limit = 300
         base_vel_limit = 20
         threshold_height = 1.17    # ist aus rewarsd targets_head_height minus 0.1
-        no_orientation = True # ist einfacher weil mehr unterstützunh 
+        no_orientation = False # ist einfacher weil mehr unterstützunh 
 
 class x02CfgPPO(LeggedRobotCfgPPO):
     runner_class_name = 'OnPolicyRunner'

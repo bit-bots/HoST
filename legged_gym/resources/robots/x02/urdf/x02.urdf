@@ -894,7 +894,7 @@
 
 <!-- ################## -->
 
-<!-- Auxiliary -->
+<!-- Auxiliary, X-Achse steuert bei uns jetzt oben und unten von den Punkten-->
   <link name="auxiliary_right_ankle_roll_link1">
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -903,8 +903,8 @@
       </geometry>
     </visual>
   </link>
-  <joint name="auxiliary_right_ankle_roll_joint1" type="fixed" dont_collapse="true">
-    <origin xyz="0.035 0.1 0" rpy="0 0 0"/>
+  <joint name="auxiliary_right_ankle_roll_joint1" type="fixed" dont_collapse="true"> <!-- innen-->
+    <origin xyz="0 0 0.1" rpy="0 0 0"/> 
     <parent link="R_ankle_pitch_Link"/>
     <child link="auxiliary_right_ankle_roll_link1"/>
   </joint>
@@ -916,13 +916,13 @@
       </geometry>
     </visual>
   </link>
-  <joint name="auxiliary_right_ankle_roll_joint2" type="fixed" dont_collapse="true">
-    <origin xyz="0.035 -0.1 0" rpy="0 0 0"/>
+  <joint name="auxiliary_right_ankle_roll_joint2" type="fixed" dont_collapse="true"> <!--außen-->
+    <origin xyz="0 0 -0.1" rpy="0 0 0"/>
     <parent link="R_ankle_pitch_Link"/>
     <child link="auxiliary_right_ankle_roll_link2"/>
   </joint>
 
-  <link name="auxiliary_right_ankle_roll_link3">
+  <link name="auxiliary_right_ankle_roll_link3"> 
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -930,8 +930,8 @@
       </geometry>
     </visual>
   </link>
-  <joint name="auxiliary_right_ankle_roll_joint3" type="fixed" dont_collapse="true">
-    <origin xyz="0.2 0 0" rpy="0 0 0"/>
+  <joint name="auxiliary_right_ankle_roll_joint3" type="fixed" dont_collapse="true"> <!-- spitze von Fuß --> 
+    <origin xyz="0 -0.2 0" rpy="0 0 0"/>
     <parent link="R_ankle_pitch_Link"/>
     <child link="auxiliary_right_ankle_roll_link3"/>
   </joint>
@@ -943,8 +943,8 @@
       </geometry>
     </visual>
   </link>
-  <joint name="auxiliary_right_ankle_roll_joint4" type="fixed" dont_collapse="true">
-    <origin xyz="-0.15 0 0" rpy="0 0 0"/>
+  <joint name="auxiliary_right_ankle_roll_joint4" type="fixed" dont_collapse="true"> <!--HINTEN -->
+    <origin xyz="0 0.15 0" rpy="0 0 0"/>
     <parent link="R_ankle_pitch_Link"/>
     <child link="auxiliary_right_ankle_roll_link4"/>
   </joint>
@@ -957,8 +957,8 @@
       </geometry>
     </visual>
   </link>
-  <joint name="auxiliary_left_ankle_roll_joint1" type="fixed" dont_collapse="true">
-    <origin xyz="0.035 0.1 0" rpy="0 0 0"/>
+  <joint name="auxiliary_left_ankle_roll_joint1" type="fixed" dont_collapse="true"> <!--Innen-->
+    <origin xyz="0 0 0.1" rpy="0 0 0"/>
     <parent link="L_ankle_pitch_Link"/>
     <child link="auxiliary_left_ankle_roll_link1"/>
   </joint>
@@ -970,8 +970,8 @@
       </geometry>
     </visual>
   </link>
-  <joint name="auxiliary_left_ankle_roll_joint2" type="fixed" dont_collapse="true">
-    <origin xyz="0.035 -0.1 0" rpy="0 0 0"/>
+  <joint name="auxiliary_left_ankle_roll_joint2" type="fixed" dont_collapse="true"> <!--außen-->
+    <origin xyz="0 0 -0.1" rpy="0 0 0"/>
     <parent link="L_ankle_pitch_Link"/>
     <child link="auxiliary_left_ankle_roll_link2"/>
   </joint>
@@ -984,8 +984,8 @@
       </geometry>
     </visual>
   </link>
-  <joint name="auxiliary_left_ankle_roll_joint3" type="fixed" dont_collapse="true">
-    <origin xyz="0.2 0 0" rpy="0 0 0"/>
+  <joint name="auxiliary_left_ankle_roll_joint3" type="fixed" dont_collapse="true"> <!--vorne-->
+    <origin xyz="0 -0.2 0" rpy="0 0 0"/>
     <parent link="L_ankle_pitch_Link"/>
     <child link="auxiliary_left_ankle_roll_link3"/>
   </joint>
@@ -997,8 +997,8 @@
       </geometry>
     </visual>
   </link>
-  <joint name="auxiliary_left_ankle_roll_joint4" type="fixed" dont_collapse="true">
-    <origin xyz="-0.15 0 0" rpy="0 0 0"/>
+  <joint name="auxiliary_left_ankle_roll_joint4" type="fixed" dont_collapse="true"> <!--hinten-->
+    <origin xyz="0 0.15 0" rpy="0 0 0"/>
     <parent link="L_ankle_pitch_Link"/>
     <child link="auxiliary_left_ankle_roll_link4"/>
   </joint>

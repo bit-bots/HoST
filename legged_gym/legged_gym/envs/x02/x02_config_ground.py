@@ -190,7 +190,7 @@ class x02Cfg(LeggedRobotCfg):
             'L_hip_roll_joint': 0.,
             'L_hip_pitch_joint': 0.5,
             'L_knee_pitch_joint': -1.0,
-            'L_ankle_pitch_joint': 0.5,
+            'L_ankle_pitch_joint': -0.5,
             'L_shoulder_yaw_joint':0.0,
             'L_shoulder_roll_joint':0.0,
             'L_shoulder_pitch_joint':0.0,

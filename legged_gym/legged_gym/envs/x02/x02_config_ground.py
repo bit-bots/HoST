@@ -371,7 +371,7 @@ class x02Cfg(LeggedRobotCfg):
 
         reward_groups = ['task', 'regu', 'style', 'target']
         num_reward_groups = len(reward_groups)
-        reward_group_weights = [2.5, 0.1, 1, 2] 
+        reward_group_weights = [2.5, 0.1, 1, 1] 
 
         class scales:
             task_orientation = 1

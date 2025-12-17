@@ -905,7 +905,7 @@
     <child link="keyframe_left_ankle_link"/>
   </joint>
   <link name="keyframe_right_ankle_link">
-    <!-- <visual>
+    <!--<visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
         <sphere radius="0.05"/>
@@ -1034,42 +1034,42 @@
 
   <link name="left_foot_front_link" />
   <joint name="left_foot_front_joint" type="fixed" dont_collapse="true">
-    <origin xyz="0.18 0 -0.06" rpy="0 0 0" />
+    <origin xyz="0.087 0.18 0" rpy="0 0 0" /> <!--"0.18 0 -0.06"-->
     <parent link="L_ankle_pitch_Link" />
     <child link="left_foot_front_link" />
   </joint>
 
   <link name="left_foot_mid_link" />
   <joint name="left_foot_mid_joint" type="fixed" dont_collapse="true">
-    <origin xyz="0.0 0 -0.06" rpy="0 0 0" />
+    <origin xyz="0.087 0 0" rpy="0 0 0" /> <!--"0.0 0 -0.06"-->
     <parent link="L_ankle_pitch_Link" />
     <child link="left_foot_mid_link" />
   </joint>
 
   <link name="left_foot_hind_link" />
   <joint name="left_foot_hind_joint" type="fixed" dont_collapse="true">
-    <origin xyz="-0.09 0 -0.06" rpy="0 0 0" />
+    <origin xyz="0.087 -0.09 0" rpy="0 0 0" /> <!--"-0.09 0 -0.06"-->
     <parent link="L_ankle_pitch_Link" />
     <child link="left_foot_hind_link" />
   </joint>
 
   <link name="right_foot_front_link" />
   <joint name="right_foot_front_joint" type="fixed" dont_collapse="true">
-    <origin xyz="0.18 0 -0.06" rpy="0 0 0" />
+    <origin xyz="0.087 -0.18 0" rpy="0 0 0" /> <!--"0.18 0 -0.06" -->
     <parent link="R_ankle_pitch_Link" />
     <child link="right_foot_front_link" />
   </joint>
 
   <link name="right_foot_mid_link" />
   <joint name="right_foot_mid_joint" type="fixed" dont_collapse="true">
-    <origin xyz="0.0 0 -0.06" rpy="0 0 0" />
+    <origin xyz="0.087 0 0" rpy="0 0 0" /> <!--"0.0 0 -0.06"-->
     <parent link="R_ankle_pitch_Link" />
     <child link="right_foot_mid_link" />
   </joint>
 
   <link name="right_foot_hind_link" />
   <joint name="right_foot_hind_joint" type="fixed" dont_collapse="true">
-    <origin xyz="-0.09 0 -0.06" rpy="0 0 0" />
+    <origin xyz="0.087 0.09 0" rpy="0 0 0" /> <!--"-0.09 0 -0.06"-->
     <parent link="R_ankle_pitch_Link" />
     <child link="right_foot_hind_link" />
   </joint>

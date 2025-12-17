@@ -157,7 +157,7 @@
 
  <link name="L_ankle_pitch_Link">
     <inertial>
-      <origin xyz="0.0393987623680991 -0.000237277713772188 -0.0784143417886232" rpy="0 0 0" />
+      <origin xyz="0.0784143417886232 0.0393987623680991 -0.000237277713772188" rpy="0 0 0" /> <!--"0.0393987623680991 -0.000237277713772188 -0.0784143417886232"-->
       <mass value="0.556154115746433" />
        <inertia ixx="0.00032584056406277" ixy="-3.52704729229917E-06" ixz="-3.15470198590693E-05" iyy="0.00243296196329658" iyz="3.92516794179968E-07" izz="0.00260484732439791" />
 <!--      <inertia ixx="0.01" ixy="0" ixz="-2.9E-06" iyy="0.01" iyz="0" izz="0.01"/>-->
@@ -172,37 +172,37 @@
       </material>
     </visual>
     <collision>
-      <origin xyz="-0.095 0.0 -0.087" rpy="0 0 0"/>
+      <origin xyz="0.087 -0.095 0.0" rpy="0 0 0"/> <!--"="-0.095 0.0 -0.087-->
+      <geometry> 
+        <sphere radius="0.005"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin xyz="0.087 -0.052 0.026" rpy="0 0 0"/> <!--"-0.052 0.026 -0.087"-->
       <geometry>
         <sphere radius="0.005"/>
       </geometry>
     </collision>
     <collision>
-      <origin xyz="-0.052 0.026 -0.087" rpy="0 0 0"/>
+      <origin xyz="0.087 -0.052 -0.028" rpy="0 0 0"/> <!--"-0.052 -0.028 -0.087"-->
       <geometry>
         <sphere radius="0.005"/>
       </geometry>
     </collision>
     <collision>
-      <origin xyz="-0.052 -0.028 -0.087" rpy="0 0 0"/>
+      <origin xyz="0.087 0.075 0.038" rpy="0 0 0"/> <!--"0.075 0.038 -0.087"-->
       <geometry>
         <sphere radius="0.005"/>
       </geometry>
     </collision>
     <collision>
-      <origin xyz="0.075 0.038 -0.087" rpy="0 0 0"/>
+      <origin xyz="0.087 0.075 -0.038" rpy="0 0 0"/> <!--"0.075 -0.038 -0.087"-->
       <geometry>
         <sphere radius="0.005"/>
       </geometry>
     </collision>
     <collision>
-      <origin xyz="0.075 -0.038 -0.087" rpy="0 0 0"/>
-      <geometry>
-        <sphere radius="0.005"/>
-      </geometry>
-    </collision>
-    <collision>
-      <origin xyz="0.136 -0.00 -0.087" rpy="0 0 0"/>
+      <origin xyz="0.087 0.136 -0.0" rpy="0 0 0"/> <!--"0.136 -0.00 -0.087"-->
       <geometry>
         <sphere radius="0.005"/>
       </geometry>
@@ -341,13 +341,13 @@
 
    <link name="R_ankle_pitch_Link">
     <inertial>
-      <origin xyz="0.0393998134614837 0.000237080400869755 -0.078414481781949" rpy="0 0 0" />
+      <origin xyz="0.078414481781949 -0.0393998134614837 0.000237080400869755" rpy="0 0 0" /> <!--"0.0393998134614837 0.000237080400869755 -0.078414481781949"-->
       <mass value="0.556160945494453" />
        <inertia ixx="0.00032584056406277" ixy="3.52704729229917E-06" ixz="-3.15470198590693E-05" iyy="0.00243296196329658" iyz="-3.92516794179968E-07" izz="0.00260484732439791" />
 <!--      <inertia ixx="0.01" ixy="0" ixz="-2.9E-06" iyy="0.01" iyz="0" izz="0.01"/>-->
     </inertial>
     <visual>
-      <origin xyz="0 0 0" rpy="1.571 0 -1.571" />
+      <origin xyz="0 0 0" rpy="1.571 0 -1.571" /> 
       <geometry>
         <mesh filename="../meshes/R_ankle_pitch_Link_x02.STL" />
       </geometry>
@@ -356,37 +356,37 @@
       </material>
     </visual>
     <collision>
-      <origin xyz="-0.095 0.0 -0.087" rpy="0 0 0"/>
+      <origin xyz="0.087 0.095 0.0" rpy="0 0 0"/> <!--"-0.095 0.0 -0.087" -->
       <geometry>
         <sphere radius="0.005"/>
       </geometry>
     </collision>
     <collision>
-      <origin xyz="-0.052 0.028 -0.087" rpy="0 0 0"/>
+      <origin xyz="0.087 0.052 0.028" rpy="0 0 0"/> <!--"-0.052 0.028 -0.087"-->
       <geometry>
         <sphere radius="0.005"/>
       </geometry>
     </collision>
     <collision>
-      <origin xyz="-0.052 -0.026 -0.087" rpy="0 0 0"/>
+      <origin xyz="0.087 0.052 -0.026" rpy="0 0 0"/> <!--"-0.052 -0.026 -0.087"-->
       <geometry>
         <sphere radius="0.005"/>
       </geometry>
     </collision>
     <collision>
-      <origin xyz="0.075 0.038 -0.087" rpy="0 0 0"/>
+      <origin xyz="0.087 -0.075 0.038" rpy="0 0 0"/> <!--"0.075 0.038 -0.087"-->
       <geometry>
         <sphere radius="0.005"/>
       </geometry>
     </collision>
     <collision>
-      <origin xyz="0.075 -0.038 -0.087" rpy="0 0 0"/>
+      <origin xyz="0.087 -0.075 -0.038" rpy="0 0 0"/> <!--"0.075 -0.038 -0.087"-->
       <geometry>
         <sphere radius="0.005"/>
       </geometry>
     </collision>
     <collision>
-      <origin xyz="0.136 -0.00 -0.087" rpy="0 0 0"/>
+      <origin xyz="0.087 -0.136 -0.0" rpy="0 0 0"/> <!--"0.136 -0.00 -0.087"-->
       <geometry>
         <sphere radius="0.005"/>
       </geometry>

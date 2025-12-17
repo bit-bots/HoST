@@ -544,7 +544,7 @@
     <parent link="L_shoulder_yaw_Link" />
     <child link="L_elbow_Link" />
     <axis xyz="0 0 1" />
-    <limit lower="0.0" upper="2.5307274153917776" effort="14" velocity="5.235987755982989"/>
+    <limit lower="-1.57" upper="0.9" effort="24" velocity="5.235987755982989"/>
   </joint>
   <link name="R_shoulder_pitch_Link">
     <inertial>
@@ -660,7 +660,7 @@
     <parent link="R_shoulder_yaw_Link" />
     <child link="R_elbow_Link" />
     <axis xyz="0 0 -1" />
-    <limit lower="0" upper="1.5707963267949" effort="14" velocity="5.235987755982989" />
+    <limit lower="-1.57" upper="0.9" effort="24" velocity="5.235987755982989" />
   </joint>
   <link name="Head_Link">
     <inertial>
@@ -891,6 +891,33 @@
     <parent link="R_knee_Link"/>
     <child link="keyframe_right_knee_link"/>
   </joint>
+  <link name="keyframe_left_ankle_link">
+    <!-- <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+    </visual> -->
+  </link>
+  <joint name="keyframe_left_ankle_joint" type="fixed" dont_collapse="true">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="L_ankle_pitch_Link"/>
+    <child link="keyframe_left_ankle_link"/>
+  </joint>
+  <link name="keyframe_right_ankle_link">
+    <!-- <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+    </visual> -->
+  </link>
+  <joint name="keyframe_right_ankle_joint" type="fixed" dont_collapse="true">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="R_ankle_pitch_Link"/>
+    <child link="keyframe_right_ankle_link"/>
+  </joint>
+
 
 <!-- ################## -->
 

@@ -153,7 +153,7 @@
     <limit lower="-2.443460952792061" upper="0.08726646259971647" effort="150" velocity="7.3303828583761845"/>
   </joint>
 
-<!-- Ab hier ist der neue Ankle_pitch Link eingefügt ######### -->
+<!-- In den Kommentaren stehen die alten werte dcie wir aus MujocoProjekt haben. Ab hier ist der neue Ankle_pitch Link eingefügt######### -->
 
  <link name="L_ankle_pitch_Link">
     <inertial>
@@ -337,7 +337,7 @@
     <limit lower="-2.443460952792061" upper="0.08726646259971647" effort="150" velocity="7.3303828583761845"/>
   </joint>
 
-<!-- Ab hier ist der neue Ankle_pitch Link eingefügt ######### -->
+<!-- In den Kommentaren stehen die alten werte dcie wir aus MujocoProjekt haben. Ab hier ist der neue Ankle_pitch Link eingefügt######### -->
 
    <link name="R_ankle_pitch_Link">
     <inertial>
@@ -985,7 +985,7 @@
     </visual>
   </link>
   <joint name="auxiliary_left_ankle_roll_joint3" type="fixed" dont_collapse="true"> <!--vorne-->
-    <origin xyz="0 -0.2 0" rpy="0 0 0"/>
+    <origin xyz="0 0.2 0" rpy="0 0 0"/>
     <parent link="L_ankle_pitch_Link"/>
     <child link="auxiliary_left_ankle_roll_link3"/>
   </joint>
@@ -998,7 +998,7 @@
     </visual>
   </link>
   <joint name="auxiliary_left_ankle_roll_joint4" type="fixed" dont_collapse="true"> <!--hinten-->
-    <origin xyz="0 0.15 0" rpy="0 0 0"/>
+    <origin xyz="0 -0.15 0" rpy="0 0 0"/>
     <parent link="L_ankle_pitch_Link"/>
     <child link="auxiliary_left_ankle_roll_link4"/>
   </joint>

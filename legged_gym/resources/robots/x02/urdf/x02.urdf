@@ -39,7 +39,7 @@
   <link name="L_hip_yaw_Link">
     <inertial>
       <origin xyz="0.000942 0.026834 -0.024386" rpy="0 0 0" />
-      <mass value="1.758" />
+      <mass value="1.758" /> <!--oder im anderen yaw_link war es 0.907-->
       <inertia ixx="0.004988888" ixy="0.000039059" ixz="-0.000005421" iyy="0.002479734" iyz="-0.001035324" izz="0.003849267" />
     </inertial>
     <visual>
@@ -63,7 +63,7 @@
     <parent link="pelvis" />
     <child link="L_hip_yaw_Link" />
     <axis xyz="0 0 1" />
-    <limit lower="-0.7853981633974483" upper="0.7853981633974483" effort="50" velocity="10.471975511965978"/>
+    <limit lower="-0.7854" upper="0.7854" effort="50" velocity="10.472"/>
   </joint>
   <link name="L_hip_roll_Link">
     <inertial>
@@ -92,7 +92,7 @@
     <parent link="L_hip_yaw_Link" />
     <child link="L_hip_roll_Link" />
     <axis xyz="0 0 -1" />
-    <limit lower="-0.2617993877991494" upper="0.7853981633974483" effort="50" velocity="10.471975511965978"/>
+    <limit lower="-0.2618" upper="0.7854" effort="50" velocity="10.471975511965978"/>
   </joint>
   <link name="L_hip_pitch_Link">
     <inertial>
@@ -121,7 +121,7 @@
     <parent link="L_hip_roll_Link" />
     <child link="L_hip_pitch_Link" />
     <axis xyz="0 0 1" />
-    <limit lower="-0.5235987755982988" upper="2.007128639793479" effort="72" velocity="9.16297857297023"/>
+    <limit lower="-0.5236" upper="2.0071" effort="72" velocity="9.163"/>
   </joint>
   <link name="L_knee_Link">
     <inertial>
@@ -150,7 +150,7 @@
     <parent link="L_hip_pitch_Link" />
     <child link="L_knee_Link" />
     <axis xyz="0 0 1" />
-    <limit lower="-2.443460952792061" upper="0.08726646259971647" effort="150" velocity="7.3303828583761845"/>
+    <limit lower="-2.4435" upper="0.0873" effort="150" velocity="7.3303828583761845"/> <!--effort 150??-->
   </joint>
 
 <!-- In den Kommentaren stehen die alten werte dcie wir aus MujocoProjekt haben. Ab hier ist der neue Ankle_pitch Link eingefügt######### -->
@@ -223,7 +223,7 @@
   <link name="R_hip_yaw_Link">
     <inertial>
       <origin xyz="0.001115 -0.049187 0.001444" rpy="0 0 0" />
-      <mass value="0.907" />
+      <mass value="1.758" /> <!--0.907-->
       <inertia ixx="0.002067018" ixy="-0.000035043" ixz="-0.000000909" iyy="0.000567723" iyz="0.000020295" izz="0.002016525" />
     </inertial>
     <visual>
@@ -247,7 +247,7 @@
     <parent link="pelvis" />
     <child link="R_hip_yaw_Link" />
     <axis xyz="0 0 -1" />
-    <limit lower="-0.7853981633974483" upper="0.7853981633974483" effort="50" velocity="10.471975511965978"/>
+    <limit lower="-0.7854" upper="0.7854" effort="50" velocity="10.472"/>
   </joint>
   <link name="R_hip_roll_Link">
     <inertial>
@@ -276,7 +276,7 @@
     <parent link="R_hip_yaw_Link" />
     <child link="R_hip_roll_Link" />
     <axis xyz="0 0 -1" />
-    <limit lower="-0.2617993877991494" upper="0.7853981633974483" effort="50" velocity="10.471975511965978"/>
+    <limit lower="-0.2618" upper="0.7854" effort="50" velocity="10.472"/>
   </joint>
   <link name="R_hip_pitch_Link">
     <inertial>
@@ -305,7 +305,7 @@
     <parent link="R_hip_roll_Link" />
     <child link="R_hip_pitch_Link" />
     <axis xyz="0 0 -1" />
-    <limit lower="-0.5235987755982988" upper="2.007128639793479" effort="72" velocity="9.16297857297023"/>
+    <limit lower="-0.5236" upper="2.0071" effort="72" velocity="9.163"/>
   </joint>
   <link name="R_knee_Link">
     <inertial>
@@ -334,7 +334,7 @@
     <parent link="R_hip_pitch_Link" />
     <child link="R_knee_Link" />
     <axis xyz="0 0 -1" />
-    <limit lower="-2.443460952792061" upper="0.08726646259971647" effort="150" velocity="7.3303828583761845"/>
+    <limit lower="-2.4435" upper="0.0873" effort="150" velocity="7.3304"/>
   </joint>
 
 <!-- In den Kommentaren stehen die alten werte dcie wir aus MujocoProjekt haben. Ab hier ist der neue Ankle_pitch Link eingefügt######### -->

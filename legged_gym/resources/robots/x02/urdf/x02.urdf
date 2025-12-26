@@ -223,7 +223,7 @@
   <link name="R_hip_yaw_Link">
     <inertial>
       <origin xyz="0.001115 -0.049187 0.001444" rpy="0 0 0" />
-      <mass value="1.758" /> <!--0.907-->
+      <mass value="0.907" /> 
       <inertia ixx="0.002067018" ixy="-0.000035043" ixz="-0.000000909" iyy="0.000567723" iyz="0.000020295" izz="0.002016525" />
     </inertial>
     <visual>

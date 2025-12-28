@@ -515,7 +515,7 @@
     <parent link="L_shoulder_roll_Link" />
     <child link="L_shoulder_yaw_Link" />
     <axis xyz="0 0 -1" />
-    <limit lower="-2.2689280275926285" upper="2.2689280275926285" effort="14" velocity="5.235987755982989"/>
+    <limit lower="-0.66" upper="1" effort="14" velocity="5.235987755982989"/>
   </joint>
   <link name="L_elbow_Link">
     <inertial>
@@ -631,7 +631,7 @@
     <parent link="R_shoulder_roll_Link" />
     <child link="R_shoulder_yaw_Link" />
     <axis xyz="0 0 1" />
-    <limit lower="-2.2689280275926285" upper="2.2689280275926285" effort="14" velocity="5.235987755982989"/>
+    <limit lower="-0.66" upper="1" effort="14" velocity="5.235987755982989"/>
   </joint>
   <link name="R_elbow_Link">
     <inertial>

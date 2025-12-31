@@ -45,51 +45,51 @@ class x02Cfg(LeggedRobotCfg):
         unactuated_timesteps = 30
 
     class asset(LeggedRobotCfg.asset):
-        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/x02/urdf/x02.urdf'
+        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/x02_2/x2_2.urdf'
         # file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/X02Lite/X02Lite.xml' das ist der alte pfad
         name = "x02"
         
         ################################################ ab hier kopiert aus g1
-        left_foot_name = "L_ankle"
-        right_foot_name = "R_ankle"
-        left_knee_name = 'L_knee'
-        right_knee_name = 'R_knee'
-        left_thigh_name = 'L_hip_pitch'
-        right_thigh_name = 'R_hip_pitch'
+        left_foot_name = 'left_ankle'
+        right_foot_name = 'right_ankle'
+        left_knee_name = 'left_knee'
+        right_knee_name = 'right_knee'
+        left_thigh_name = 'left_hip_pitch'
+        right_thigh_name = 'right_hip_pitch'
         foot_name = "ankle"
         penalize_contacts_on = ["elbow", 'shoulder', 'torso', 'knee', 'hip']
         terminate_after_contacts_on = []    #'torse'
         self_collisions = 0 # 1 to disable, 0 to enable...bitwise filter
         flip_visual_attachments = False
 
-        left_shoulder_name = "L_shoulder"
-        right_shoulder_name = "R_shoulder"
+        left_shoulder_name = 'left_shoulder'
+        right_shoulder_name = 'right_shoulder'
 
         ####### -- bereits geschafft bis hier 
         ###### Die Joints in der Urdf Joints nennen weil Substrings genommen werden
-        left_leg_joints = ['L_hip_yaw_joint', 'L_hip_roll_joint', 'L_hip_pitch_joint', 'L_knee_pitch_joint', 'L_ankle_pitch_joint']
-        right_leg_joints = ['R_hip_yaw_joint', 'R_hip_roll_joint', 'R_hip_pitch_joint', 'R_knee_pitch_joint', 'R_ankle_pitch_joint']
-        left_hip_joints = ['L_hip_yaw_joint']
-        right_hip_joints = ['R_hip_yaw_joint']
+        left_leg_joints = ['left_hip_yaw_joint', 'left_hip_roll_joint', 'left_hip_pitch_joint', 'left_knee_pitch_joint', 'left_ankle_pitch_joint']
+        right_leg_joints = ['right_hip_yaw_joint', 'right_hip_roll_joint', 'right_hip_pitch_joint', 'right_knee_pitch_joint', 'right_ankle_pitch_joint']
+        left_hip_joints = ['left_hip_yaw_joint']
+        right_hip_joints = ['right_hip_yaw_joint']
 
-        left_hip_roll_joints = ['L_hip_roll_joint']
-        right_hip_roll_joints = ['R_hip_roll_joint']    
+        left_hip_roll_joints = ['left_hip_roll_joint']
+        right_hip_roll_joints = ['right_hip_roll_joint']    
 
-        left_hip_pitch_joints = ['L_hip_pitch_joint']
-        right_hip_pitch_joints = ['R_hip_pitch_joint']    
+        left_hip_pitch_joints = ['left_hip_pitch_joint']
+        right_hip_pitch_joints = ['right_hip_pitch_joint']    
 
-        left_shoulder_roll_joints = ['L_shoulder_roll_joint']
-        right_shoulder_roll_joints = ['R_shoulder_roll_joint']    
+        left_shoulder_roll_joints = ['left_shoulder_roll_joint']
+        right_shoulder_roll_joints = ['right_shoulder_roll_joint']    
 
 
-        left_knee_joints = ['L_knee_pitch_joint']
-        right_knee_joints = ['R_knee_pitch_joint']    
+        left_knee_joints = ['left_knee_pitch_joint']
+        right_knee_joints = ['right_knee_pitch_joint']    
 
-        left_arm_joints = ['L_shoulder_pitch_joint', 'L_shoulder_roll_joint', 'L_shoulder_yaw_joint', 'L_elbow_joint']
-        right_arm_joints = ['R_shoulder_pitch_joint', 'R_shoulder_roll_joint', 'R_shoulder_yaw_joint', 'R_elbow_joint']
+        left_arm_joints = ['left_shoulder_pitch_joint', 'left_shoulder_roll_joint', 'left_shoulder_yaw_joint', 'left_elbow_joint']
+        right_arm_joints = ['right_shoulder_pitch_joint', 'right_shoulder_roll_joint', 'right_shoulder_yaw_joint', 'right_elbow_joint']
         waist_joints = ["torso_joint"]
-        knee_joints = ['L_knee_pitch_joint', 'R_knee_pitch_joint']
-        ankle_joints = ['L_ankle_pitch_joint', 'R_ankle_pitch_joint']
+        knee_joints = ['left_knee_pitch_joint', 'right_knee_pitch_joint']
+        ankle_joints = ['left_ankle_pitch_joint', 'right_ankle_pitch_joint']
 
 
         trunk_names = ["pelvis", "torso"]
@@ -100,13 +100,13 @@ class x02Cfg(LeggedRobotCfg):
         #armature = 0
 
 
-        left_upper_body_names = ['L_shoulder_pitch', 'L_elbow']
-        right_upper_body_names = ['R_shoulder_pitch', 'R_elbow']
-        left_lower_body_names = ['L_hip_pitch', 'L_ankle', 'L_knee']
-        right_lower_body_names = ['R_hip_pitch', 'R_ankle', 'R_knee']
+        left_upper_body_names = ['left_shoulder_pitch', 'left_elbow']
+        right_upper_body_names = ['right_shoulder_pitch', 'right_elbow']
+        left_lower_body_names = ['left_hip_pitch', 'left_ankle', 'left_knee']
+        right_lower_body_names = ['right_hip_pitch', 'right_ankle', 'right_knee']
 
-        left_ankle_names = ['L_ankle']
-        right_ankle_names = ['R_ankle']
+        left_ankle_names = ['left_ankle']
+        right_ankle_names = ['right_ankle']
 
         density = 0.001
         angular_damping = 0.01
@@ -162,49 +162,49 @@ class x02Cfg(LeggedRobotCfg):
 
         #Hier nochmal die Target-Pose anschauen
         target_joint_angles = {  # = target angles [rad] when action = 0.0
-            'L_hip_yaw_joint': 0.,
-            'L_hip_roll_joint': 0.,
-            'L_hip_pitch_joint': -0.1,
-            'L_knee_pitch_joint': 0.3,
-            'L_ankle_pitch_joint': -0.2,
-            'L_shoulder_yaw_joint':0.0,
-            'L_shoulder_roll_joint':0.3,
-            'L_shoulder_pitch_joint':0.0,
-            'L_elbow_joint':0.7,
+            'left_hip_yaw_joint': 0.,
+            'left_hip_roll_joint': 0.,
+            'left_hip_pitch_joint': -0.1,
+            'left_knee_pitch_joint': 0.3,
+            'left_ankle_pitch_joint': -0.2,
+            'left_shoulder_yaw_joint':0.0,
+            'left_shoulder_roll_joint':0.3,
+            'left_shoulder_pitch_joint':0.0,
+            'left_elbow_joint':0.7,
 
-            'R_hip_yaw_joint': 0.,
-            'R_hip_roll_joint': 0., #0.0
-            'R_hip_pitch_joint': -0.1,
-            'R_knee_pitch_joint': -0.1,
-            'R_ankle_pitch_joint': -0.2,
-            'R_shoulder_yaw_joint':0.0,
-            'R_shoulder_roll_joint': -0.3,
-            'R_shoulder_pitch_joint':0.0,
-            'R_elbow_joint':0.7,
+            'right_hip_yaw_joint': 0.,
+            'right_hip_roll_joint': 0., #0.0
+            'right_hip_pitch_joint': -0.1,
+            'right_knee_pitch_joint': -0.1,
+            'right_ankle_pitch_joint': -0.2,
+            'right_shoulder_yaw_joint':0.0,
+            'right_shoulder_roll_joint': -0.3,
+            'right_shoulder_pitch_joint':0.0,
+            'right_elbow_joint':0.7,
 
             'torso_joint':0.0,
         }
 
         default_joint_angles = {  # = target angles [rad] when action = 0.0
-            'L_hip_yaw_joint': 0.,
-            'L_hip_roll_joint': 0.,
-            'L_hip_pitch_joint': 0.5,
-            'L_knee_pitch_joint': -1.0,
-            'L_ankle_pitch_joint': -0.5,
-            'L_shoulder_yaw_joint':0.0,
-            'L_shoulder_roll_joint':0.0,
-            'L_shoulder_pitch_joint':0.0,
-            'L_elbow_joint':0.0,
+            'left_hip_yaw_joint': 0.,
+            'left_hip_roll_joint': 0.,
+            'left_hip_pitch_joint': 0.5,
+            'left_knee_pitch_joint': -1.0,
+            'left_ankle_pitch_joint': -0.5,
+            'left_shoulder_yaw_joint':0.0,
+            'left_shoulder_roll_joint':0.0,
+            'left_shoulder_pitch_joint':0.0,
+            'left_elbow_joint':0.0,
 
-            'R_hip_yaw_joint': 0.,
-            'R_hip_roll_joint': 0.,
-            'R_hip_pitch_joint': 0.5,
-            'R_knee_pitch_joint': -1.0, # -1.0
-            'R_ankle_pitch_joint': 0.5,
-            'R_shoulder_yaw_joint':0.0,
-            'R_shoulder_roll_joint':0.0,
-            'R_shoulder_pitch_joint':0.0,
-            'R_elbow_joint':0.0,
+            'right_hip_yaw_joint': 0.,
+            'right_hip_roll_joint': 0.,
+            'right_hip_pitch_joint': 0.5,
+            'right_knee_pitch_joint': -1.0, # -1.0
+            'right_ankle_pitch_joint': 0.5,
+            'right_shoulder_yaw_joint':0.0,
+            'right_shoulder_roll_joint':0.0,
+            'right_shoulder_pitch_joint':0.0,
+            'right_elbow_joint':0.0,
 
             'torso_joint':0.0
         }

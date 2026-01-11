@@ -45,7 +45,7 @@ class x02Cfg(LeggedRobotCfg):
         unactuated_timesteps = 30
 
     class asset(LeggedRobotCfg.asset):
-        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/x02_2/x2_2.urdf'
+        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/x02_2/x2_new_hip.urdf'
         # file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/X02Lite/X02Lite.xml' das ist der alte pfad
         name = "x02"
         

@@ -241,7 +241,7 @@ class x02Cfg(LeggedRobotCfg):
 
     class constraints( LeggedRobotCfg.rewards ):
         is_gaussian = True
-        target_head_height = 1.3 #zuvor 1 aber unser kopf ist höher, wir wollen nicht zu früh den optimalen reward bekommen
+        target_head_height = 1.35 #zuvor 1 aber unser kopf ist höher, wir wollen nicht zu früh den optimalen reward bekommen
         target_head_margin = 1
         orientation_height_threshold = 0.9
         target_base_height = 0.95   # was ist das? # soll warscheinlich so sein also 50 % von finaler höhe
@@ -360,9 +360,9 @@ class x02Cfg(LeggedRobotCfg):
         is_gaussian = True
         target_head_height = 1.3 # angespasst sind 75% der Höhe vom x02
         target_head_margin = 1
-        target_base_height_phase1 = 0.4 #ursprünglich 0.45, dann 0.6
-        target_base_height_phase2 = 0.4 #ursprünglich 0.45, dann 0.6
-        target_base_height_phase3 = 0.7 # hab ich bischen kleiner gemacht
+        target_base_height_phase1 = 0.35 #ursprünglich 0.45, dann 0.6
+        target_base_height_phase2 = 0.35#ursprünglich 0.45, dann 0.6
+        target_base_height_phase3 = 0.65 # hab ich bischen kleiner gemacht
         orientation_threshold = 0.99
         left_foot_displacement_sigma = -2
         right_foot_displacement_sigma = -2

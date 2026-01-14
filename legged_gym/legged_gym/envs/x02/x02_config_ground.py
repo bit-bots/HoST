@@ -274,7 +274,7 @@ class x02Cfg(LeggedRobotCfg):
             style_knee_deviation = -0.25
             style_shank_orientation = 10
             style_ground_parallel = 20
-            style_feet_distance = -10
+            style_feet_distance = 10  # POSITIV! Reward gibt 1=gut, 0=schlecht (nicht mehr binär wie vorher)
             style_style_ang_vel_xy = 1
 
             # post-task reward   ich glaube das halr eh aus

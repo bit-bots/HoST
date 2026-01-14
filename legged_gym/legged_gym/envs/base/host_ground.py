@@ -1178,12 +1178,40 @@ class LeggedRobot(BaseTask):
             reward = reward * ~standup + torch.ones_like(reward) * standup
         return reward
 
+    #def _reward_feet_distance(self):
+    #    left_foot_pos = self.rigid_body_states[:, self.left_foot_indices, :3].clone()
+    #    right_foot_pos = self.rigid_body_states[:, self.right_foot_indices, :3].clone()
+    #    feet_distances = torch.norm(left_foot_pos - right_foot_pos, dim=-1)
+    #    reward = tolerance(feet_distances, [0, 0.4], 0.38, 0.05)
+    #    return (feet_distances > 0.9).squeeze(1)
+
     def _reward_feet_distance(self):
+        """
+        Belohnt wenn Füße nebeneinander stehen (Y-Achse) statt hintereinander (X-Achse).
+        Wichtig für X02 ohne ankle_roll Joint - kann nur stabil stehen wenn Füße seitlich versetzt.
+
+        Return: 0-1 (1 = gute Position) -> braucht POSITIVEN scale in config!
+        """
         left_foot_pos = self.rigid_body_states[:, self.left_foot_indices, :3].clone()
         right_foot_pos = self.rigid_body_states[:, self.right_foot_indices, :3].clone()
-        feet_distances = torch.norm(left_foot_pos - right_foot_pos, dim=-1)
-        reward = tolerance(feet_distances, [0, 0.4], 0.38, 0.05)
-        return (feet_distances > 0.9).squeeze(1)
+
+        # X-Differenz: sollte klein sein (Füße nicht hintereinander)
+        x_diff = torch.abs(left_foot_pos[:, :, 0] - right_foot_pos[:, :, 0]).squeeze(1)
+
+        # Y-Differenz: sollte zwischen 15-40cm sein (Füße nebeneinander mit Abstand)
+        y_diff = torch.abs(left_foot_pos[:, :, 1] - right_foot_pos[:, :, 1]).squeeze(1)
+
+        # tolerance() gibt 1.0 wenn in bounds, fällt weich ab außerhalb
+        x_reward = tolerance(x_diff, [0, 0.15], margin=0.1, value_at_margin=0.1)  # X < 15cm = gut
+        y_reward = tolerance(y_diff, [0.15, 0.4], margin=0.1, value_at_margin=0.1)  # Y 15-40cm = gut
+
+        # Beide Bedingungen müssen erfüllt sein
+        reward = x_reward * y_reward
+
+        # Nur aktiv wenn aufgestanden (base_height > phase3)
+        standup = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
+        # .float() weil tolerance() float64 zurückgibt, aber rewards float32 sein sollten
+        return (reward.squeeze() * standup).float()
 
     def _reward_style_ang_vel_xy(self):
         # Penalize xy axes base angular velocity

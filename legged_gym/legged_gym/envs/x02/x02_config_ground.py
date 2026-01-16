@@ -272,9 +272,9 @@ class x02Cfg(LeggedRobotCfg):
             style_left_foot_displacement = 2.5
             style_right_foot_displacement = 2.5
             style_knee_deviation = -0.25
-            style_shank_orientation = 10
+            style_shank_orientation = 5
             style_ground_parallel = 20
-            style_feet_distance = 10  # POSITIV! Reward gibt 1=gut, 0=schlecht (nicht mehr binär wie vorher)
+            style_feet_distance = 20 #POSITIV! Reward gibt 1=gut, 0=schlecht (nicht mehr binär wie vorher)
             style_style_ang_vel_xy = 1
 
             # post-task reward   ich glaube das halr eh aus
@@ -282,6 +282,7 @@ class x02Cfg(LeggedRobotCfg):
             target_lin_vel_xy = 10
             target_feet_height_var = 2.5
             target_target_upper_dof_pos = 10
+            target_target_lower_dof_pos = 15  # NEU: Bestraft Abweichung der Bein-Joints von Target (zB hip_pitch links != rechts)
             target_target_orientation = 10
             target_target_base_height = 10
 

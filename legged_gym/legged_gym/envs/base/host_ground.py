@@ -1239,10 +1239,17 @@ class LeggedRobot(BaseTask):
     def _reward_target_upper_dof_pos(self):
         mse = torch.sum(torch.square(self.dof_pos[:, self.upper_body_joint_indices] - self.target_dof_pos[:, self.upper_body_joint_indices]), dim=-1)
         standup =self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
-        reward = torch.exp(mse * self.cfg.rewards.target_dof_pos_sigma) 
+        reward = torch.exp(mse * self.cfg.rewards.target_dof_pos_sigma)
         reward = reward * standup
         return reward
-    
+
+    def _reward_target_lower_dof_pos(self):
+        mse = torch.sum(torch.square(self.dof_pos[:, self.lower_body_joint_indices] - self.target_dof_pos[:, self.lower_body_joint_indices]), dim=-1)
+        standup = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
+        reward = torch.exp(mse * self.cfg.rewards.target_dof_pos_sigma)
+        reward = reward * standup
+        return reward
+
     def _reward_target_orientation(self):
         # Penalize non flat base orientation
         standup  = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3

@@ -272,7 +272,7 @@ class x02Cfg(LeggedRobotCfg):
             style_left_foot_displacement = 2.5
             style_right_foot_displacement = 2.5
             style_knee_deviation = -0.25
-            style_shank_orientation = 5
+            style_shank_orientation = 10
             style_ground_parallel = 20
             style_feet_distance = 20 #POSITIV! Reward gibt 1=gut, 0=schlecht (nicht mehr binär wie vorher)
             style_style_ang_vel_xy = 1

@@ -1199,11 +1199,11 @@ class LeggedRobot(BaseTask):
         x_diff = torch.abs(left_foot_pos[:, :, 0] - right_foot_pos[:, :, 0]).squeeze(1)
 
         # Y-Differenz: sollte zwischen 15-40cm sein (Füße nebeneinander mit Abstand)
-        y_diff = torch.abs(left_foot_pos[:, :, 1] - right_foot_pos[:, :, 1]).squeeze(1)
+        y_diff = torch.abs(left_foot_pos[:, :, 2] - right_foot_pos[:, :, 2]).squeeze(1)
 
         # tolerance() gibt 1.0 wenn in bounds, fällt weich ab außerhalb
-        x_reward = tolerance(x_diff, [0, 0.15], margin=0.1, value_at_margin=0.1)  # X < 15cm = gut
-        y_reward = tolerance(y_diff, [0.15, 0.4], margin=0.1, value_at_margin=0.1)  # Y 15-40cm = gut
+        x_reward = tolerance(x_diff, [0, 0.1], margin=0.1, value_at_margin=0.1)  # X < 10cm = gut
+        y_reward = tolerance(y_diff, [0.2, 0.5], margin=0.1, value_at_margin=0.1)  # Y 20-50cm = gut
 
         # Beide Bedingungen müssen erfüllt sein
         reward = x_reward * y_reward

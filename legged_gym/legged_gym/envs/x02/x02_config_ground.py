@@ -250,7 +250,7 @@ class x02Cfg(LeggedRobotCfg):
         right_foot_displacement_sigma = -2
         hip_yaw_var_sigma = -2
         target_dof_pos_sigma = -0.1
-        post_task = False
+        post_task = True #zuvor False
         
         class scales:
             # regularization reward
@@ -277,7 +277,7 @@ class x02Cfg(LeggedRobotCfg):
             style_feet_distance = -10 
             style_style_ang_vel_xy = 1
 
-            # post-task reward   ich glaube das halr eh aus
+            # post-task reward
             target_ang_vel_xy = 10
             target_lin_vel_xy = 10
             target_feet_height_var = 2.5

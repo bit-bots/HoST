@@ -64,7 +64,7 @@
     <parent link="pelvis_link" />
     <child link="left_hip_yaw_link" />
     <axis xyz="0 0 1" />
-    <limit lower="-1.3" upper="1" effort="50" velocity="10.472"/>
+    <limit lower="-1.3" upper="1.3" effort="50" velocity="10.472"/>
   </joint>
   <link name="left_hip_roll_link">
     <inertial>
@@ -240,7 +240,7 @@
     <parent link="pelvis_link" />
     <child link="right_hip_yaw_link" />
     <axis xyz="0 0 -1" />
-    <limit lower="-1.3" upper="1" effort="50" velocity="10.472"/>
+    <limit lower="-1.3" upper="1.3" effort="50" velocity="10.472"/>
   </joint>
   <link name="right_hip_roll_link">
     <inertial>

@@ -282,7 +282,7 @@ class x02Cfg(LeggedRobotCfg):
             target_lin_vel_xy = 10
             target_feet_height_var = 2.5
             target_target_upper_dof_pos = 10
-            target_target_lower_dof_pos = 40 # NEU: Bestraft Abweichung der Bein-Joints von Target (zB hip_pitch links != rechts)
+            target_target_lower_dof_pos = 25 # NEU: Bestraft Abweichung der Bein-Joints von Target (zB hip_pitch links != rechts)
             target_target_orientation = 10
             target_target_base_height = 10
 

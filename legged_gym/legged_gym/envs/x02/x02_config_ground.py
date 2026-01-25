@@ -45,7 +45,7 @@ class x02Cfg(LeggedRobotCfg):
         unactuated_timesteps = 30
 
     class asset(LeggedRobotCfg.asset):
-        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/x02_2/x2_new_hip.urdf'
+        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/x02_2/x2_foot.urdf'
         # file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/X02Lite/X02Lite.xml' das ist der alte pfad
         name = "x02"
         
@@ -241,7 +241,7 @@ class x02Cfg(LeggedRobotCfg):
 
     class constraints( LeggedRobotCfg.rewards ):
         is_gaussian = True
-        target_head_height = 1.2 #zuvor 1 aber unser kopf ist höher, wir wollen nicht zu früh den optimalen reward bekommen
+        target_head_height = 1.25 #zuvor 1 aber unser kopf ist höher, wir wollen nicht zu früh den optimalen reward bekommen
         target_head_margin = 1
         orientation_height_threshold = 0.9
         target_base_height = 0.95   # was ist das? # soll warscheinlich so sein also 50 % von finaler höhe
@@ -273,9 +273,11 @@ class x02Cfg(LeggedRobotCfg):
             style_right_foot_displacement = 2.5
             style_knee_deviation = -0.25
             style_shank_orientation = 10
-            style_ground_parallel = 20
+            style_ground_parallel = 0
             style_feet_distance = -10 
             style_style_ang_vel_xy = 1
+            #style_feet_side_by_side = -10  # negativer Wert weil reward=1 bei schlechter Position
+
 
             # post-task reward
             target_ang_vel_xy = 10
@@ -359,7 +361,7 @@ class x02Cfg(LeggedRobotCfg):
         only_positive_rewards = False # if true negative total rewards are clipped at zero (avoids early termination problems)
         orientation_sigma = 1
         is_gaussian = True
-        target_head_height = 1.2 # angespasst sind 75% der Höhe vom x02
+        target_head_height = 1.25 # angespasst sind 75% der Höhe vom x02
         target_head_margin = 1
         target_base_height_phase1 = 0.35 #ursprünglich 0.45, dann 0.6
         target_base_height_phase2 = 0.35#ursprünglich 0.45, dann 0.6
@@ -384,7 +386,7 @@ class x02Cfg(LeggedRobotCfg):
         force = 100 # 100*2=200 is the actuatl force because of a extra keyframe torso link # haben wir jetzt so gelassen aber kp so wirklich
         dof_vel_limit = 300
         base_vel_limit = 20
-        threshold_height = 1.17    # ist aus rewarsd targets_head_height minus 0.1
+        threshold_height = 1.15    # ist aus rewarsd targets_head_height minus 0.1
         no_orientation = False # ist einfacher weil mehr unterstützung
 
 class x02CfgPPO(LeggedRobotCfgPPO):

@@ -188,19 +188,19 @@
       </geometry>
     </collision>
     <collision>
-      <origin xyz="0.075 0.038 -0.087" rpy="0 0 0"/>
+      <origin xyz="0.075 0.026 -0.087" rpy="0 0 0"/>
       <geometry>
         <sphere radius="0.005"/>
       </geometry>
     </collision>
     <collision>
-      <origin xyz="0.075 -0.038 -0.087" rpy="0 0 0"/>
+      <origin xyz="0.075 -0.028 -0.087" rpy="0 0 0"/>
       <geometry>
         <sphere radius="0.005"/>
       </geometry>
     </collision>
     <collision>
-      <origin xyz="0.136 -0.00 -0.087" rpy="0 0 0"/>
+      <origin xyz="0.136 0.00 -0.087" rpy="0 0 0"/>
       <geometry>
         <sphere radius="0.005"/>
       </geometry>
@@ -364,13 +364,13 @@
       </geometry>
     </collision>
     <collision>
-      <origin xyz="0.075 0.038 -0.087" rpy="0 0 0"/>
+      <origin xyz="0.075 0.028 -0.087" rpy="0 0 0"/>
       <geometry>
         <sphere radius="0.005"/>
       </geometry>
     </collision>
     <collision>
-      <origin xyz="0.075 -0.038 -0.087" rpy="0 0 0"/>
+      <origin xyz="0.075 -0.026 -0.087" rpy="0 0 0"/>
       <geometry>
         <sphere radius="0.005"/>
       </geometry>

@@ -1275,3 +1275,31 @@ class LeggedRobot(BaseTask):
         base_height = self.root_states[:, 2]
         standup  = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
         return torch.exp(torch.abs(base_height - self.cfg.rewards.base_height_target) * - 20) * standup
+
+    # def _reward_feet_side_by_side(self):
+    #     """
+    #     Belohnt wenn Füße seitlich (lokal Y) versetzt sind, nicht vor/hinter (lokal X).
+    #     In lokalen Koordinaten - rotationsinvariant!
+    #     Wichtig für X02 ohne ankle_roll - kann nur stabil stehen wenn Füße seitlich versetzt.
+    #
+    #     Return: True (=1) wenn schlecht (Füße hintereinander), False (=0) wenn gut
+    #     -> braucht NEGATIVEN scale in config (z.B. style_feet_side_by_side = -10)
+    #     """
+    #     left_foot_pos = self.rigid_body_states[:, self.left_foot_indices, :3].squeeze(1)
+    #     right_foot_pos = self.rigid_body_states[:, self.right_foot_indices, :3].squeeze(1)
+    #
+    #     # Differenz in Weltkoordinaten
+    #     feet_diff_world = left_foot_pos - right_foot_pos
+    #
+    #     # In lokale Koordinaten transformieren (relativ zur Roboter-Orientierung)
+    #     feet_diff_local = quat_rotate_inverse(self.base_quat, feet_diff_world)
+    #
+    #     # Lokal X = vor/zurück, Lokal Y = seitlich
+    #     x_diff = torch.abs(feet_diff_local[:, 0])  # sollte klein sein
+    #     y_diff = torch.abs(feet_diff_local[:, 1])  # sollte groß sein (~0.2-0.4m)
+    #
+    #     # Bestraft wenn Füße hintereinander (x_diff > y_diff) oder y_diff zu klein
+    #     reward = (x_diff > 0.15) | (y_diff < 0.15)
+    #
+    #     standup = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
+    #     return reward * standup

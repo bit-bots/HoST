@@ -1264,7 +1264,18 @@ class LeggedRobot(BaseTask):
         standup = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
         reward = torch.exp(mse * self.cfg.rewards.target_dof_pos_sigma)
         return (reward * standup).float()
-
+    
+    def _reward_lower_body_deviation(self):
+        lower_body_dof_left = torch.cat([self.left_hip_roll_joint_indices, self.left_hip_pitch_joint_indices, self.left_hip_joint_indices, self.left_knee_joint_indices])
+        lower_body_dof_right = torch.cat([self.right_hip_roll_joint_indices, self.right_hip_pitch_joint_indices, self.right_hip_joint_indices, self.right_knee_joint_indices])
+        left_dof_pos = self.dof_pos[:, lower_body_dof_left].unsqueeze(1)
+        left_dof_pos[:, :, 0] =  -left_dof_pos[:, :, 0]
+        left_dof_pos[:, :, 2] =  -left_dof_pos[:, :, 2]
+        right_dof_pos = self.dof_pos[:, lower_body_dof_right].unsqueeze(1)
+        reward = torch.sum( torch.var(torch.cat([left_dof_pos, right_dof_pos], dim=1), dim=1), dim=-1)
+        reward = torch.exp(reward * -2)
+        return reward
+    
     def _reward_target_orientation(self):
         # Penalize non flat base orientation
         standup  = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3

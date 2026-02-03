@@ -163,7 +163,7 @@ class x02Cfg(LeggedRobotCfg):
         #Hier nochmal die Target-Pose anschauen
         target_joint_angles = {  # = target angles [rad] when action = 0.0
             'left_hip_yaw_joint': 0.,
-            'left_hip_roll_joint': 0.15,
+            'left_hip_roll_joint': 0.08,
             'left_hip_pitch_joint': 0.1, #-0.1
             'left_knee_pitch_joint': -0.3, #0.3
             'left_ankle_pitch_joint': 0.2, #-0.2
@@ -173,7 +173,7 @@ class x02Cfg(LeggedRobotCfg):
             'left_elbow_joint':-0.5, #0.7
 
             'right_hip_yaw_joint': 0.,
-            'right_hip_roll_joint': 0.15, #0.0
+            'right_hip_roll_joint': 0.08, #0.0
             'right_hip_pitch_joint': 0.1,
             'right_knee_pitch_joint': -0.3,
             'right_ankle_pitch_joint': 0.2, #-0.2
@@ -274,7 +274,7 @@ class x02Cfg(LeggedRobotCfg):
             style_knee_deviation = -0.25
             style_shank_orientation = 10
             style_ground_parallel = 20
-            style_feet_distance = -10 
+            style_feet_distance = -10
             style_style_ang_vel_xy = 1
             #style_feet_side_by_side = -10  # negativer Wert weil reward=1 bei schlechter Position
 
@@ -284,7 +284,8 @@ class x02Cfg(LeggedRobotCfg):
             target_lin_vel_xy = 10
             target_feet_height_var = 2.5
             target_target_upper_dof_pos = 10
-            target_target_lower_dof_pos = 20 # NEU: Bestraft Abweichung der Bein-Joints von Target (zB hip_pitch links != rechts)
+            target_target_lower_dof_pos = 10 #von uns hinzugefügt
+            target_lower_body_deviation = 10 #soll symmetrie der Beine erzeugen
             target_target_orientation = 10
             target_target_base_height = 10
 

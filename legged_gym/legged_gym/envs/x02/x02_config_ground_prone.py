@@ -45,51 +45,51 @@ class x02Cfg(LeggedRobotCfg):
         unactuated_timesteps = 30
 
     class asset(LeggedRobotCfg.asset):
-        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/x02/urdf/x02.urdf'
+        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/x02_2/x2_foot.urdf'
         # file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/X02Lite/X02Lite.xml' das ist der alte pfad
         name = "x02"
         
         ################################################ ab hier kopiert aus g1
-        left_foot_name = "L_ankle"
-        right_foot_name = "R_ankle"
-        left_knee_name = 'L_knee'
-        right_knee_name = 'R_knee'
-        left_thigh_name = 'L_hip_pitch'
-        right_thigh_name = 'R_hip_pitch'
+        left_foot_name = 'left_ankle'
+        right_foot_name = 'right_ankle'
+        left_knee_name = 'left_knee'
+        right_knee_name = 'right_knee'
+        left_thigh_name = 'left_hip_pitch'
+        right_thigh_name = 'right_hip_pitch'
         foot_name = "ankle"
         penalize_contacts_on = ["elbow", 'shoulder', 'torso', 'knee', 'hip']
         terminate_after_contacts_on = []    #'torse'
         self_collisions = 0 # 1 to disable, 0 to enable...bitwise filter
         flip_visual_attachments = False
 
-        left_shoulder_name = "L_shoulder"
-        right_shoulder_name = "R_shoulder"
+        left_shoulder_name = 'left_shoulder'
+        right_shoulder_name = 'right_shoulder'
 
         ####### -- bereits geschafft bis hier 
         ###### Die Joints in der Urdf Joints nennen weil Substrings genommen werden
-        left_leg_joints = ['L_hip_yaw_joint', 'L_hip_roll_joint', 'L_hip_pitch_joint', 'L_knee_pitch_joint', 'L_ankle_pitch_joint']
-        right_leg_joints = ['R_hip_yaw_joint', 'R_hip_roll_joint', 'R_hip_pitch_joint', 'R_knee_pitch_joint', 'R_ankle_pitch_joint']
-        left_hip_joints = ['L_hip_yaw_joint']
-        right_hip_joints = ['R_hip_yaw_joint']
+        left_leg_joints = ['left_hip_yaw_joint', 'left_hip_roll_joint', 'left_hip_pitch_joint', 'left_knee_pitch_joint', 'left_ankle_pitch_joint']
+        right_leg_joints = ['right_hip_yaw_joint', 'right_hip_roll_joint', 'right_hip_pitch_joint', 'right_knee_pitch_joint', 'right_ankle_pitch_joint']
+        left_hip_joints = ['left_hip_yaw_joint']
+        right_hip_joints = ['right_hip_yaw_joint']
 
-        left_hip_roll_joints = ['L_hip_roll_joint']
-        right_hip_roll_joints = ['R_hip_roll_joint']    
+        left_hip_roll_joints = ['left_hip_roll_joint']
+        right_hip_roll_joints = ['right_hip_roll_joint']    
 
-        left_hip_pitch_joints = ['L_hip_pitch_joint']
-        right_hip_pitch_joints = ['R_hip_pitch_joint']    
+        left_hip_pitch_joints = ['left_hip_pitch_joint']
+        right_hip_pitch_joints = ['right_hip_pitch_joint']    
 
-        left_shoulder_roll_joints = ['L_shoulder_roll_joint']
-        right_shoulder_roll_joints = ['R_shoulder_roll_joint']    
+        left_shoulder_roll_joints = ['left_shoulder_roll_joint']
+        right_shoulder_roll_joints = ['right_shoulder_roll_joint']    
 
 
-        left_knee_joints = ['L_knee_pitch_joint']
-        right_knee_joints = ['R_knee_pitch_joint']    
+        left_knee_joints = ['left_knee_pitch_joint']
+        right_knee_joints = ['right_knee_pitch_joint']    
 
-        left_arm_joints = ['L_shoulder_pitch_joint', 'L_shoulder_roll_joint', 'L_shoulder_yaw_joint', 'L_elbow_joint']
-        right_arm_joints = ['R_shoulder_pitch_joint', 'R_shoulder_roll_joint', 'R_shoulder_yaw_joint', 'R_elbow_joint']
+        left_arm_joints = ['left_shoulder_pitch_joint', 'left_shoulder_roll_joint', 'left_shoulder_yaw_joint', 'left_elbow_joint']
+        right_arm_joints = ['right_shoulder_pitch_joint', 'right_shoulder_roll_joint', 'right_shoulder_yaw_joint', 'right_elbow_joint']
         waist_joints = ["torso_joint"]
-        knee_joints = ['L_knee_pitch_joint', 'R_knee_pitch_joint']
-        ankle_joints = ['L_ankle_pitch_joint', 'R_ankle_pitch_joint']
+        knee_joints = ['left_knee_pitch_joint', 'right_knee_pitch_joint']
+        ankle_joints = ['left_ankle_pitch_joint', 'right_ankle_pitch_joint']
 
 
         trunk_names = ["pelvis", "torso"]
@@ -101,13 +101,13 @@ class x02Cfg(LeggedRobotCfg):
         armature = 0
 
 
-        left_upper_body_names = ['L_shoulder_pitch', 'L_elbow']
-        right_upper_body_names = ['R_shoulder_pitch', 'R_elbow']
-        left_lower_body_names = ['L_hip_pitch', 'L_ankle', 'L_knee']
-        right_lower_body_names = ['R_hip_pitch', 'R_ankle', 'R_knee']
+        left_upper_body_names = ['left_shoulder_pitch', 'left_elbow']
+        right_upper_body_names = ['right_shoulder_pitch', 'right_elbow']
+        left_lower_body_names = ['left_hip_pitch', 'left_ankle', 'left_knee']
+        right_lower_body_names = ['right_hip_pitch', 'right_ankle', 'right_knee']
 
-        left_ankle_names = ['L_ankle']
-        right_ankle_names = ['R_ankle']
+        left_ankle_names = ['left_ankle']
+        right_ankle_names = ['right_ankle']
 
         density = 0.001
         angular_damping = 0.01
@@ -279,7 +279,7 @@ class x02Cfg(LeggedRobotCfg):
             style_feet_distance = -10
             style_style_ang_vel_xy = 1
 
-            # post-task reward   ich glaube das halr eh aus
+            # post-task reward
             target_ang_vel_xy = 10
             target_lin_vel_xy = 10
             target_feet_height_var = 2.5

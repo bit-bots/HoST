@@ -1183,7 +1183,7 @@ class LeggedRobot(BaseTask):
        right_foot_pos = self.rigid_body_states[:, self.right_foot_indices, :3].clone()
        feet_distances = torch.norm(left_foot_pos - right_foot_pos, dim=-1)
        reward = tolerance(feet_distances, [0.4, 0.7], 0.1, 0.05)
-       return (feet_distances > 0.8).squeeze(1)
+       return (feet_distances > 0.9).squeeze(1)
 
     # def _reward_feet_distance(self):
     #     """
@@ -1243,27 +1243,22 @@ class LeggedRobot(BaseTask):
         reward = reward * standup
         return reward
 
-    # def _reward_target_lower_dof_pos(self):
-    #     mse = torch.sum(torch.square(self.dof_pos[:, self.lower_body_joint_indices] - self.target_dof_pos[:, self.lower_body_joint_indices]), dim=-1)
-    #     standup = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
-    #     reward = torch.exp(mse * self.cfg.rewards.target_dof_pos_sigma)
-    #     reward = reward * standup
-    #     return reward
-
     def _reward_target_lower_dof_pos(self):
-        # Normale Differenz für alle lower body joints
-        diff_lower = self.dof_pos[:, self.lower_body_joint_indices] - self.target_dof_pos[:, self.lower_body_joint_indices]
-        
-        # Hip_pitch Differenz nochmal extra (doppelte Gewichtung)
-        diff_hip_pitch = self.dof_pos[:, self.hip_pitch_joint_indices] - self.target_dof_pos[:, self.hip_pitch_joint_indices]
-        
-        # Kombinieren: hip_pitch zählt jetzt 2x
-        combined_diff = torch.cat([diff_lower, diff_hip_pitch], dim=-1)
-        
-        mse = torch.sum(torch.square(combined_diff), dim=-1)
+        mse = torch.sum(torch.square(self.dof_pos[:, self.lower_body_joint_indices] - self.target_dof_pos[:, self.lower_body_joint_indices]), dim=-1)
         standup = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
         reward = torch.exp(mse * self.cfg.rewards.target_dof_pos_sigma)
-        return (reward * standup).float()
+        reward = reward * standup
+        return reward
+
+    #def _reward_target_lower_dof_pos(self):
+    #    # Hip pitch mit doppeltem Gewicht
+    #    diff_lower = self.dof_pos[:, self.lower_body_joint_indices] - self.target_dof_pos[:, self.lower_body_joint_indices]        
+    #    diff_hip_pitch = self.dof_pos[:, self.hip_pitch_joint_indices] - self.target_dof_pos[:, self.hip_pitch_joint_indices]
+    #    combined_diff = torch.cat([diff_lower, diff_hip_pitch], dim=-1)
+    #    mse = torch.sum(torch.square(combined_diff), dim=-1)
+    #    standup = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
+    #    reward = torch.exp(mse * self.cfg.rewards.target_dof_pos_sigma)
+    #    return (reward * standup).float()
     
     def _reward_lower_body_deviation(self):
         lower_body_dof_left = torch.cat([self.left_hip_roll_joint_indices, self.left_hip_pitch_joint_indices, self.left_hip_joint_indices, self.left_knee_joint_indices])

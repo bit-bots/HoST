@@ -285,6 +285,7 @@ class x02Cfg(LeggedRobotCfg):
             target_feet_height_var = 2.5
             target_target_upper_dof_pos = 10
             target_target_lower_dof_pos = 15 #von uns hinzugefügt
+            target_lower_body_var = 10 #hip_yaw ist nicht mit drinnen
             target_lower_body_deviation = 10 #soll symmetrie der Beine erzeugen
             target_target_orientation = 10
             target_target_base_height = 10

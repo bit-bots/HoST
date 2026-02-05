@@ -37,7 +37,8 @@ create_isaac_visualizer(
 import isaacgym
 from isaacgym import gymapi
 from legged_gym.envs import *
-from legged_gym.envs.base.host_ground import LeggedRobot
+from legged_gym.envs.base.host_ground import LeggedRobot as LeggedRobotGround
+from legged_gym.envs.base.host_ground_prone import LeggedRobot as LeggedRobotProne
 from legged_gym.utils import get_args, export_policy_as_jit, task_registry, Logger
 
 import numpy as np
@@ -82,7 +83,9 @@ def _patched_create_sim(self):
     # Step 4: Create environments - now with bound visualizer
     self._create_envs()
 
-LeggedRobot.create_sim = _patched_create_sim
+# Patch both environment classes for web visualizer
+LeggedRobotGround.create_sim = _patched_create_sim
+LeggedRobotProne.create_sim = _patched_create_sim
 
 # Also patch the MimicViewer to handle get_viewer_camera_transform
 from sim_web_visualizer.isaac_visualizer_client import MimicViewer, _REGISTERED_VISUALIZER
@@ -222,6 +225,9 @@ def play(args):
 
     # Create environment (web visualizer is bound automatically via patched create_sim)
     env, _ = task_registry.make_env(name=args.task, args=args, env_cfg=env_cfg)
+
+    # Move env to center of terrain
+    env.env_origins[0, :2] = 10.0
 
     # Add camera transform override for MimicViewer
     _ensure_camera_override(env)

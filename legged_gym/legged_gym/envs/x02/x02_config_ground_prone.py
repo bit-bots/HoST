@@ -45,7 +45,7 @@ class x02Cfg(LeggedRobotCfg):
         unactuated_timesteps = 30
 
     class asset(LeggedRobotCfg.asset):
-        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/x02_2/x2_foot.urdf'
+        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/x02_2/x2_new_hip.urdf'
         # file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/X02Lite/X02Lite.xml' das ist der alte pfad
         name = "x02"
         
@@ -163,49 +163,49 @@ class x02Cfg(LeggedRobotCfg):
 
         #Hier nochmal die Target-Pose anschauen
         target_joint_angles = {  # = target angles [rad] when action = 0.0
-            'L_hip_yaw_joint': 0.,
-            'L_hip_roll_joint': 0.,
-            'L_hip_pitch_joint': -0.1,
-            'L_knee_pitch_joint': 0.3,
-            'L_ankle_pitch_joint': -0.2,
-            'L_shoulder_yaw_joint':0.0,
-            'L_shoulder_roll_joint':0.3,
-            'L_shoulder_pitch_joint':0.0,
-            'L_elbow_joint':0.7,
+            'left_hip_yaw_joint': 0.,
+            'left_hip_roll_joint': 0.,
+            'left_hip_pitch_joint': -0.1,
+            'left_knee_pitch_joint': 0.3,
+            'left_ankle_pitch_joint': -0.2,
+            'left_shoulder_yaw_joint':0.0,
+            'left_shoulder_roll_joint':0.3,
+            'left_shoulder_pitch_joint':0.0,
+            'left_elbow_joint':0.7,
 
-            'R_hip_yaw_joint': 0.,
-            'R_hip_roll_joint': 0.,
-            'R_hip_pitch_joint': -0.1,
-            'R_knee_pitch_joint': -0.1,
-            'R_ankle_pitch_joint': -0.2,
-            'R_shoulder_yaw_joint':0.0,
-            'R_shoulder_roll_joint': -0.3,
-            'R_shoulder_pitch_joint':0.0,
-            'R_elbow_joint':0.7,
+            'right_hip_yaw_joint': 0.,
+            'right_hip_roll_joint': 0.,
+            'right_hip_pitch_joint': -0.1,
+            'right_knee_pitch_joint': -0.1,
+            'right_ankle_pitch_joint': -0.2,
+            'right_shoulder_yaw_joint':0.0,
+            'right_shoulder_roll_joint': -0.3,
+            'right_shoulder_pitch_joint':0.0,
+            'right_elbow_joint':0.7,
 
             'torso_joint':0.0,
         }
 
         default_joint_angles = {  # = target angles [rad] when action = 0.0
-            'L_hip_yaw_joint': 0.,
-            'L_hip_roll_joint': 0.,
-            'L_hip_pitch_joint': 0.5,
-            'L_knee_pitch_joint': -1.0,
-            'L_ankle_pitch_joint': 0.5,
-            'L_shoulder_yaw_joint':0.0,
-            'L_shoulder_roll_joint':0.0,
-            'L_shoulder_pitch_joint':0.0,
-            'L_elbow_joint':0.0,
+            'left_hip_yaw_joint': 0.,
+            'left_hip_roll_joint': 0.,
+            'left_hip_pitch_joint': 0.5,
+            'left_knee_pitch_joint': -1.0,
+            'left_ankle_pitch_joint': 0.5,
+            'left_shoulder_yaw_joint':0.0,
+            'left_shoulder_roll_joint':0.0,
+            'left_shoulder_pitch_joint':0.0,
+            'left_elbow_joint':0.0,
 
-            'R_hip_yaw_joint': 0.,
-            'R_hip_roll_joint': 0.,
-            'R_hip_pitch_joint': 0.5,
-            'R_knee_pitch_joint': -1.0,
-            'R_ankle_pitch_joint': 0.5,
-            'R_shoulder_yaw_joint':0.0,
-            'R_shoulder_roll_joint':0.0,
-            'R_shoulder_pitch_joint':0.0,
-            'R_elbow_joint':0.0,
+            'right_hip_yaw_joint': 0.,
+            'right_hip_roll_joint': 0.,
+            'right_hip_pitch_joint': 0.5,
+            'right_knee_pitch_joint': -1.0,
+            'right_ankle_pitch_joint': 0.5,
+            'right_shoulder_yaw_joint':0.0,
+            'right_shoulder_roll_joint':0.0,
+            'right_shoulder_pitch_joint':0.0,
+            'right_elbow_joint':0.0,
 
             'torso_joint':0.0
         }

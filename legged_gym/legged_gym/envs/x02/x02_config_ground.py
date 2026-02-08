@@ -97,7 +97,7 @@ class x02Cfg(LeggedRobotCfg):
 
         keyframe_name = "keyframe"
         head_name = 'keyframe_head'
-        #armature = 0
+        armature = 0
 
 
         left_upper_body_names = ['left_shoulder_pitch', 'left_elbow']

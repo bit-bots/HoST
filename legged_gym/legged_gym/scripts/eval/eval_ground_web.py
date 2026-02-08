@@ -227,7 +227,7 @@ def play(args):
     env, _ = task_registry.make_env(name=args.task, args=args, env_cfg=env_cfg)
 
     # Move env to center of terrain
-    env.env_origins[0, :2] = 10.0
+    #env.env_origins[0, :2] = 10.0
 
     # Add camera transform override for MimicViewer
     _ensure_camera_override(env)

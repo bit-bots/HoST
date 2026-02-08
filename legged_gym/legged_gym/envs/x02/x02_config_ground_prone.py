@@ -164,24 +164,24 @@ class x02Cfg(LeggedRobotCfg):
         #Hier nochmal die Target-Pose anschauen
         target_joint_angles = {  # = target angles [rad] when action = 0.0
             'left_hip_yaw_joint': 0.,
-            'left_hip_roll_joint': 0.,
-            'left_hip_pitch_joint': -0.1,
-            'left_knee_pitch_joint': 0.3,
-            'left_ankle_pitch_joint': -0.2,
+            'left_hip_roll_joint': 0.08,
+            'left_hip_pitch_joint': 0.1, #-0.1
+            'left_knee_pitch_joint': -0.3, #0.3
+            'left_ankle_pitch_joint': 0.2, #-0.2
             'left_shoulder_yaw_joint':0.0,
-            'left_shoulder_roll_joint':0.3,
+            'left_shoulder_roll_joint':0.3, #-0.3
             'left_shoulder_pitch_joint':0.0,
-            'left_elbow_joint':0.7,
+            'left_elbow_joint':-0.5, #0.7
 
             'right_hip_yaw_joint': 0.,
-            'right_hip_roll_joint': 0.,
-            'right_hip_pitch_joint': -0.1,
-            'right_knee_pitch_joint': -0.1,
-            'right_ankle_pitch_joint': -0.2,
+            'right_hip_roll_joint': 0.08, #0.0
+            'right_hip_pitch_joint': 0.1,
+            'right_knee_pitch_joint': -0.3,
+            'right_ankle_pitch_joint': 0.2, #-0.2
             'right_shoulder_yaw_joint':0.0,
-            'right_shoulder_roll_joint': -0.3,
+            'right_shoulder_roll_joint': 0.3,#-0.3
             'right_shoulder_pitch_joint':0.0,
-            'right_elbow_joint':0.7,
+            'right_elbow_joint':-0.5, #0.7
 
             'torso_joint':0.0,
         }
@@ -389,7 +389,7 @@ class x02Cfg(LeggedRobotCfg):
         dof_vel_limit = 300
         base_vel_limit = 20
         threshold_height = 1.17    # ist aus rewarsd targets_head_height minus 0.1
-        no_orientation = False # ist einfacher weil mehr unterstützunh 
+        no_orientation = True 
 
 class x02CfgPPO(LeggedRobotCfgPPO):
     runner_class_name = 'OnPolicyRunner'

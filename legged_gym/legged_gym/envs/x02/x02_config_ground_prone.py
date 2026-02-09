@@ -344,7 +344,7 @@ class x02Cfg(LeggedRobotCfg):
         initial_joint_pos_scale = [0.9, 1.1]
         initial_joint_pos_offset = [-0.1, 0.1]
         
-        push_robots = False
+        push_robots = True
         push_interval_s = 10
         max_push_vel_xy = 0.5
 

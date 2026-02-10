@@ -45,7 +45,7 @@ class x02Cfg(LeggedRobotCfg):
         unactuated_timesteps = 30
 
     class asset(LeggedRobotCfg.asset):
-        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/x02_2/x2_new_hip.urdf'
+        file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/x02_2/x2.urdf'
         # file = '{LEGGED_GYM_ROOT_DIR}/resources/robots/X02Lite/X02Lite.xml' das ist der alte pfad
         name = "x02"
         
@@ -284,7 +284,7 @@ class x02Cfg(LeggedRobotCfg):
             target_lin_vel_xy = 10
             target_feet_height_var = 2.5
             target_target_upper_dof_pos = 10
-            target_lower_body_deviation = 10 #für ground_prone hinzugefügt
+            target_lower_body_deviation = 10
             target_target_orientation = 10
             target_target_base_height = 10
 
@@ -359,7 +359,7 @@ class x02Cfg(LeggedRobotCfg):
         soft_dof_vel_limit = 0.9
         base_height_sigma = 0.3 #für ground_prone hinuzgefügt
         tracking_dof_sigma = 0.3 #für ground_prone hinuzgefügt
-        base_height_target = 0.89 # haben wir übernommen
+        base_height_target = 0.89
         only_positive_rewards = False # if true negative total rewards are clipped at zero (avoids early termination problems)
         orientation_sigma = 1
         is_gaussian = True
@@ -410,4 +410,4 @@ class x02CfgPPO(LeggedRobotCfgPPO):
         experiment_name = 'x02_ground_prone'
         algorithm_class_name = 'PPO'
         init_at_random_ep_len = True
-        max_iterations = 12000# number of policy updates
+        max_iterations = 12000 # number of policy updates

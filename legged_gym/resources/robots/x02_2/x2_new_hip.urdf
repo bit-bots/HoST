@@ -416,7 +416,7 @@
     <parent link="pelvis_link" />
     <child link="torso_link" />
     <axis xyz="0 0 1" />
-    <limit lower="-2.35" upper="2.35" effort="50" velocity="10.471975511965978"/>
+    <limit lower="-1" upper="1" effort="50" velocity="10.471975511965978"/>
   </joint>
   <link name="logo_link">
     <inertial>

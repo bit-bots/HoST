@@ -5,11 +5,11 @@ from .base.host_ground import LeggedRobot as LeggedRobotGround
 from legged_gym.envs.g1.g1_config_ground import G1Cfg as G1CfgGround
 from legged_gym.envs.g1.g1_config_ground import G1CfgPPO as G1CfgPPOGround
 
-from legged_gym.envs.x02.x02_config_ground import x02Cfg as X02CfgGround   # das von und
+from legged_gym.envs.x02.x02_config_ground import x02Cfg as X02CfgGround
 from legged_gym.envs.x02.x02_config_ground import x02CfgPPO as X02CfgPPOGround
 
-from .base.host_ground_prone import LeggedRobot as LeggedRobotGroundProne # das von uns
-from legged_gym.envs.x02.x02_config_ground_prone import x02Cfg as X02CfgGroundProne 
+from .base.host_ground_prone import LeggedRobot as LeggedRobotGroundProne
+from legged_gym.envs.x02.x02_config_ground_prone import x02Cfg as X02CfgGroundProne
 from legged_gym.envs.x02.x02_config_ground_prone import x02CfgPPO as X02CfgPPOGroundProne
 
 from .base.host_platform import LeggedRobot as LeggedRobotPlatform

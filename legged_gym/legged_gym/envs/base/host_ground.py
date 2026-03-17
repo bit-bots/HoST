@@ -418,8 +418,19 @@ class LeggedRobot(BaseTask):
         """ Callback called before computing terminations, rewards, and observations
             Default behaviour: Compute ang vel command based on target and heading, compute measured terrain heights and randomly push robots
         """
-        # 
+        #
         env_ids = (self.episode_length_buf % int(self.cfg.commands.resampling_time / self.dt)==0).nonzero(as_tuple=False).flatten()
+        if self.cfg.domain_rand.push_robots and (
+            self.common_step_counter % self.cfg.domain_rand.push_interval == 0
+        ):
+            self._push_robots()
+
+    def _push_robots(self):
+        """ Random pushes the robots. Emulates an impulse by setting a randomized base velocity.
+        """
+        max_vel = self.cfg.domain_rand.max_push_vel_xy
+        self.root_states[:, 7:9] = torch_rand_float(-max_vel, max_vel, (self.num_envs, 2), device=self.device) # lin vel x/y
+        self.gym.set_actor_root_state_tensor(self.sim, gymtorch.unwrap_tensor(self.root_states))
 
     def _compute_torques(self, actions):
         """ Compute torques from actions.
@@ -1106,7 +1117,7 @@ class LeggedRobot(BaseTask):
     #-----------------------------style rewards-----------------------------
     def _reward_waist_deviation(self):
         wrist_dof = self.dof_pos[:, self.waist_joint_indices]
-        reward = (torch.abs(wrist_dof) > 0.3).float()
+        reward = (torch.abs(wrist_dof) > 1.4).float()
         return reward.squeeze(1)
 
     def _reward_hip_yaw_deviation(self):
@@ -1185,38 +1196,39 @@ class LeggedRobot(BaseTask):
        reward = tolerance(feet_distances, [0.4, 0.7], 0.1, 0.05)
        return (feet_distances > 0.9).squeeze(1)
 
-    # def _reward_feet_distance(self):
-    #     """
-    #     Belohnt wenn Füße nebeneinander stehen (Y-Achse) statt hintereinander (X-Achse).
-    #     Wichtig für X02 ohne ankle_roll Joint - kann nur stabil stehen wenn Füße seitlich versetzt.
-
-    #     Return: 0-1 (1 = gute Position) -> braucht POSITIVEN scale in config!
-    #     """
-    #     left_foot_pos = self.rigid_body_states[:, self.left_foot_indices, :3].clone()
-    #     right_foot_pos = self.rigid_body_states[:, self.right_foot_indices, :3].clone()
-
-    #     # X-Differenz: sollte klein sein (Füße nicht hintereinander)
-    #     x_diff = torch.abs(left_foot_pos[:, :, 0] - right_foot_pos[:, :, 0]).squeeze(1)
-
-    #     # Y-Differenz: sollte zwischen 15-40cm sein (Füße nebeneinander mit Abstand)
-    #     y_diff = torch.abs(left_foot_pos[:, :, 2] - right_foot_pos[:, :, 2]).squeeze(1)
-
-    #     # tolerance() gibt 1.0 wenn in bounds, fällt weich ab außerhalb
-    #     x_reward = tolerance(x_diff, [0, 0.1], margin=0.1, value_at_margin=0.1)  # X < 10cm = gut
-    #     y_reward = tolerance(y_diff, [0.2, 0.5], margin=0.1, value_at_margin=0.1)  # Y 20-50cm = gut
-
-    #     # Beide Bedingungen müssen erfüllt sein
-    #     reward = x_reward * y_reward
-
-    #     # Nur aktiv wenn aufgestanden (base_height > phase3)
-    #     standup = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
-    #     # .float() weil tolerance() float64 zurückgibt, aber rewards float32 sein sollten
-    #     return (reward.squeeze() * standup).float()
-
     def _reward_style_ang_vel_xy(self):
         # Penalize xy axes base angular velocity
         base_height = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase1
         return torch.exp(torch.sum(torch.square(self.base_ang_vel[:, :2]), dim=1) * -2) * base_height
+
+    def _reward_soft_symmetry_action(self):
+        left_body_action = self.actions[:, self.left_leg_joints_indices] # [num_envs, 6]
+        right_body_action = self.actions[:, self.right_leg_joints_indices] # [num_envs, 6]
+        # negative_indices = torch.tensor([1, 2, 5, 16, 17], device=self.device, dtype=torch.int64)
+        negative_indices = torch.tensor([1, 2, 5], device=self.device, dtype=torch.int64)
+        left_body_action[:, negative_indices] *= -1
+        body_symmetry = torch.norm(left_body_action - right_body_action, dim=-1)
+        standup =self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
+        body_symmetry[~standup] *= 0
+        body_symmetry = body_symmetry * torch.clamp(-self.projected_gravity[:, 2], 0, 0.9) / 0.9
+        return body_symmetry
+
+    def _reward_soft_symmetry_body(self):
+        left_body = self.dof_pos[:, self.left_leg_joints_indices] # [num_envs, 6]
+        right_body = self.dof_pos[:, self.right_leg_joints_indices] # [num_envs, 6]
+        # negative_indices = torch.tensor([1, 2, 5, 16, 17], device=self.device, dtype=torch.int64)
+        negative_indices = torch.tensor([1, 2, 5], device=self.device, dtype=torch.int64)
+        left_body[:, negative_indices] *= -1
+        error=(torch.abs(left_body-right_body)-0.08).clip(min=0)
+        body_symmetry = torch.norm(error, dim=-1)
+        standup =self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
+        body_symmetry[~standup] *= 0
+        reward = torch.exp(-body_symmetry/0.025)
+
+        reward[~standup] *= 0
+        reward = reward * torch.clamp(-self.projected_gravity[:, 2], 0, 0.9) / 0.9
+
+        return reward
  
     #--------------------------post-task rewards-----------------------------
     def _reward_ang_vel_xy(self):
@@ -1243,6 +1255,20 @@ class LeggedRobot(BaseTask):
         reward = reward * standup
         return reward
 
+    def _reward_target_feet_stumble(self):
+        # Penalize feet hitting vertical surfaces
+        reward = torch.any(torch.norm(self.contact_forces[:, self.feet_indices, :2], dim=2) > 3 * torch.abs(self.contact_forces[:, self.feet_indices, 2]), dim=1)
+        base_height = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase1
+
+        reward = reward * base_height
+        return reward
+    
+    def _reward_target_knee_angle(self):
+        knee_angles = self.dof_pos[:, self.knee_joint_indices]
+        reward = torch.all(knee_angles > 0, dim=1).float()
+        standup = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
+        return reward * standup
+
     def _reward_target_lower_dof_pos(self):
         mse = torch.sum(torch.square(self.dof_pos[:, self.lower_body_joint_indices] - self.target_dof_pos[:, self.lower_body_joint_indices]), dim=-1)
         standup = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
@@ -1250,16 +1276,6 @@ class LeggedRobot(BaseTask):
         reward = reward * standup
         return reward
 
-    #def _reward_target_lower_dof_pos(self):
-    #    # Hip pitch mit doppeltem Gewicht
-    #    diff_lower = self.dof_pos[:, self.lower_body_joint_indices] - self.target_dof_pos[:, self.lower_body_joint_indices]        
-    #    diff_hip_pitch = self.dof_pos[:, self.hip_pitch_joint_indices] - self.target_dof_pos[:, self.hip_pitch_joint_indices]
-    #    combined_diff = torch.cat([diff_lower, diff_hip_pitch], dim=-1)
-    #    mse = torch.sum(torch.square(combined_diff), dim=-1)
-    #    standup = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
-    #    reward = torch.exp(mse * self.cfg.rewards.target_dof_pos_sigma)
-    #    return (reward * standup).float()
-    
     def _reward_lower_body_deviation(self):
         lower_body_dof_left = torch.cat([self.left_hip_roll_joint_indices, self.left_hip_pitch_joint_indices, self.left_hip_joint_indices, self.left_knee_joint_indices])
         lower_body_dof_right = torch.cat([self.right_hip_roll_joint_indices, self.right_hip_pitch_joint_indices, self.right_hip_joint_indices, self.right_knee_joint_indices])
@@ -1289,31 +1305,3 @@ class LeggedRobot(BaseTask):
         base_height = self.root_states[:, 2]
         standup  = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
         return torch.exp(torch.abs(base_height - self.cfg.rewards.base_height_target) * - 20) * standup
-
-    # def _reward_feet_side_by_side(self):
-    #     """
-    #     Belohnt wenn Füße seitlich (lokal Y) versetzt sind, nicht vor/hinter (lokal X).
-    #     In lokalen Koordinaten - rotationsinvariant!
-    #     Wichtig für X02 ohne ankle_roll - kann nur stabil stehen wenn Füße seitlich versetzt.
-    #
-    #     Return: True (=1) wenn schlecht (Füße hintereinander), False (=0) wenn gut
-    #     -> braucht NEGATIVEN scale in config (z.B. style_feet_side_by_side = -10)
-    #     """
-    #     left_foot_pos = self.rigid_body_states[:, self.left_foot_indices, :3].squeeze(1)
-    #     right_foot_pos = self.rigid_body_states[:, self.right_foot_indices, :3].squeeze(1)
-    #
-    #     # Differenz in Weltkoordinaten
-    #     feet_diff_world = left_foot_pos - right_foot_pos
-    #
-    #     # In lokale Koordinaten transformieren (relativ zur Roboter-Orientierung)
-    #     feet_diff_local = quat_rotate_inverse(self.base_quat, feet_diff_world)
-    #
-    #     # Lokal X = vor/zurück, Lokal Y = seitlich
-    #     x_diff = torch.abs(feet_diff_local[:, 0])  # sollte klein sein
-    #     y_diff = torch.abs(feet_diff_local[:, 1])  # sollte groß sein (~0.2-0.4m)
-    #
-    #     # Bestraft wenn Füße hintereinander (x_diff > y_diff) oder y_diff zu klein
-    #     reward = (x_diff > 0.15) | (y_diff < 0.15)
-    #
-    #     standup = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
-    #     return reward * standup

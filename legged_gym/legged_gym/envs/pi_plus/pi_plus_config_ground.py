@@ -74,24 +74,32 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         episode_length_s = 10 # episode length in seconds
         unactuated_timesteps = 30
 
-    class control( LeggedRobotCfg.control ): #Werte für oberkörper fehlen noch
+    class control( LeggedRobotCfg.control ): #Values found on: github.com/HighTorque-Robotics/Mini-Pi-Plus_BeyondMimic/blob/master/source/whole_body_tracking/whole_body_tracking/robots/pi_plus.py
         # PD Drive parameters:
         control_type = 'P'
         stiffness = {
-            "hip_pitch": 30,
-            "hip_roll": 15,
-            "thigh": 15,
-            "calf": 30,
-            "ankle_pitch": 12,
-            "ankle_roll": 5,
+            "hip_pitch": 80,
+            "hip_roll": 80,
+            "thigh":80,
+            "calf": 80,
+            "ankle_pitch": 80,
+            "ankle_roll": 80,
+            "shoulder_pitch": 30,
+            "shoulder_roll": 30,
+            "upper_arm": 30,
+            "elbow": 30,
         }  # [N*m/rad]
         damping = {
-            "hip_pitch": 0.2,
-            "hip_roll": 0.2,
-            "thigh": 0.2,
-            "calf": 0.2,
-            "ankle_pitch": 0.2,
-            "ankle_roll": 0.2,
+            "hip_pitch": 1.1,
+            "hip_roll": 1.1,
+            "thigh": 1.1,
+            "calf": 1.1,
+            "ankle_pitch": 1.1,
+            "ankle_roll": 1.1,
+            "shoulder_pitch": 0.6,
+            "shoulder_roll": 0.6,
+            "upper_arm": 0.6,
+            "elbow": 0.6,
         }  # [N*m/rad]  # [N*m*s/rad]
         # action scale: target angle = actionRescale * action + cur_dof_pos
         action_scale = 0.25#0.25#1

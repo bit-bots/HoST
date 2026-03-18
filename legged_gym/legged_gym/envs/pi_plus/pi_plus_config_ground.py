@@ -170,6 +170,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         head_name = 'keyframe_head'
 
         trunk_names = ["base_link"]
+        torso_name = 'base_link'
         base_name = 'base_link'
 
         left_upper_body_names = ['l_shoulder_pitch', 'l_elbow']

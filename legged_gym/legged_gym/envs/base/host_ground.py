@@ -906,6 +906,15 @@ class LeggedRobot(BaseTask):
 
         self.all_hip_joint_indices = torch.cat([self.hip_pitch_joint_indices, self.hip_roll_joint_indices, self.hip_joint_indices])
 
+
+        # left
+        self.left_leg_joints_indices = torch.zeros(len(self.cfg.asset.left_leg_joints), dtype=torch.long, device=self.device, requires_grad=False)
+        for i in range(len(self.cfg.asset.left_leg_joints)):
+            self.left_leg_joints_indices[i] = self.dof_names.index(self.cfg.asset.left_leg_joints[i])
+        self.right_leg_joints_indices = torch.zeros(len(self.cfg.asset.right_leg_joints), dtype=torch.long, device=self.device, requires_grad=False)
+        for i in range(len(self.cfg.asset.right_leg_joints)):
+            self.right_leg_joints_indices[i] = self.dof_names.index(self.cfg.asset.right_leg_joints[i])
+        
         self.left_shoulder_roll_joint_indices = torch.zeros(len(self.cfg.asset.left_shoulder_roll_joints), dtype=torch.long, device=self.device, requires_grad=False)
         for i in range(len(self.cfg.asset.left_shoulder_roll_joints)):
             self.left_shoulder_roll_joint_indices[i] = self.dof_names.index(self.cfg.asset.left_shoulder_roll_joints[i])

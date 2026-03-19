@@ -204,8 +204,8 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         target_base_height_phase2 = 0.20 #0.05 updated to 0.05 to get better standing style
         target_base_height_phase3 = 0.30  # updated to match Piwaist
         orientation_threshold = 0.99
-        left_foot_displacement_sigma = -200#-200 updated to get better standing style
-        right_foot_displacement_sigma = -200#-200 updated to get better standing style
+        left_foot_displacement_sigma = -20#-200 updated to get better standing style
+        right_foot_displacement_sigma = -20#-200 updated to get better standing style
         target_dof_pos_sigma = -0.1
         tracking_sigma = 0.25 # tracking reward = exp(-error^2/sigma)
 
@@ -224,8 +224,8 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         orientation_height_threshold = 0.9
         target_base_height = 0.34  # updated to match Piwaist
 
-        left_foot_displacement_sigma = -200#-200 updated to get better standing style
-        right_foot_displacement_sigma = -200#-200 updated to get better standing style
+        left_foot_displacement_sigma = -20#-200 updated to get better standing style
+        right_foot_displacement_sigma = -20#-200 updated to get better standing style
         hip_yaw_var_sigma = -2
         target_dof_pos_sigma = -0.1
         post_task = False

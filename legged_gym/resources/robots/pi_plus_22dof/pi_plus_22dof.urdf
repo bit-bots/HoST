@@ -1020,7 +1020,7 @@
 		</visual>
 	</link>
 	<joint name="keyframe_head_joint" type="fixed" dont_collapse="true">
-		<origin xyz="0 0 0.08" rpy="0 0 0"/>
+		<origin xyz="0 0 0.15" rpy="0 0 0"/>
 		<parent link="base_link"/>
 		<child link="keyframe_head_link"/>
 	</joint>

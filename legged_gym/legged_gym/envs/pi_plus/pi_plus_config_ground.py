@@ -7,11 +7,11 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         rot = [0.0, -1, 0, 1.0] # x,y,z,w [quat]
         target_joint_angles = { # = target angles [rad] when action = 0.0
             # left leg (6 dof)
-            "l_hip_pitch_joint": -0.0,
+            "l_hip_pitch_joint": -0.2,
             "l_hip_roll_joint": 0.0,
             "l_thigh_joint": 0.0,
-            "l_calf_joint": 0.0,
-            "l_ankle_pitch_joint": -0.0,
+            "l_calf_joint": 0.5,
+            "l_ankle_pitch_joint": -0.25,
             "l_ankle_roll_joint": 0,
             #left arm (4 dof)
             "l_shoulder_pitch_joint": 0.0,
@@ -19,11 +19,11 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             "l_upper_arm_joint": 0.0,
             "l_elbow_joint": 0.0,
             # right leg (6 dof)
-            "r_hip_pitch_joint": -0.0,
+            "r_hip_pitch_joint": -0.2,
             "r_hip_roll_joint": 0.0,
             "r_thigh_joint": 0.0,
-            "r_calf_joint": 0.0,
-            "r_ankle_pitch_joint": -0.0,
+            "r_calf_joint": 0.5,
+            "r_ankle_pitch_joint": -0.25,
             "r_ankle_roll_joint": 0,
             #right arm (4 dof)
             "r_shoulder_pitch_joint": 0.0,
@@ -66,7 +66,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         }
 
     class env(LeggedRobotCfg.env):
-        num_one_step_observations= 76
+        num_one_step_observations= 73
         num_actions = 22
         num_dofs = 22
         num_actor_history = 6
@@ -200,9 +200,9 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         is_gaussian = True
         target_head_height = 0.37  # updated to match Piwaist head_height_target (base_height + 0.08)
         target_head_margin = 0.37
-        target_base_height_phase1 = 0.25  # updated to match Piwaist
-        target_base_height_phase2 = 0.25 #0.05 updated to 0.05 to get better standing style
-        target_base_height_phase3 = 0.34  # updated to match Piwaist
+        target_base_height_phase1 = 0.20  # updated to match Piwaist
+        target_base_height_phase2 = 0.20 #0.05 updated to 0.05 to get better standing style
+        target_base_height_phase3 = 0.30  # updated to match Piwaist
         orientation_threshold = 0.99
         left_foot_displacement_sigma = -200#-200 updated to get better standing style
         right_foot_displacement_sigma = -200#-200 updated to get better standing style
@@ -249,12 +249,13 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             style_shoulder_roll_deviation = -2.5
             style_left_foot_displacement = 7.5 #7.5 updated to get better standing style
             style_right_foot_displacement = 7.5 #7.5  updated to get better standing style
-            style_knee_deviation = -0.25
+            #style_knee_deviation = -0.25
+            style_knee_deviation_pi_plus = -0.5
             style_shank_orientation = 10
-            style_ground_parallel = 20
+            style_ground_parallel = 30
             style_feet_distance = -10
             style_style_ang_vel_xy = 1
-            style_soft_symmetry_action=-10  #  updated to get better standing style
+            #style_soft_symmetry_action=-10  #  updated to get better standing style
             style_soft_symmetry_body=2.5 # updated to get better standing style
 
             # post-task reward

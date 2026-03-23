@@ -169,7 +169,7 @@ class LeggedRobot(BaseTask):
         """ Check if environments need to be reset
         """
         self.reset_buf = torch.any(torch.norm(self.contact_forces[:, self.termination_contact_indices, :], dim=-1) > 1., dim=1)
-        self.time_out_buf = self.episode_length_buf > self.max_episode_length 
+        self.time_out_buf = self.episode_length_buf > self.max_episode_length
         self.reset_buf |= self.time_out_buf
 
         self.dof_vel_out = (torch.abs(self.dof_vel.max(dim=1).values) > self.cfg.curriculum.dof_vel_limit) & (self.real_episode_length_buf > self.unactuated_time)
@@ -177,6 +177,10 @@ class LeggedRobot(BaseTask):
 
         self.base_vel_out = (torch.norm(self.base_lin_vel[:, :3], dim=-1) > self.cfg.curriculum.base_vel_limit) & (self.real_episode_length_buf > self.unactuated_time)
         self.reset_buf |= self.base_vel_out
+
+        nan_state = torch.isnan(self.root_states[:, 2])
+        nan_state |= torch.any(torch.isnan(self.dof_vel), dim=1)
+        self.reset_buf |= nan_state
 
     def reset_idx(self, env_ids):
         """ Reset some environments.
@@ -277,6 +281,8 @@ class LeggedRobot(BaseTask):
         for rg in self.reward_groups:
             idx = self.reward_groups.index(rg)
             self.episode_sums[rg] = self.rew_buf[:, idx]
+
+        self.rew_buf = torch.nan_to_num(self.rew_buf, nan=0.0)
 
     def compute_observations(self):
         """ Computes observations
@@ -1179,8 +1185,8 @@ class LeggedRobot(BaseTask):
         left_foot_pos = self.rigid_body_states[:, self.left_foot_indices, :3].clone()
         right_foot_pos = self.rigid_body_states[:, self.right_foot_indices, :3].clone()
 
-        left_feet_orientation = (left_knee_pos - left_foot_pos)[:, :, 2] / torch.norm(left_knee_pos - left_foot_pos, dim=-1)
-        right_feet_orientation = (right_knee_pos - right_foot_pos)[:, :, 2] / torch.norm(right_knee_pos - right_foot_pos, dim=-1)
+        left_feet_orientation = (left_knee_pos - left_foot_pos)[:, :, 2] / torch.norm(left_knee_pos - left_foot_pos, dim=-1).clamp(min=1e-6)
+        right_feet_orientation = (right_knee_pos - right_foot_pos)[:, :, 2] / torch.norm(right_knee_pos - right_foot_pos, dim=-1).clamp(min=1e-6)
 
         feet_orientation = torch.mean(torch.concat([left_feet_orientation, right_feet_orientation], dim=-1), dim=-1)
 

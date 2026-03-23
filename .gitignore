@@ -182,4 +182,4 @@ logs/# pixi environments
 isaacgym/
 legged_gym/logs/
 
-vscode/
+.vscode/

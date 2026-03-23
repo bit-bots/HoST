@@ -1081,9 +1081,7 @@ class LeggedRobot_Pi(BaseTask):
 
     #-----------------------------style rewards-----------------------------
     def _reward_waist_deviation(self):
-        wrist_dof = self.dof_pos[:, self.waist_joint_indices]
-        reward = (torch.abs(wrist_dof) > 1.4).float()
-        return reward.squeeze(1)
+        return torch.zeros_like(self.dof_pos[:, 0])
 
     def _reward_hip_yaw_deviation(self):
         hip_yaw_dof = self.dof_pos[:, self.hip_joint_indices]

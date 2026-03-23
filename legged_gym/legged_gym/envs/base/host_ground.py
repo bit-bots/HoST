@@ -851,8 +851,6 @@ class LeggedRobot(BaseTask):
             self.ankle_joint_indices[i] = self.dof_names.index(self.cfg.asset.ankle_joints[i])
 
         self.waist_joint_indices = torch.zeros(len(self.cfg.asset.waist_joints), dtype=torch.long, device=self.device, requires_grad=False)
-        for i in range(len(self.cfg.asset.waist_joints)):
-            self.waist_joint_indices[i] = self.dof_names.index(self.cfg.asset.waist_joints[i])
 
         self.keyframe_names = [s for s in body_names if self.cfg.asset.keyframe_name in s]
         self.keyframe_indices = torch.zeros(len(self.keyframe_names), dtype=torch.long, device=self.device)
@@ -934,7 +932,7 @@ class LeggedRobot(BaseTask):
             self.right_arm_joint_indices[i] = self.dof_names.index(self.cfg.asset.right_arm_joints[i])
 
         # import ipdb; ipdb.set_trace()
-        self.upper_body_joint_indices = torch.cat([self.right_arm_joint_indices, self.left_arm_joint_indices, self.waist_joint_indices])
+        self.upper_body_joint_indices = torch.cat([self.right_arm_joint_indices, self.left_arm_joint_indices])
         self.lower_body_joint_indices = torch.cat([self.all_hip_joint_indices, self.knee_joint_indices, self.ankle_joint_indices])
 
         left_upper_body_names = []
@@ -1063,6 +1061,13 @@ class LeggedRobot(BaseTask):
         else:
             base_height = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase1
             reward = tolerance(-self.projected_gravity[:, 2], [self.cfg.rewards.orientation_threshold, np.inf], 1., 0.05) #-1 
+
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+    
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+
         return reward
 
     def _reward_head_height(self):
@@ -1078,36 +1083,76 @@ class LeggedRobot(BaseTask):
             delta_headheight = head_height - self.old_headheight
             self.max_headheight = torch.max(torch.cat((head_height, self.old_headheight), dim=1), dim=1)[0].unsqueeze(-1)
             self.old_headheight = head_height
+
+            if torch.isnan(reward).any():
+                raise ValueError("Encountered nan!")
+    
+            if torch.isinf(reward).any():
+                raise ValueError("Encountered inf!")
+
             return reward
 
 
     #-----------------------------regularization rewards-----------------------------
     def _reward_dof_acc(self):
         # Penalize dof accelerations
-        return torch.sum(torch.square((self.last_dof_vel - self.dof_vel) / self.dt), dim=1)
+        reward = torch.sum(torch.square((self.last_dof_vel - self.dof_vel) / self.dt), dim=1)
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+        return reward
 
     def _reward_action_rate(self):
         # Penalize changes in actions
-        return torch.sum(torch.square(self.last_actions - self.actions), dim=1)
+        reward = torch.sum(torch.square(self.last_actions - self.actions), dim=1)
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+        return reward
 
     def _reward_smoothness(self):
         # second order smoothness
-        return torch.sum(torch.square(self.actions - self.last_actions - self.last_actions + self.last_last_actions), dim=1)
-
+        reward = torch.sum(torch.square(self.actions - self.last_actions - self.last_actions + self.last_last_actions), dim=1)
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+        return reward
     def _reward_torques(self):
         # Penalize torques
-        return torch.sum(torch.square(self.torques), dim=1)
+        reward = torch.sum(torch.square(self.torques), dim=1)
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+        return reward
 
     def _reward_joint_power(self):
         #Penalize high power
-        return torch.sum(torch.abs(self.dof_vel) * torch.abs(self.torques), dim=1) 
-
+        reward = torch.sum(torch.abs(self.dof_vel) * torch.abs(self.torques), dim=1)
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+        return reward
     def _reward_dof_vel(self):
         # Penalize dof velocities
-        return torch.sum(torch.square(self.dof_vel), dim=1)
+        reward = torch.sum(torch.square(self.dof_vel), dim=1)
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+        return reward
 
     def _reward_joint_tracking_error(self):
-        return torch.sum(torch.square(self.joint_pos_target - self.dof_pos), dim=-1)
+        reward = torch.sum(torch.square(self.joint_pos_target - self.dof_pos), dim=-1)
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+        return reward
 
     def _reward_dof_pos_limits(self):
         # Penalize dof positions too close to the limit
@@ -1117,32 +1162,57 @@ class LeggedRobot(BaseTask):
 
     def _reward_dof_vel_limits(self):
         # Penalize dof velocities too close to the limit
-        return torch.sum((torch.abs(self.dof_vel) - self.dof_vel_limits*self.cfg.rewards.soft_dof_vel_limit).clip(min=0., max=1.), dim=1)
-
+        reward = torch.sum((torch.abs(self.dof_vel) - self.dof_vel_limits*self.cfg.rewards.soft_dof_vel_limit).clip(min=0., max=1.), dim=1)
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+        return reward
     def _reward_torque_limits(self):
         # penalize torques too close to the limit
-        return torch.sum((torch.abs(self.torques) - self.torque_limits*self.cfg.rewards.soft_torque_limit).clip(min=0.), dim=1)
+        reward = torch.sum((torch.abs(self.torques) - self.torque_limits*self.cfg.rewards.soft_torque_limit).clip(min=0.), dim=1)
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+        return reward
 
 
     #-----------------------------style rewards-----------------------------
     def _reward_waist_deviation(self):
         wrist_dof = self.dof_pos[:, self.waist_joint_indices]
         reward = (torch.abs(wrist_dof) > 1.4).float()
-        return reward.squeeze(1)
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+        return reward
 
     def _reward_hip_yaw_deviation(self):
         hip_yaw_dof = self.dof_pos[:, self.hip_joint_indices]
         reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_joint_indices]), dim=-1)[0] > 1.4) | (torch.min(self.dof_pos[:, self.hip_joint_indices], dim=-1)[0] < -0.9)
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
         return reward
 
     def _reward_hip_roll_deviation(self):
         hip_roll_dof = self.dof_pos[:, self.hip_roll_joint_indices]
         reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_roll_joint_indices]), dim=-1)[0] >  1.4) | (torch.min(self.dof_pos[:, self.hip_roll_joint_indices], dim=-1)[0] < -0.9)
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
         return reward
 
     def _reward_shoulder_roll_deviation(self):
         hip_roll_dof = self.dof_pos[:, self.shoulder_roll_joint_indices]
         reward = (self.dof_pos[:, self.shoulder_roll_joint_indices[0]] < -0.02) | (self.dof_pos[:, self.shoulder_roll_joint_indices[1]] > 0.02)
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
         return reward
 
     def _reward_left_foot_displacement(self):
@@ -1152,7 +1222,12 @@ class LeggedRobot(BaseTask):
         reward = torch.exp(mse_error * self.cfg.rewards.left_foot_displacement_sigma) *  (self.rigid_body_states[:, self.left_foot_indices, 2] < 0.3).squeeze(1)
 
         standup  = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
-        return reward * standup
+        reward = reward * standup
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+        return reward
 
     def _reward_right_foot_displacement(self):
         base_xy = self.root_states[:, :2].clone()
@@ -1161,16 +1236,30 @@ class LeggedRobot(BaseTask):
         reward = torch.exp(mse_error * self.cfg.rewards.right_foot_displacement_sigma) * (self.rigid_body_states[:, self.right_foot_indices, 2] < 0.3).squeeze(1)
 
         standup  = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
-        return reward * standup
+        reward = reward * standup
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+        return reward
 
     def _reward_knee_deviation(self):
         hip_roll_dof = self.dof_pos[:, self.knee_joint_indices]
         reward = (torch.max(torch.abs(self.dof_pos[:, self.knee_joint_indices]), dim=-1)[0] > 2.85) | (torch.min(self.dof_pos[:, self.knee_joint_indices], dim=-1)[0] < -0.06)
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
         return reward
 
     def _reward_knee_deviation_pi_plus(self):
-        hip_roll_dof = self.dof_pos[:, self.knee_joint_indices]
-        reward = (torch.max(torch.abs(self.dof_pos[:, self.knee_joint_indices]), dim=-1)[0] > 2.85) | (torch.min(self.dof_pos[:, self.knee_joint_indices], dim=-1)[0] < -1.4)
+        dev = torch.mean(torch.exp(self.dof_pos[:, self.knee_joint_indices] - 1.6), dim=-1)
+        standup  = self.root_states[:, 2] < self.cfg.rewards.target_base_height_phase2
+        reward = dev * standup
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
         return reward
 
     def _reward_shank_orientation(self):
@@ -1190,6 +1279,10 @@ class LeggedRobot(BaseTask):
         if self.cfg.constraints.post_task:
             standup  = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
             reward = reward * ~standup + torch.ones_like(reward) * standup
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
         return reward 
 
     def _reward_ground_parallel(self):
@@ -1202,6 +1295,10 @@ class LeggedRobot(BaseTask):
         if self.cfg.constraints.post_task:
             standup  = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
             reward = reward * ~standup + torch.ones_like(reward) * standup
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
         return reward
 
     def _reward_feet_distance(self):
@@ -1214,7 +1311,12 @@ class LeggedRobot(BaseTask):
     def _reward_style_ang_vel_xy(self):
         # Penalize xy axes base angular velocity
         base_height = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase1
-        return torch.exp(torch.sum(torch.square(self.base_ang_vel[:, :2]), dim=1) * -2) * base_height
+        reward = torch.exp(torch.sum(torch.square(self.base_ang_vel[:, :2]), dim=1) * -2) * base_height
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+        return reward
 
     def _reward_soft_symmetry_action(self):
         left_body_action = self.actions[:, self.left_leg_joints_indices] # [num_envs, 6]
@@ -1226,6 +1328,10 @@ class LeggedRobot(BaseTask):
         standup =self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
         body_symmetry[~standup] *= 0
         body_symmetry = body_symmetry * torch.clamp(-self.projected_gravity[:, 2], 0, 0.9) / 0.9
+        if torch.isnan(body_symmetry).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(body_symmetry).any():
+            raise ValueError("Encountered inf!")
         return body_symmetry
 
     def _reward_soft_symmetry_body(self):
@@ -1243,31 +1349,56 @@ class LeggedRobot(BaseTask):
         reward[~standup] *= 0
         reward = reward * torch.clamp(-self.projected_gravity[:, 2], 0, 0.9) / 0.9
 
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+
         return reward
  
     #--------------------------post-task rewards-----------------------------
     def _reward_ang_vel_xy(self):
         # Penalize xy axes base angular velocity
         base_height = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
-        return torch.exp(torch.sum(torch.square(self.base_ang_vel[:, :2]), dim=1) * -2) * base_height
+        reward = torch.exp(torch.sum(torch.square(self.base_ang_vel[:, :2]), dim=1) * -2) * base_height
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+        return reward
  
     def _reward_lin_vel_xy(self):
         # Penalize z axis base linear velocity
         base_height = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
-        return torch.exp(torch.sum(torch.square(self.base_lin_vel[:, :2]), dim=1) * -5) * base_height
+        reward = torch.exp(torch.sum(torch.square(self.base_lin_vel[:, :2]), dim=1) * -5) * base_height
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+        return reward
 
     def _reward_feet_height_var(self):
         left_foot_height = self.rigid_body_states[:, self.left_foot_indices, 2].clone() * 10
         right_foot_height = self.rigid_body_states[:, self.right_foot_indices, 2].clone() * 10
         feet_distance = torch.abs(left_foot_height - right_foot_height).squeeze(1).clamp(0.2, np.inf)
         standup  = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
-        return torch.exp(feet_distance * -2) * standup
-    
+        reward = torch.exp(feet_distance * -2) * standup
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+        return reward
+
     def _reward_target_upper_dof_pos(self):
-        mse = torch.sum(torch.square(self.dof_pos[:, self.upper_body_joint_indices] - self.target_dof_pos[:, self.upper_body_joint_indices]), dim=-1)
+        # TODO maybe use mean
+        mse = torch.mean(torch.square(self.dof_pos[:, self.upper_body_joint_indices] - self.target_dof_pos[:, self.upper_body_joint_indices]), dim=-1)
         standup =self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
-        reward = torch.exp(mse * self.cfg.rewards.target_dof_pos_sigma)
+        reward = torch.exp(mse * -0.1)
         reward = reward * standup
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
         return reward
 
     def _reward_target_feet_stumble(self):
@@ -1276,19 +1407,34 @@ class LeggedRobot(BaseTask):
         base_height = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase1
 
         reward = reward * base_height
+
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
         return reward
     
     def _reward_target_knee_angle(self):
         knee_angles = self.dof_pos[:, self.knee_joint_indices]
         reward = torch.all(knee_angles > 0, dim=1).float()
         standup = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
-        return reward * standup
+        reward = reward * standup
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+        return reward
 
     def _reward_target_lower_dof_pos(self):
-        mse = torch.sum(torch.square(self.dof_pos[:, self.lower_body_joint_indices] - self.target_dof_pos[:, self.lower_body_joint_indices]), dim=-1)
+        # TODO maybe use mean
+        mse = torch.mean(torch.square(self.dof_pos[:, self.lower_body_joint_indices] - self.target_dof_pos[:, self.lower_body_joint_indices]), dim=-1)
         standup = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
         reward = torch.exp(mse * self.cfg.rewards.target_dof_pos_sigma)
         reward = reward * standup
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
         return reward
 
     def _reward_lower_body_deviation(self):
@@ -1301,6 +1447,10 @@ class LeggedRobot(BaseTask):
         reward = torch.sum( torch.var(torch.cat([left_dof_pos, right_dof_pos], dim=1), dim=1), dim=-1)
         reward = torch.exp(reward * -2)
         standup  = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
+        if torch.isnan(reward * standup).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward * standup).any():
+            raise ValueError("Encountered inf!")
         return reward * standup
     
     def _reward_lower_body_var(self):
@@ -1308,15 +1458,30 @@ class LeggedRobot(BaseTask):
         right_lower_body_pos = self.rigid_body_states[:, self.right_lower_body_indices, :3].clone() * 10
         lower_body_distance = torch.norm(left_lower_body_pos - right_lower_body_pos, dim=-1)
         standup  = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
-        return torch.exp(lower_body_distance.var(1) * -2) * standup
-    
+        reward = torch.exp(lower_body_distance.var(1) * -2) * standup
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+        return reward
+
     def _reward_target_orientation(self):
         # Penalize non flat base orientation
         standup  = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
-        return torch.exp(torch.sum(torch.square(self.projected_gravity[:, :2]), dim=1) * -5) * standup
+        reward = torch.exp(torch.sum(torch.square(self.projected_gravity[:, :2]), dim=1) * -5) * standup
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+        return reward
 
     def _reward_target_base_height(self):
         # Penalize base height away from target
         base_height = self.root_states[:, 2]
         standup  = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
-        return torch.exp(torch.abs(base_height - self.cfg.rewards.base_height_target) * - 20) * standup
+        reward = torch.exp(torch.abs(base_height - self.cfg.rewards.base_height_target) * - 20) * standup
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+        return reward

@@ -102,7 +102,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             "elbow": 0.6,
         }  # [N*m/rad]  # [N*m*s/rad]
         # action scale: target angle = actionRescale * action + cur_dof_pos
-        action_scale = 0.25#0.25#1
+        action_scale = 1
         # decimation: Number of control action updates @ sim DT per policy DT
         decimation = 4
 
@@ -157,6 +157,8 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         left_shoulder_roll_joints = ['l_shoulder_roll_joint']
         right_shoulder_roll_joints = ['r_shoulder_roll_joint']
 
+        waist_joints = ["waist_yaw_joint"]  # Placeholder
+
         left_knee_joints = ['l_calf_joint']
         right_knee_joints = ['r_calf_joint']    
 
@@ -206,7 +208,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         orientation_threshold = 0.99
         left_foot_displacement_sigma = -20#-200 updated to get better standing style
         right_foot_displacement_sigma = -20#-200 updated to get better standing style
-        target_dof_pos_sigma = -0.1
+        target_dof_pos_sigma = -5
         tracking_sigma = 0.25 # tracking reward = exp(-error^2/sigma)
 
         reward_groups = ['task', 'regu', 'style', 'target']
@@ -227,7 +229,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         left_foot_displacement_sigma = -20#-200 updated to get better standing style
         right_foot_displacement_sigma = -20#-200 updated to get better standing style
         hip_yaw_var_sigma = -2
-        target_dof_pos_sigma = -0.1
+        target_dof_pos_sigma = -1
         post_task = False
         
         class scales:
@@ -250,10 +252,10 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             style_left_foot_displacement = 7.5 #7.5 updated to get better standing style
             style_right_foot_displacement = 7.5 #7.5  updated to get better standing style
             #style_knee_deviation = -0.25
-            style_knee_deviation_pi_plus = -0.5
-            style_shank_orientation = 10
-            style_ground_parallel = 30
-            style_feet_distance = -10
+            style_knee_deviation_pi_plus = -60
+            #style_shank_orientation = 10
+            style_ground_parallel = 10
+            # style_feet_distance = -10
             style_style_ang_vel_xy = 1
             #style_soft_symmetry_action=-10  #  updated to get better standing style
             style_soft_symmetry_body=2.5 # updated to get better standing style
@@ -262,11 +264,12 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             target_ang_vel_xy = 10
             target_lin_vel_xy = 10
             target_feet_height_var = 2.5
-            target_target_lower_dof_pos = 30  #  updated to get better standing style
-            target_target_upper_dof_pos = 10
+            target_lower_body_deviation = 10
+            target_target_lower_dof_pos = 15  #  updated to get better standing style
+            target_target_upper_dof_pos = 15
             target_target_orientation = 10
             target_target_base_height = 10
-            target_target_knee_angle = 10 #  updated to get better standing style
+            #target_target_knee_angle = 10 #  updated to get better standing style
 
     class domain_rand:
         use_random = True
@@ -311,7 +314,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
     
     class curriculum:
         pull_force = True
-        force = 15 # 100*2=200 is the actuatl force because of a extra keyframe torso link
+        force = 60 # 100*2=200 is the actuatl force because of a extra keyframe torso link
         dof_vel_limit = 300
         base_vel_limit = 20
         threshold_height = 0.37

@@ -119,6 +119,12 @@ class ActorCritic(nn.Module):
         self.distribution = Normal(mean, mean*0. + self.std)
 
     def act(self, observations, **kwargs):
+        if torch.isnan(observations).any():
+            raise ValueError("Encountered nan!")
+    
+        if torch.isinf(observations).any():
+            raise ValueError("Encountered inf!")
+    
         self.update_distribution(observations)
         return self.distribution.sample()
     

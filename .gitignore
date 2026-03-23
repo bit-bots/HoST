@@ -174,4 +174,12 @@ cython_debug/
 .pypirc
 
 
-logs/
+logs/# pixi environments
+.pixi/*
+!.pixi/config.toml
+
+
+isaacgym/
+legged_gym/logs/
+
+vscode/

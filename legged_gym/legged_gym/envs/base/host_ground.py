@@ -178,9 +178,11 @@ class LeggedRobot(BaseTask):
         self.base_vel_out = (torch.norm(self.base_lin_vel[:, :3], dim=-1) > self.cfg.curriculum.base_vel_limit) & (self.real_episode_length_buf > self.unactuated_time)
         self.reset_buf |= self.base_vel_out
 
-        nan_state = torch.isnan(self.root_states[:, 2])
-        nan_state |= torch.any(torch.isnan(self.dof_vel), dim=1)
-        self.reset_buf |= nan_state
+        nan_state = torch.isnan(self.root_states[:, 2]).any()
+        nan_state |= torch.isnan(self.dof_vel).any()
+        
+        if nan_state:
+            raise ValueError("NaN detected in state!")
 
     def reset_idx(self, env_ids):
         """ Reset some environments.
@@ -281,8 +283,6 @@ class LeggedRobot(BaseTask):
         for rg in self.reward_groups:
             idx = self.reward_groups.index(rg)
             self.episode_sums[rg] = self.rew_buf[:, idx]
-
-        self.rew_buf = torch.nan_to_num(self.rew_buf, nan=0.0)
 
     def compute_observations(self):
         """ Computes observations
@@ -1285,10 +1285,12 @@ class LeggedRobot(BaseTask):
         if self.cfg.constraints.post_task:
             standup  = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
             reward = reward * ~standup + torch.ones_like(reward) * standup
+
         if torch.isnan(reward).any():
-            raise ValueError("Encountered nan!")
-        if torch.isinf(reward).any():
-            raise ValueError("Encountered inf!")
+            print("Shank reward is nan. Set it to 0.")
+        
+        reward = torch.nan_to_num(reward, nan=0.0)
+        
         return reward 
 
     def _reward_ground_parallel(self):

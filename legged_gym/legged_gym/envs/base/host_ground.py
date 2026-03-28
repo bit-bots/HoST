@@ -1259,7 +1259,7 @@ class LeggedRobot(BaseTask):
         return reward
 
     def _reward_knee_deviation_pi_plus(self):
-        dev = torch.mean(torch.exp(self.dof_pos[:, self.knee_joint_indices] - 1.6), dim=-1)
+        dev = torch.mean(torch.square(self.dof_pos[:, self.knee_joint_indices] - 1.6), dim=-1)
         standup  = self.root_states[:, 2] < self.cfg.rewards.target_base_height_phase2
         reward = dev * standup
         if torch.isnan(reward).any():

@@ -93,7 +93,7 @@
      <parent link="base_link" />
      <child link="l_hip_pitch_link" />
      <axis xyz="0 1 0" />
-     <limit lower="-3.12" upper="2.94" effort="20" velocity="5.45" />
+     <limit lower="-1.45" upper="1.45" effort="20" velocity="5.45" />
      <dynamics damping="0.08" friction="0.0"/> <!-- 即使很小的阻尼也能极大改善稳定性 -->
    </joint>
    <link name="l_hip_roll_link">
@@ -123,7 +123,7 @@
      <parent link="l_hip_pitch_link" />
      <child link="l_hip_roll_link" />
      <axis xyz="1 0 0" />
-     <limit lower="-0.31" upper="3.14" effort="20" velocity="5.45" />
+     <limit lower="-0.31" upper="1.2" effort="20" velocity="5.45" />
      <dynamics damping="0.08" friction="0.0"/> <!-- 即使很小的阻尼也能极大改善稳定性 -->
    </joint>
    <link name="l_thigh_link">
@@ -153,7 +153,7 @@
      <parent link="l_hip_roll_link" />
      <child link="l_thigh_link" />
      <axis xyz="0 0 1" />
-     <limit lower="-2.87" upper="2.87" effort="20" velocity="5.45" />
+     <limit lower="-1.2" upper="0.6" effort="20" velocity="5.45" />
      <dynamics damping="0.08" friction="0.0"/> <!-- 即使很小的阻尼也能极大改善稳定性 -->
    </joint>
    <link name="l_calf_link">
@@ -238,7 +238,7 @@
      <parent link="l_thigh_link" />
      <child link="l_calf_link" />
      <axis xyz="0 1 0" />
-     <limit lower="-0.05" upper="1.65" effort="20" velocity="5.45" />
+     <limit lower="-0.05" upper="2.4" effort="20" velocity="5.45" />
      <dynamics damping="0.08" friction="0.0"/> <!-- 即使很小的阻尼也能极大改善稳定性 -->
    </joint>
    <link name="l_ankle_pitch_link">
@@ -409,7 +409,7 @@
      <parent link="base_link" />
      <child link="r_hip_pitch_link" />
      <axis xyz="0 1 0" />
-     <limit lower="-3.12" upper="2.94" effort="20" velocity="5.45" />
+     <limit lower="-1.45" upper="1.45" effort="20" velocity="5.45" />
      <dynamics damping="0.08" friction="0.0"/> <!-- 即使很小的阻尼也能极大改善稳定性 -->
    </joint>
    <link name="r_hip_roll_link">
@@ -439,7 +439,7 @@
      <parent link="r_hip_pitch_link" />
      <child link="r_hip_roll_link" />
      <axis xyz="1 0 0" />
-     <limit lower="-3.14" upper="0.31" effort="20" velocity="5.45" />
+     <limit lower="-1.2" upper="0.31" effort="20" velocity="5.45" />
      <dynamics damping="0.08" friction="0.0"/> <!-- 即使很小的阻尼也能极大改善稳定性 -->
    </joint>
    <link name="r_thigh_link">
@@ -469,7 +469,7 @@
      <parent link="r_hip_roll_link" />
      <child link="r_thigh_link" />
      <axis xyz="0 0 1" />
-     <limit lower="-2.87" upper="2.87" effort="20" velocity="5.45" />
+     <limit lower="-1.2" upper="1.2" effort="20" velocity="5.45" />
      <dynamics damping="0.02" friction="0.0"/> <!-- 即使很小的阻尼也能极大改善稳定性 -->
    </joint>
    <link name="r_calf_link">
@@ -531,7 +531,7 @@
      <parent link="r_thigh_link" />
      <child link="r_calf_link" />
      <axis xyz="0 1 0" />
-     <limit lower="-0.05" upper="1.65" effort="20" velocity="5.45" />
+     <limit lower="-0.05" upper="2.4" effort="20" velocity="5.45" />
      <dynamics damping="0.08" friction="0.0"/> <!-- 即使很小的阻尼也能极大改善稳定性 -->
    </joint>
    <link name="r_ankle_pitch_link">
@@ -756,7 +756,7 @@
      <parent link="l_upper_arm_link" />
      <child link="l_elbow_link" />
      <axis xyz="0 1 0" />
-     <limit lower="-1.91" upper="1.91" effort="10" velocity="15.91" />
+     <limit lower="-1.91" upper="0.0" effort="10" velocity="15.91" />
      <dynamics damping="0.08" friction="0.0"/> <!-- 即使很小的阻尼也能极大改善稳定性 -->
    </joint>
    <link name="l_wrist_link">
@@ -906,7 +906,7 @@
      <parent link="r_upper_arm_link" />
      <child link="r_elbow_link" />
      <axis xyz="0 1 0" />
-     <limit lower="-1.91" upper="1.91" effort="10" velocity="15.91" />
+     <limit lower="-1.91" upper="0.0" effort="10" velocity="15.91" />
      <dynamics damping="0.08" friction="0.0"/> <!-- 即使很小的阻尼也能极大改善稳定性 -->
    </joint>
    <link name="r_wrist_link">
@@ -967,7 +967,7 @@
      <parent link="base_link" />
      <child link="head_yaw_link" />
      <axis xyz="0 0 1" />
-     <limit lower="-1.39" upper="1.39" effort="3" velocity="30.37" />
+     <limit lower="-0.3" upper="0.3" effort="3" velocity="30.37" />
      <dynamics damping="0.08" friction="0.0"/> <!-- 即使很小的阻尼也能极大改善稳定性 -->
    </joint>
    <link name="head_pitch_link">
@@ -997,7 +997,7 @@
      <parent link="head_yaw_link" />
      <child link="head_pitch_link" />
      <axis xyz="0 1 0" />
-     <limit lower="-0.34" upper="1.57" effort="3" velocity="30.37" />
+     <limit lower="-0.34" upper="0.9" effort="3" velocity="30.37" />
      <dynamics damping="0.08" friction="0.0"/> <!-- 即使很小的阻尼也能极大改善稳定性 -->
    </joint>
 

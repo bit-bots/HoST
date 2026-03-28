@@ -252,22 +252,22 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             style_left_foot_displacement = 7.5 #7.5 updated to get better standing style
             style_right_foot_displacement = 7.5 #7.5  updated to get better standing style
             #style_knee_deviation = -0.25
-            style_knee_deviation_pi_plus = -60
+            style_knee_deviation_pi_plus = -20
             style_shank_orientation = 10
             style_ground_parallel = 10
             #style_feet_distance = -10
             style_style_ang_vel_xy = 1
             #style_soft_symmetry_action=-10  #  updated to get better standing style
-            style_soft_symmetry_body=2.5 # updated to get better standing style
+            #style_soft_symmetry_body=2.5 # updated to get better standing style
 
             # post-task reward
-            target_ang_vel_xy = 10
-            target_lin_vel_xy = 10
+            target_ang_vel_xy = 5
+            target_lin_vel_xy = 5
             target_feet_height_var = 2.5
-            target_lower_body_deviation = 10
-            target_target_lower_dof_pos = 15  #  updated to get better standing style
-            target_target_upper_dof_pos = 15
-            target_target_orientation = 10
+            target_lower_body_deviation = 20
+            target_target_lower_dof_pos = 30  #  updated to get better standing style
+            target_target_upper_dof_pos = 30
+            target_target_orientation = 20
             target_target_base_height = 10
             #target_target_knee_angle = 10 #  updated to get better standing style
 

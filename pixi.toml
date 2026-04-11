@@ -16,6 +16,7 @@ setuptools = "<60"
 ipython = ">=8.12.2,<9"
 numpy = "<1.24"
 tensorflow = ">=2.4.1,<3"
+pip = ">=24.2,<25"
 
 [pypi-dependencies]
 torch = { version = "==1.10.0+cu113", index = "https://download.pytorch.org/whl/cu113" }
@@ -24,7 +25,10 @@ torchaudio = { version = "==0.10.0+cu113", index = "https://download.pytorch.org
 isaacgym = { path = "isaacgym/python", editable = true }
 rsl_rl = { path = "rsl_rl", editable = true }
 legged_gym = { path = "legged_gym", editable = true}
+sim-web-visualizer = { path = "sim-web-visualizer", editable = true }
+setuptools = "==59.5.0"
 numpy = "<1.24"
 
 [activation.env]
 LD_LIBRARY_PATH="$CONDA_PREFIX/lib:$LD_LIBRARY_PATH"
+PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION="python"

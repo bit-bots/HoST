@@ -785,7 +785,8 @@ class LeggedRobot(BaseTask):
         start_pose.p = gymapi.Vec3(*self.base_init_state[:3])
 
         self.default_rigid_body_mass = torch.zeros(self.num_bodies, dtype=torch.float, device=self.device, requires_grad=False)
-        self.torso_link_index = body_names.index("torso_link")
+        torso_name = getattr(self.cfg.asset, 'torso_name', 'torso_link')
+        self.torso_link_index = body_names.index(torso_name)
 
         self._get_env_origins()
         env_lower = gymapi.Vec3(0., 0., 0.)
@@ -1437,6 +1438,16 @@ class LeggedRobot(BaseTask):
     def _reward_knee_deviation(self):
         hip_roll_dof = self.dof_pos[:, self.knee_joint_indices]
         reward = (torch.max(torch.abs(self.dof_pos[:, self.knee_joint_indices]), dim=-1)[0] > 2.85) | (torch.min(self.dof_pos[:, self.knee_joint_indices], dim=-1)[0] < -0.06)
+        return reward
+
+    def _reward_knee_deviation_pi_plus(self):
+        dev = torch.mean(torch.square(self.dof_pos[:, self.knee_joint_indices] - 1.6), dim=-1)
+        standup  = self.root_states[:, 2] < self.cfg.rewards.target_base_height_phase2
+        reward = dev * standup
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
         return reward
 
     def _reward_shoulder_roll_deviation(self):

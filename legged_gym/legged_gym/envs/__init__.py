@@ -31,13 +31,14 @@ from legged_gym.envs.pi.pi_host_ground import LeggedRobot_Pi
 from legged_gym.envs.x02.x02_config_ground import x02Cfg as X02CfgGround
 from legged_gym.envs.x02.x02_config_ground import x02CfgPPO as X02CfgPPOGround
 
-from .base.host_ground_prone import LeggedRobot as LeggedRobotGroundProne
 from legged_gym.envs.x02.x02_config_ground_prone import x02Cfg as X02CfgGroundProne
 from legged_gym.envs.x02.x02_config_ground_prone import x02CfgPPO as X02CfgPPOGroundProne
 
-from .base.host_ground import LeggedRobot as LeggedRobotGround
 from legged_gym.envs.pi_plus.pi_plus_config_ground import Pi_PlusCfg as Pi_PlusCfgGround
 from legged_gym.envs.pi_plus.pi_plus_config_ground import Pi_PlusCfgPPO as Pi_PlusCfgPPOGround
+
+from legged_gym.envs.pi_plus.pi_plus_config_ground_prone import Pi_PlusCfg as Pi_PlusCfgGroundProne
+from legged_gym.envs.pi_plus.pi_plus_config_ground_prone import Pi_PlusCfgPPO as Pi_PlusCfgPPOGroundProne
 
 task_registry.register( "g1_ground", LeggedRobotGround, G1CfgGround(), G1CfgPPOGround())
 task_registry.register( "g1_platform", LeggedRobotPlatform, G1CfgPlatform(), G1CfgPPOPlatform())
@@ -47,8 +48,9 @@ task_registry.register( "g1_ground_prone", LeggedRobotGroundProne, G1CfgGroundPr
 task_registry.register( "h1_ground", LeggedRobotGround, H1CfgGround(), H1CfgPPOGround())
 
 task_registry.register( "pi_ground", LeggedRobot_Pi, PiCfgGround(), PiCfgPPOGround())
+
 task_registry.register( "pi_plus_ground", LeggedRobotGround, Pi_PlusCfgGround(), Pi_PlusCfgPPOGround())
+task_registry.register("pi_plus_ground_prone", LeggedRobotGroundProne, Pi_PlusCfgGroundProne(), Pi_PlusCfgPPOGroundProne())
 
 task_registry.register( "x02_ground", LeggedRobotGround, X02CfgGround(), X02CfgPPOGround())
 task_registry.register( "x02_ground_prone", LeggedRobotGroundProne, X02CfgGroundProne(), X02CfgPPOGroundProne())
-task_registry.register( "x02_ground", LeggedRobotGround, X02CfgGround(), X02CfgPPOGround())

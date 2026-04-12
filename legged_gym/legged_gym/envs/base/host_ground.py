@@ -1196,7 +1196,7 @@ class LeggedRobot(BaseTask):
 
     def _reward_hip_yaw_deviation(self):
         hip_yaw_dof = self.dof_pos[:, self.hip_joint_indices]
-        reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_joint_indices]), dim=-1)[0] > 1.4) | (torch.min(self.dof_pos[:, self.hip_joint_indices], dim=-1)[0] < -0.9)
+        reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_joint_indices]), dim=-1)[0] > 1.57) | (torch.min(self.dof_pos[:, self.hip_joint_indices], dim=-1)[0] < -1.57)
         if torch.isnan(reward).any():
             raise ValueError("Encountered nan!")
         if torch.isinf(reward).any():
@@ -1205,7 +1205,7 @@ class LeggedRobot(BaseTask):
 
     def _reward_hip_roll_deviation(self):
         hip_roll_dof = self.dof_pos[:, self.hip_roll_joint_indices]
-        reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_roll_joint_indices]), dim=-1)[0] >  1.4) | (torch.min(self.dof_pos[:, self.hip_roll_joint_indices], dim=-1)[0] < -0.9)
+        reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_roll_joint_indices]), dim=-1)[0] >  0.9) | (torch.min(self.dof_pos[:, self.hip_roll_joint_indices], dim=-1)[0] < -1.57)
         if torch.isnan(reward).any():
             raise ValueError("Encountered nan!")
         if torch.isinf(reward).any():

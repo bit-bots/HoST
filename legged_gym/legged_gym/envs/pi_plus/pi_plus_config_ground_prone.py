@@ -135,9 +135,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         slope_treshold = 0.75 # slopes above this threshold will be corrected to vertical surfaces
 
     class asset( LeggedRobotCfg.asset ):
-        #old urdf without proper torso
-        #file = "{LEGGED_GYM_ROOT_DIR}/resources/robots/pi_plus_22dof/pi_plus_22dof.urdf"
-        file = "{LEGGED_GYM_ROOT_DIR}/resources/robots/pi_plus_torso/pi_plus_torso.urdf"
+        file = "{LEGGED_GYM_ROOT_DIR}/resources/robots/pi_plus_torso/pi_plus.urdf"
         name = "pi_plus"
         left_foot_name = "l_ankle_pitch"
         right_foot_name = "r_ankle_pitch"

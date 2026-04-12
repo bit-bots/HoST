@@ -1267,7 +1267,7 @@ class LeggedRobot(BaseTask):
         right_foot_pos = self.rigid_body_states[:, self.right_foot_indices, :3].clone()
         feet_distances = torch.norm(left_foot_pos - right_foot_pos, dim=-1)
         reward = tolerance(feet_distances, [0, 0.4], 0.38, 0.05)
-        return (feet_distances > 0.9).squeeze(1)
+        return (feet_distances > 0.4).squeeze(1)
 
     def _reward_torques(self):
         # Penalize torques
@@ -1401,7 +1401,7 @@ class LeggedRobot(BaseTask):
         base_xy = self.root_states[:, :2].clone()
         left_foot_xy = self.rigid_body_states[:, self.left_foot_indices, :2].squeeze(1)
         mse_error = torch.sum(torch.square(base_xy - left_foot_xy), dim=-1).clamp(0.3, np.inf)
-        reward = torch.exp(mse_error * self.cfg.rewards.left_foot_displacement_sigma) *  (self.rigid_body_states[:, self.left_foot_indices, 2] < 0.3).squeeze(1)
+        reward = torch.exp(mse_error * self.cfg.rewards.left_foot_displacement_sigma) *  (self.rigid_body_states[:, self.left_foot_indices, 2] < 0.2).squeeze(1)
 
         standup  = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
         return reward * standup
@@ -1410,7 +1410,7 @@ class LeggedRobot(BaseTask):
         base_xy = self.root_states[:, :2].clone()
         right_foot_xy = self.rigid_body_states[:, self.right_foot_indices, :2].squeeze(1)
         mse_error = torch.sum(torch.square(base_xy - right_foot_xy), dim=-1).clamp(0.3, np.inf)
-        reward = torch.exp(mse_error * self.cfg.rewards.right_foot_displacement_sigma) * (self.rigid_body_states[:, self.right_foot_indices, 2] < 0.3).squeeze(1)
+        reward = torch.exp(mse_error * self.cfg.rewards.right_foot_displacement_sigma) * (self.rigid_body_states[:, self.right_foot_indices, 2] < 0.2).squeeze(1)
 
         standup  = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
         return reward * standup
@@ -1418,26 +1418,30 @@ class LeggedRobot(BaseTask):
     def _reward_waist_deviation(self):
         wrist_dof = self.dof_pos[:, self.waist_joint_indices]
         reward = (torch.abs(wrist_dof) > 0.3).float()
-        return reward.squeeze(1)
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
+        return reward
 
     def _reward_hip_yaw_deviation(self):
         hip_yaw_dof = self.dof_pos[:, self.hip_joint_indices]
-        reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_joint_indices]), dim=-1)[0] > 0.9) | (torch.min(torch.abs(self.dof_pos[:, self.hip_joint_indices]), dim=-1)[0] > 0.8)
+        reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_joint_indices]), dim=-1)[0] > 1.57) | (torch.min(torch.abs(self.dof_pos[:, self.hip_joint_indices]), dim=-1)[0] < -1.57)
         return reward
 
     def _reward_hip_roll_deviation(self):
         hip_roll_dof = self.dof_pos[:, self.hip_roll_joint_indices]
-        reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_roll_joint_indices]), dim=-1)[0] >  0.9) | (torch.min(torch.abs(self.dof_pos[:, self.hip_roll_joint_indices]), dim=-1)[0] > 0.8)
+        reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_roll_joint_indices]), dim=-1)[0] >  0.9) | (torch.min(torch.abs(self.dof_pos[:, self.hip_roll_joint_indices]), dim=-1)[0] < -1.57)
         return reward
 
     def _reward_hip_pitch_deviation(self):
         hip_pitch_dof = self.dof_pos[:, self.hip_pitch_joint_indices]
-        reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_pitch_joint_indices]), dim=-1)[0] > 0.9) | (torch.min(torch.abs(self.dof_pos[:, self.hip_pitch_joint_indices]), dim=-1)[0] > 0.8)
+        reward = (torch.max(torch.abs(self.dof_pos[:, self.hip_pitch_joint_indices]), dim=-1)[0] > 1.35) | (torch.min(torch.abs(self.dof_pos[:, self.hip_pitch_joint_indices]), dim=-1)[0] < -1.7)
         return reward
 
     def _reward_knee_deviation(self):
         hip_roll_dof = self.dof_pos[:, self.knee_joint_indices]
-        reward = (torch.max(torch.abs(self.dof_pos[:, self.knee_joint_indices]), dim=-1)[0] > 2.85) | (torch.min(self.dof_pos[:, self.knee_joint_indices], dim=-1)[0] < -0.06)
+        reward = (torch.max(torch.abs(self.dof_pos[:, self.knee_joint_indices]), dim=-1)[0] > 0.5) | (torch.min(self.dof_pos[:, self.knee_joint_indices], dim=-1)[0] < -2.1)
         return reward
 
     def _reward_knee_deviation_pi_plus(self):
@@ -1515,6 +1519,10 @@ class LeggedRobot(BaseTask):
         if self.cfg.constraints.post_task:
             standup  = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
             reward = reward * ~standup + torch.ones_like(reward) * standup
+        if torch.isnan(reward).any():
+            raise ValueError("Encountered nan!")
+        if torch.isinf(reward).any():
+            raise ValueError("Encountered inf!")
         return reward
 
     def _reward_target_orientation(self):

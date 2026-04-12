@@ -254,19 +254,20 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             regu_dof_vel_limits = -1 
 
             # style reward
-            # style_waist_deviation = -10
+            style_waist_deviation = -10
             style_hip_yaw_deviation = -10
             style_hip_roll_deviation = -10
             style_hip_pitch_deviation = -10
             style_shoulder_roll_deviation = -2.5
             style_left_foot_displacement = 7.5 #7.5 updated to get better standing style
             style_right_foot_displacement = 7.5 #7.5  updated to get better standing style
-            #style_knee_deviation = -0.25
-            style_knee_deviation_pi_plus = -20
+            style_knee_deviation = -0.25
+            #style_knee_deviation_pi_plus = -20
             style_shank_orientation = 10
-            style_ground_parallel = 10
-            #style_feet_distance = -10
+            style_ground_parallel = 20
+            style_feet_distance = -10
             style_style_ang_vel_xy = 1
+            style_feet_parallel = 10
             #style_soft_symmetry_action=-10  #  updated to get better standing style
             #style_soft_symmetry_body=2.5 # updated to get better standing style
 

@@ -165,7 +165,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         left_shoulder_roll_joints = ['l_shoulder_roll_joint']
         right_shoulder_roll_joints = ['r_shoulder_roll_joint']
 
-        waist_joints = ["torso_joint"]  # Placeholder
+        waist_joints = []  # Placeholder
 
         left_knee_joints = ['l_calf_joint']
         right_knee_joints = ['r_calf_joint']    

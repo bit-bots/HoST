@@ -78,20 +78,22 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         # PD Drive parameters:
         control_type = 'P'
         stiffness = {
-            "hip_pitch": 80,
-            "hip_roll": 80,
-            "thigh":80,
-            "calf": 80,
-            "ankle_pitch": 80,
-            "ankle_roll": 80,
-            "shoulder_pitch": 30,
-            "shoulder_roll": 30,
-            "upper_arm": 30,
-            "elbow": 30,
+            "hip_pitch": 110,
+            "hip_roll": 110,
+            "thigh":110,
+            "calf": 110,
+            "ankle_pitch": 210,
+            "ankle_roll": 110,
+            "shoulder_pitch": 6,
+            "shoulder_roll": 6,
+            "upper_arm": 6,
+            "elbow": 6,
+            "head_yaw": 6,
+            "head_pitch":6,
         }  # [N*m/rad]
         damping = {
             "hip_pitch": 1.1,
-            "hip_roll": 1.1,
+            "hip_roll": 1.4,
             "thigh": 1.1,
             "calf": 1.1,
             "ankle_pitch": 1.1,
@@ -100,6 +102,8 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             "shoulder_roll": 0.6,
             "upper_arm": 0.6,
             "elbow": 0.6,
+            "head_yaw": 0.6,
+            "head_pitch": 0.6,
         }  # [N*m/rad]  # [N*m*s/rad]
         # action scale: target angle = actionRescale * action + cur_dof_pos
         action_scale = 1
@@ -159,7 +163,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         left_shoulder_roll_joints = ['l_shoulder_roll_joint']
         right_shoulder_roll_joints = ['r_shoulder_roll_joint']
 
-        waist_joints = ["waist_yaw_joint"]  # Placeholder
+        waist_joints = ["torso_joint"]  # Placeholder
 
         left_knee_joints = ['l_calf_joint']
         right_knee_joints = ['r_calf_joint']    

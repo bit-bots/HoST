@@ -362,7 +362,7 @@
      <parent link="torso_link" />
      <child link="head_yaw_link" />
      <axis xyz="0 0 1" />
-     <limit lower="-1.43" upper="1.43" effort="3" velocity="30.37" />
+     <limit lower="-1.43" upper="1.43" effort="2.5" velocity="30.37" />
      <dynamics damping="0.02" friction="0.0"/> <!-- 即使很小的阻尼也能极大改善稳定性 -->
    </joint>
    <link name="head_pitch_link">
@@ -392,7 +392,7 @@
      <parent link="head_yaw_link" />
      <child link="head_pitch_link" />
      <axis xyz="0 1 0" />
-     <limit lower="-1.23" upper="1.01" effort="3" velocity="30.37" />
+     <limit lower="-1.23" upper="1.01" effort="2.5" velocity="30.37" />
      <dynamics damping="0.02" friction="0.0"/> <!-- 即使很小的阻尼也能极大改善稳定性 -->
    </joint>
    <link name="camera_link">

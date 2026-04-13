@@ -258,7 +258,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             style_hip_yaw_deviation = -10
             style_hip_roll_deviation = -10
             style_hip_pitch_deviation = -10
-            style_shoulder_roll_deviation = -2.5
+            #style_shoulder_roll_deviation = -2.5 #maybe tis reward has wrong hardcodes numbers for pi_plus
             style_left_foot_displacement = 7.5 #7.5 updated to get better standing style
             style_right_foot_displacement = 7.5 #7.5  updated to get better standing style
             style_knee_deviation = -0.25

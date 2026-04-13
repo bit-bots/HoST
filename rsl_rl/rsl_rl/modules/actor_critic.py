@@ -116,6 +116,8 @@ class ActorCritic(nn.Module):
 
     def update_distribution(self, observations):
         mean = self.actor(observations)
+        if torch.isnan(mean).any() or torch.isinf(mean).any():
+            mean = torch.nan_to_num(mean, nan=0.0, posinf=0.0, neginf=0.0)
         self.distribution = Normal(mean, mean*0. + self.std)
 
     def act(self, observations, **kwargs):
@@ -134,6 +136,8 @@ class ActorCritic(nn.Module):
 
     def evaluate(self, critic_observations, **kwargs):
         values = torch.concat([critic(critic_observations) for critic in self.critics], dim=-1)
+        if torch.isnan(values).any() or torch.isinf(values).any():
+            values = torch.nan_to_num(values, nan=0.0, posinf=0.0, neginf=0.0)
         return values
 
 

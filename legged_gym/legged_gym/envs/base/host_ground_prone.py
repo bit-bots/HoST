@@ -119,8 +119,10 @@ class LeggedRobot(BaseTask):
 
         # return clipped obs, clipped states (None), rewards, dones and infos
         clip_obs = self.cfg.normalization.clip_observations
+        self.obs_buf = torch.nan_to_num(self.obs_buf, nan=0.0, posinf=clip_obs, neginf=-clip_obs)
         self.obs_buf = torch.clip(self.obs_buf, -clip_obs, clip_obs)
         if self.privileged_obs_buf is not None:
+            self.privileged_obs_buf = torch.nan_to_num(self.privileged_obs_buf, nan=0.0, posinf=clip_obs, neginf=-clip_obs)
             self.privileged_obs_buf = torch.clip(self.privileged_obs_buf, -clip_obs, clip_obs)
         
         return self.obs_buf, self.privileged_obs_buf, self.rew_buf, self.reset_buf, self.extras

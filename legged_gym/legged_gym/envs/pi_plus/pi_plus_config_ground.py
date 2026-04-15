@@ -290,7 +290,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         motor_strength_range = [0.9, 1.1]
 
         randomize_payload_mass = use_random
-        payload_mass_range = [-2, 3]
+        payload_mass_range = [0.9, 1.1]
 
         randomize_com_displacement = use_random
         com_displacement_range = [-0.03, 0.03]

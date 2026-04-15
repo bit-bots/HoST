@@ -293,7 +293,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         motor_strength_range = [0.9, 1.1]
 
         randomize_payload_mass = use_random
-        payload_mass_range = [-2, 3]
+        payload_mass_range = [-1, 2]
 
         randomize_com_displacement = use_random
         com_displacement_range = [-0.03, 0.03]
@@ -305,7 +305,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         friction_range = [0.1, 1]
         
         randomize_restitution = use_random
-        restitution_range = [0.0, 1.0]
+        restitution_range = [0.0, 0.7]
         
         randomize_kp = use_random
         kp_range = [0.85, 1.15]
@@ -314,7 +314,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         kd_range = [0.85, 1.15]
         
         randomize_initial_joint_pos = True
-        initial_joint_pos_scale = [0.9, 1.1]
+        initial_joint_pos_scale = [0.5, 1.2]
         initial_joint_pos_offset = [-0.1, 0.1]
         
         push_robots = True 

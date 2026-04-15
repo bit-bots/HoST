@@ -141,6 +141,8 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         right_foot_name = "r_ankle_pitch"
         left_knee_name = 'l_calf'
         right_knee_name = 'r_calf'
+        left_thigh_name = 'l_hip_pitch'
+        right_thigh_name = 'r_hip_pitch'
         foot_name = "ankle_roll"
         penalize_contacts_on = ['calf', 'hip', 'head', 'wrist', 'elbow', 'upper_arm', 'shoulder']
         terminate_after_contacts_on = []    #'torse'
@@ -161,7 +163,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         left_shoulder_roll_joints = ['l_shoulder_roll_joint']
         right_shoulder_roll_joints = ['r_shoulder_roll_joint']
 
-        waist_joints = ["torso_joint"]  # Placeholder
+        waist_joints = []  # Placeholder
 
         left_knee_joints = ['l_calf_joint']
         right_knee_joints = ['r_calf_joint']    
@@ -178,9 +180,10 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         trunk_names = ["base_link"]
         torso_name = 'base_link'
         base_name = 'base_link'
+        tracking_body_names =  ['base_link']
 
-        left_upper_body_names = ['l_shoulder_pitch', 'l_elbow']
-        right_upper_body_names = ['r_shoulder_pitch', 'r_elbow']
+        left_upper_body_names = ['l_shoulder_pitch_joint', 'l_shoulder_roll_joint', 'l_upper_arm_joint', 'l_elbow_joint']
+        right_upper_body_names = ['r_shoulder_pitch_joint', 'r_shoulder_roll_joint', 'r_upper_arm_joint', 'r_elbow_joint']
         left_lower_body_names = ['l_hip_pitch', 'l_ankle_roll', 'l_calf']
         right_lower_body_names = ['r_hip_pitch', 'r_ankle_roll', 'r_calf']
 
@@ -200,19 +203,21 @@ class Pi_PlusCfg( LeggedRobotCfg ):
     class rewards( LeggedRobotCfg.rewards ):
         soft_dof_pos_limit = 0.9
         soft_dof_vel_limit = 0.9
+        base_height_sigma = 0.3 #für ground_prone hinuzgefügt
+        tracking_dof_sigma = 0.3 #für ground_prone hinuzgefügt
         base_height_target = 0.34  # updated to match Piwaist
         only_positive_rewards = False # if true negative total rewards are clipped at zero (avoids early termination problems)
         orientation_sigma = 1
         is_gaussian = True
-        target_head_height = 0.37  # updated to match Piwaist head_height_target (base_height + 0.08)
-        target_head_margin = 0.37
-        target_base_height_phase1 = 0.20  # updated to match Piwaist
-        target_base_height_phase2 = 0.20 #0.05 updated to 0.05 to get better standing style
-        target_base_height_phase3 = 0.30  # updated to match Piwaist
+        target_head_height = 0.45  # updated to match Piwaist head_height_target (base_height + 0.08)
+        target_head_margin = 0.30
+        target_base_height_phase1 = 0.23  # updated to match Piwaist
+        target_base_height_phase2 = 0.23 #0.05 updated to 0.05 to get better standing style
+        target_base_height_phase3 = 0.35  # updated to match Piwaist
         orientation_threshold = 0.99
         left_foot_displacement_sigma = -20#-200 updated to get better standing style
         right_foot_displacement_sigma = -20#-200 updated to get better standing style
-        target_dof_pos_sigma = -5
+        target_dof_pos_sigma = -0.1
         tracking_sigma = 0.25 # tracking reward = exp(-error^2/sigma)
 
         reward_groups = ['task', 'regu', 'style', 'target']
@@ -233,7 +238,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         left_foot_displacement_sigma = -20#-200 updated to get better standing style
         right_foot_displacement_sigma = -20#-200 updated to get better standing style
         hip_yaw_var_sigma = -2
-        target_dof_pos_sigma = -1
+        target_dof_pos_sigma = -0.1
         post_task = False
         
         class scales:

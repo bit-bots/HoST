@@ -182,8 +182,8 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         base_name = 'base_link'
         tracking_body_names =  ['base_link']
 
-        left_upper_body_names = ['l_shoulder_pitch', 'l_elbow']
-        right_upper_body_names = ['r_shoulder_pitch', 'r_elbow']
+        left_upper_body_names = ['l_shoulder_pitch_joint', 'l_shoulder_roll_joint', 'l_upper_arm_joint', 'l_elbow_joint']
+        right_upper_body_names = ['r_shoulder_pitch_joint', 'r_shoulder_roll_joint', 'r_upper_arm_joint', 'r_elbow_joint']
         left_lower_body_names = ['l_hip_pitch', 'l_ankle_roll', 'l_calf']
         right_lower_body_names = ['r_hip_pitch', 'r_ankle_roll', 'r_calf']
 
@@ -217,7 +217,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         orientation_threshold = 0.99
         left_foot_displacement_sigma = -20#-200 updated to get better standing style
         right_foot_displacement_sigma = -20#-200 updated to get better standing style
-        target_dof_pos_sigma = -5
+        target_dof_pos_sigma = -0.1
         tracking_sigma = 0.25 # tracking reward = exp(-error^2/sigma)
 
         reward_groups = ['task', 'regu', 'style', 'target']
@@ -238,7 +238,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         left_foot_displacement_sigma = -20#-200 updated to get better standing style
         right_foot_displacement_sigma = -20#-200 updated to get better standing style
         hip_yaw_var_sigma = -2
-        target_dof_pos_sigma = -1
+        target_dof_pos_sigma = -0.1
         post_task = False
         
         class scales:
@@ -258,7 +258,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             style_hip_yaw_deviation = -10
             style_hip_roll_deviation = -10
             style_hip_pitch_deviation = -10
-            #style_shoulder_roll_deviation = -2.5 #maybe tis reward has wrong hardcodes numbers for pi_plus
+            style_shoulder_roll_deviation = -10 #lets see if this helps for target_upper_body
             style_left_foot_displacement = 7.5 #7.5 updated to get better standing style
             style_right_foot_displacement = 7.5 #7.5  updated to get better standing style
             style_knee_deviation = -0.25
@@ -276,6 +276,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             target_lin_vel_xy = 5
             target_feet_height_var = 2.5
             target_lower_body_deviation = 20
+            target_upper_body_var = 20
             target_target_lower_dof_pos = 30  #  updated to get better standing style
             target_target_upper_dof_pos = 30
             target_target_orientation = 20

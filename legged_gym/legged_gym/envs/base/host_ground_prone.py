@@ -1579,7 +1579,7 @@ class LeggedRobot(BaseTask):
 
     def _reward_shoulder_roll_deviation(self):
         hip_roll_dof = self.dof_pos[:, self.shoulder_roll_joint_indices]
-        reward = ((self.dof_pos[:, self.shoulder_roll_joint_indices[0]] < -0.02) | (self.dof_pos[:, self.shoulder_roll_joint_indices[1]] > 0.02)).float()
+        reward = ((self.dof_pos[:, self.shoulder_roll_joint_indices[0]] < -2.0) | (self.dof_pos[:, self.shoulder_roll_joint_indices[1]] > 0.13+)).float()
         if torch.isnan(reward).any() or torch.isinf(reward).any():
             return torch.zeros_like(reward)
         return reward

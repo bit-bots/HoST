@@ -107,7 +107,6 @@ class LeggedRobot(BaseTask):
             if self.cfg.curriculum.pull_force:
                 force_tensor = torch.zeros([self.num_envs, self.num_bodies, 3], device=self.device)
                 force_tensor[:, self.base_indices, 2] = self.force 
-
                 force_tensor *= (self.real_episode_length_buf.unsqueeze(1) > self.unactuated_time).unsqueeze(1)
                 if not self.cfg.curriculum.no_orientation:
                     force_tensor *= (self.projected_gravity[:, 2] < -0.8).unsqueeze(1).unsqueeze(1)
@@ -121,8 +120,10 @@ class LeggedRobot(BaseTask):
 
         # return clipped obs, clipped states (None), rewards, dones and infos
         clip_obs = self.cfg.normalization.clip_observations
+        self.obs_buf = torch.nan_to_num(self.obs_buf, nan=0.0, posinf=clip_obs, neginf=-clip_obs)
         self.obs_buf = torch.clip(self.obs_buf, -clip_obs, clip_obs)
         if self.privileged_obs_buf is not None:
+            self.privileged_obs_buf = torch.nan_to_num(self.privileged_obs_buf, nan=0.0, posinf=clip_obs, neginf=-clip_obs)
             self.privileged_obs_buf = torch.clip(self.privileged_obs_buf, -clip_obs, clip_obs)
         
         return self.obs_buf, self.privileged_obs_buf, self.rew_buf, self.reset_buf, self.extras
@@ -177,12 +178,6 @@ class LeggedRobot(BaseTask):
 
         self.base_vel_out = (torch.norm(self.base_lin_vel[:, :3], dim=-1) > self.cfg.curriculum.base_vel_limit) & (self.real_episode_length_buf > self.unactuated_time)
         self.reset_buf |= self.base_vel_out
-
-        nan_state = torch.isnan(self.root_states[:, 2]).any()
-        nan_state |= torch.isnan(self.dof_vel).any()
-        
-        if nan_state:
-            raise ValueError("NaN detected in state!")
 
     def reset_idx(self, env_ids):
         """ Reset some environments.
@@ -1216,7 +1211,7 @@ class LeggedRobot(BaseTask):
 
     def _reward_knee_deviation(self):
         hip_roll_dof = self.dof_pos[:, self.knee_joint_indices]
-        reward = (torch.max(torch.abs(self.dof_pos[:, self.knee_joint_indices]), dim=-1)[0] > 2.85) | (torch.min(self.dof_pos[:, self.knee_joint_indices], dim=-1)[0] < -0.06)
+        reward = (torch.max(torch.abs(self.dof_pos[:, self.knee_joint_indices]), dim=-1)[0] > 0.5) | (torch.min(self.dof_pos[:, self.knee_joint_indices], dim=-1)[0] < -2.1)
         if torch.isnan(reward).any() or torch.isinf(reward).any():
             return torch.zeros_like(reward)
         return reward

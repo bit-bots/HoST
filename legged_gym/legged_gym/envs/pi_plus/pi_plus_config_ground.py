@@ -163,7 +163,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         left_shoulder_roll_joints = ['l_shoulder_roll_joint']
         right_shoulder_roll_joints = ['r_shoulder_roll_joint']
 
-        waist_joints = []  # Placeholder
+        waist_joints = ['torso_joint']  # Placeholder
 
         left_knee_joints = ['l_calf_joint']
         right_knee_joints = ['r_calf_joint']    
@@ -254,16 +254,16 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             regu_dof_vel_limits = -1 
 
             # style reward
-            style_waist_deviation = -10
+            #style_waist_deviation = -10 #pi+ has no waist joint
             style_hip_yaw_deviation = -10
             style_hip_roll_deviation = -10
             style_shoulder_roll_deviation = -2.5
             style_left_foot_displacement = 7.5 #7.5 updated to get better standing style
             style_right_foot_displacement = 7.5 #7.5  updated to get better standing style
-            #style_knee_deviation = -0.25
-            style_knee_deviation_pi_plus = -20
+            style_knee_deviation = -0.25
+            #style_knee_deviation_pi_plus = -20
             style_shank_orientation = 10
-            style_ground_parallel = 10
+            style_ground_parallel = 20
             #style_feet_distance = -10
             style_style_ang_vel_xy = 1
             #style_soft_symmetry_action=-10  #  updated to get better standing style
@@ -302,7 +302,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         friction_range = [0.1, 1]
         
         randomize_restitution = use_random
-        restitution_range = [0.0, 1.0]
+        restitution_range = [0.0, 0.7]
         
         randomize_kp = use_random
         kp_range = [0.85, 1.15]
@@ -311,7 +311,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         kd_range = [0.85, 1.15]
         
         randomize_initial_joint_pos = True
-        initial_joint_pos_scale = [0.9, 1.1]
+        initial_joint_pos_scale = [0.5, 1.2]
         initial_joint_pos_offset = [-0.1, 0.1]
         
         push_robots = True 

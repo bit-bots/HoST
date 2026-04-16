@@ -1170,6 +1170,13 @@ class LeggedRobot(BaseTask):
         if torch.isnan(reward).any() or torch.isinf(reward).any():
             return torch.zeros_like(reward)
         return reward
+    
+    def _reward_hip_pitch_deviation(self):
+        hip_pitch_dof = self.dof_pos[:, self.hip_pitch_joint_indices]
+        reward = ((torch.max(torch.abs(self.dof_pos[:, self.hip_pitch_joint_indices]), dim=-1)[0] > 1.35) | (torch.min(torch.abs(self.dof_pos[:, self.hip_pitch_joint_indices]), dim=-1)[0] < -1.7)).float()
+        if torch.isnan(reward).any() or torch.isinf(reward).any():
+            return torch.zeros_like(reward)
+        return reward
 
     def _reward_hip_roll_deviation(self):
         hip_roll_dof = self.dof_pos[:, self.hip_roll_joint_indices]
@@ -1260,15 +1267,34 @@ class LeggedRobot(BaseTask):
             return torch.zeros_like(reward)
         return reward
 
+    def _reward_upper_body_var(self):
+        left_upper_body_pos = self.rigid_body_states[:, self.left_upper_body_indices, :3].clone() * 10
+        right_upper_body_pos = self.rigid_body_states[:, self.right_upper_body_indices, :3].clone() * 10
+        upper_body_distance = torch.norm(left_upper_body_pos - right_upper_body_pos, dim=-1)
+        standup  = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3
+        reward = torch.exp(upper_body_distance.var(1) * -2) * standup
+        if torch.isnan(reward).any() or torch.isinf(reward).any():
+            return torch.zeros_like(reward)
+        return reward
+    
+    def _reward_feet_parallel(self):
+        left_foot_pos = self.rigid_body_states[:, self.left_foot_indices[0:3], :3].clone()
+        right_foot_pos = self.rigid_body_states[:, self.right_foot_indices[0:3], :3].clone()
+        feet_distances = torch.norm(left_foot_pos - right_foot_pos, dim=2)
+        reward = torch.var(feet_distances, dim=1)
+        if torch.isnan(reward).any() or torch.isinf(reward).any():
+            return torch.zeros_like(reward)
+        return reward
+    
     def _reward_feet_distance(self):
-       left_foot_pos = self.rigid_body_states[:, self.left_foot_indices, :3].clone()
-       right_foot_pos = self.rigid_body_states[:, self.right_foot_indices, :3].clone()
-       feet_distances = torch.norm(left_foot_pos - right_foot_pos, dim=-1)
-       reward = tolerance(feet_distances, [0.4, 0.7], 0.1, 0.05)
-       reward = (feet_distances > 0.9).squeeze(1)
-       if torch.isnan(reward).any() or torch.isinf(reward).any():
-           return torch.zeros_like(reward)
-       return reward
+        left_foot_pos = self.rigid_body_states[:, self.left_foot_indices, :3].clone()
+        right_foot_pos = self.rigid_body_states[:, self.right_foot_indices, :3].clone()
+        feet_distances = torch.norm(left_foot_pos - right_foot_pos, dim=-1).squeeze(1)
+        target = 0.22  # target distance pi_plus ~22cm 
+        reward = torch.exp(-torch.square(feet_distances - target) / (2 * 0.05**2))  # sigma=5cm
+        if torch.isnan(reward).any() or torch.isinf(reward).any():
+            return torch.zeros_like(reward)
+        return reward
 
     def _reward_style_ang_vel_xy(self):
         # Penalize xy axes base angular velocity

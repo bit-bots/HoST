@@ -254,11 +254,11 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             regu_dof_vel_limits = -1 
 
             # style reward
-            #style_waist_deviation = -10 #pi+ has no waist joint 
+            #style_waist_deviation = -10 #pi+ has no waist joint
             style_hip_yaw_deviation = -10
             style_hip_roll_deviation = -10
             style_hip_pitch_deviation = -10
-            style_shoulder_roll_deviation = -10 #lets see if this helps for target_upper_body
+            style_shoulder_roll_deviation = -10
             style_left_foot_displacement = 7.5 #7.5 updated to get better standing style
             style_right_foot_displacement = 7.5 #7.5  updated to get better standing style
             style_knee_deviation = -0.25

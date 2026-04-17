@@ -15,7 +15,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             "l_ankle_roll_joint": 0,
             #left arm (4 dof)
             "l_shoulder_pitch_joint": -1.57,
-            "l_shoulder_roll_joint": -1.57,
+            "l_shoulder_roll_joint": -1.3,
             "l_upper_arm_joint": 0.0,
             "l_elbow_joint": -1.57,
             # right leg (6 dof)
@@ -27,7 +27,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             "r_ankle_roll_joint": 0,
             #right arm (4 dof)
             "r_shoulder_pitch_joint": -1.57,
-            "r_shoulder_roll_joint": -1.57,
+            "r_shoulder_roll_joint": -1.3,
             "r_upper_arm_joint": 0.0,
             "r_elbow_joint": -1.57,
             
@@ -272,8 +272,8 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             #style_soft_symmetry_body=2.5 # updated to get better standing style
 
             # post-task reward
-            target_ang_vel_xy = 5
-            target_lin_vel_xy = 5
+            target_ang_vel_xy = 7.5
+            target_lin_vel_xy = 7.5
             target_feet_height_var = 2.5
             target_lower_body_deviation = 20
             target_upper_body_var = 20

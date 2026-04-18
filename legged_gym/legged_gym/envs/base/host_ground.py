@@ -1405,6 +1405,7 @@ class LeggedRobot(BaseTask):
         lower_body_dof_left = torch.cat([self.left_hip_roll_joint_indices, self.left_hip_pitch_joint_indices, self.left_hip_joint_indices, self.left_knee_joint_indices])
         lower_body_dof_right = torch.cat([self.right_hip_roll_joint_indices, self.right_hip_pitch_joint_indices, self.right_hip_joint_indices, self.right_knee_joint_indices])
         left_dof_pos = self.dof_pos[:, lower_body_dof_left].unsqueeze(1)
+        left_dof_pos[:, :, 0] =  -left_dof_pos[:, :, 0]  # hip_roll  (same axis 1 0 0, but mirrored limits: r[-2.46,0.17] l[-0.17,2.46])
         left_dof_pos[:, :, 1] =  -left_dof_pos[:, :, 1]  # hip_pitch (r: 0 -1 0, l: 0 1 0)
         left_dof_pos[:, :, 3] =  -left_dof_pos[:, :, 3]  # calf      (r: 0  1 0, l: 0 -1 0)
         right_dof_pos = self.dof_pos[:, lower_body_dof_right].unsqueeze(1)

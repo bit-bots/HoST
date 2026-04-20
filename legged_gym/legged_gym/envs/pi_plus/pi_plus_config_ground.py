@@ -15,7 +15,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             "l_ankle_roll_joint": 0,
             #left arm (4 dof)
             "l_shoulder_pitch_joint": -1.57,
-            "l_shoulder_roll_joint": -1.57,
+            "l_shoulder_roll_joint": -1.3,
             "l_upper_arm_joint": 0.0,
             "l_elbow_joint": -1.57,
             # right leg (6 dof)
@@ -27,7 +27,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             "r_ankle_roll_joint": 0,
             #right arm (4 dof)
             "r_shoulder_pitch_joint": -1.57,
-            "r_shoulder_roll_joint": -1.57,
+            "r_shoulder_roll_joint": -1.3,
             "r_upper_arm_joint": 0.0,
             "r_elbow_joint": -1.57,
             
@@ -293,7 +293,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         motor_strength_range = [0.9, 1.1]
 
         randomize_payload_mass = use_random
-        payload_mass_range = [0.9, 1.1]
+        payload_mass_range = [-0.5, 1]
 
         randomize_com_displacement = use_random
         com_displacement_range = [-0.03, 0.03]

@@ -498,8 +498,20 @@ class LeggedRobot(BaseTask):
             init_dos_pos += torch_rand_float(self.cfg.domain_rand.initial_joint_pos_offset[0], self.cfg.domain_rand.initial_joint_pos_offset[1], (len(env_ids), self.num_dof), device=self.device)
             self.dof_pos[env_ids] = torch.clip(init_dos_pos, dof_lower, dof_upper)
         else:
-            self.dof_pos[env_ids] = self.default_dof_pos * torch_rand_float(0.5, 1.5, (len(env_ids), self.num_dof), device=self.device) + int(self.cfg.domain_rand.random_pose) * torch_rand_float(-1, 1, (len(env_ids), self.num_dof), device=self.device) 
+            self.dof_pos[env_ids] = self.default_dof_pos * torch_rand_float(0.5, 1.5, (len(env_ids), self.num_dof), device=self.device) + int(self.cfg.domain_rand.random_pose) * torch_rand_float(-1, 1, (len(env_ids), self.num_dof), device=self.device)
             self.dof_vel[env_ids] = 0.
+
+        if getattr(self.cfg.domain_rand, 'randomize_arm_joint_pos', False):
+            arm_indices = torch.cat([self.left_arm_joint_indices, self.right_arm_joint_indices])
+            num_arm = len(arm_indices)
+            arm_pos = self.default_dof_pos[:, arm_indices] * torch_rand_float(
+                self.cfg.domain_rand.arm_joint_pos_scale[0], self.cfg.domain_rand.arm_joint_pos_scale[1],
+                (len(env_ids), num_arm), device=self.device)
+            arm_pos += torch_rand_float(
+                self.cfg.domain_rand.arm_joint_pos_offset[0], self.cfg.domain_rand.arm_joint_pos_offset[1],
+                (len(env_ids), num_arm), device=self.device)
+            arm_pos = torch.clip(arm_pos, dof_lower[:, arm_indices], dof_upper[:, arm_indices])
+            self.dof_pos[env_ids.unsqueeze(1), arm_indices.unsqueeze(0)] = arm_pos
 
         self.dof_vel[env_ids] = 0.
 

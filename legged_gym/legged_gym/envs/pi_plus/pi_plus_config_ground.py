@@ -268,7 +268,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             style_ground_parallel = 25
             style_feet_distance = 10
             style_style_ang_vel_xy = 1
-            style_feet_parallel = 10
+            style_feet_parallel = -10
             #style_soft_symmetry_action=-10  #  updated to get better standing style
             #style_soft_symmetry_body=2.5 # updated to get better standing style
 

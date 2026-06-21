@@ -44,8 +44,8 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             "l_ankle_pitch_joint": -0.0,
             "l_ankle_roll_joint": 0,
             #left arm (4 dof)
-            "l_shoulder_pitch_joint": -1.57,
-            "l_shoulder_roll_joint": -0.5,
+            "l_shoulder_pitch_joint": 0.0,  # arm rotation auskommentiert (war -1.57)
+            "l_shoulder_roll_joint": 0.0,   # arm rotation auskommentiert (war -0.5)
             "l_upper_arm_joint": 0.0,
             "l_elbow_joint": 0.0,
             # right leg (6 dof)
@@ -56,8 +56,8 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             "r_ankle_pitch_joint": -0.0,
             "r_ankle_roll_joint": 0,
             #right arm (4 dof)
-            "r_shoulder_pitch_joint": -1.57,
-            "r_shoulder_roll_joint": -0.5,
+            "r_shoulder_pitch_joint": 0.0,  # arm rotation auskommentiert (war -1.57)
+            "r_shoulder_roll_joint": 0.0,   # arm rotation auskommentiert (war -0.5)
             "r_upper_arm_joint": 0.0,
             "r_elbow_joint": 0.0,
             #head (2 dof)
@@ -331,7 +331,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         initial_joint_pos_scale = [0.5, 1.2]
         initial_joint_pos_offset = [-0.1, 0.1]
 
-        randomize_arm_joint_pos = True
+        randomize_arm_joint_pos = False
         arm_joint_pos_scale = [0.3, 1.5]
         arm_joint_pos_offset = [-0.4, 0.4]
 

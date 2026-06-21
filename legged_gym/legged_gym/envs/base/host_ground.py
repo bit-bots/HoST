@@ -387,6 +387,12 @@ class LeggedRobot(BaseTask):
             self.dof_pos_limits = torch.zeros(self.num_dof, 2, dtype=torch.float, device=self.device, requires_grad=False)
             self.dof_vel_limits = torch.zeros(self.num_dof, dtype=torch.float, device=self.device, requires_grad=False)
             self.torque_limits = torch.zeros(self.num_dof, dtype=torch.float, device=self.device, requires_grad=False)
+
+            # Per-joint armature override matching the bitbots_main MuJoCo XML
+            # (the real-robot model). Isaac Gym's asset_options.armature sets a
+            # uniform value across all DOFs; without this override the head
+            # joints would train with 4x too much rotor inertia.
+            per_joint_armature = getattr(self.cfg.asset, "per_joint_armature", None)
             for i in range(len(props)):
                 self.dof_pos_limits[i, 0] = props["lower"][i].item()
                 self.dof_pos_limits[i, 1] = props["upper"][i].item()
@@ -395,6 +401,12 @@ class LeggedRobot(BaseTask):
                 # hard limits
                 self.dof_pos_limits[i, 0] = self.dof_pos_limits[i, 0] * self.cfg.rewards.soft_dof_pos_limit
                 self.dof_pos_limits[i, 1] = self.dof_pos_limits[i, 1] * self.cfg.rewards.soft_dof_pos_limit
+                if per_joint_armature is not None:
+                    name = self.dof_names[i]
+                    for key, value in per_joint_armature.items():
+                        if key in name:
+                            props["armature"][i] = value
+                            break
         return props
 
     def _process_rigid_body_props(self, props, env_id):

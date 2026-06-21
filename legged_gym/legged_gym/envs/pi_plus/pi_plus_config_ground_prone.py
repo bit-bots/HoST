@@ -135,7 +135,8 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         slope_treshold = 0.75 # slopes above this threshold will be corrected to vertical surfaces
 
     class asset( LeggedRobotCfg.asset ):
-        file = "{LEGGED_GYM_ROOT_DIR}/resources/robots/pi_plus_torso/pi_plus.urdf"
+        #file = "{LEGGED_GYM_ROOT_DIR}/resources/robots/pi_plus_torso/pi_plus.urdf"
+        file = "{LEGGED_GYM_ROOT_DIR}/resources/robots/pi_plus_torso/pi_plus_correct_limits.urdf"
         name = "pi_plus"
         left_foot_name = "l_ankle_pitch"
         right_foot_name = "r_ankle_pitch"
@@ -195,7 +196,20 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         linear_damping = 0.01
         max_angular_velocity = 1000.
         max_linear_velocity = 1000.
-        armature = 0.01
+        armature = 0.01316  # uniform fallback; per-joint values applied via per_joint_armature
+        # Per-joint armature override (substring match against dof_names) to
+        # mirror the real-robot / bitbots_main MuJoCo XML. Applied in
+        # `host_ground._process_dof_props`.
+        per_joint_armature = {
+            "hip":        0.01316,
+            "thigh":      0.01316,
+            "calf":       0.01316,
+            "ankle":      0.01316,
+            "shoulder":   0.01317,
+            "upper_arm":  0.01317,
+            "elbow":      0.01317,
+            "head":       0.00249,
+        }
         thickness = 0.01
         self_collisions = 0 # 1 to disable, 0 to enable...bitwise filter
         flip_visual_attachments = False

@@ -74,26 +74,35 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         episode_length_s = 10 # episode length in seconds
         unactuated_timesteps = 30
 
-    class control( LeggedRobotCfg.control ): #Values found on: github.com/HighTorque-Robotics/Mini-Pi-Plus_BeyondMimic/blob/master/source/whole_body_tracking/whole_body_tracking/robots/pi_plus.py
-        # PD Drive parameters:
+    class control( LeggedRobotCfg.control ):
+        # PD Drive parameters, taken 1:1 from the BeyondMimic motion-tracking setup that
+        # transfers to the real Pi+ (mocap/Mini-Pi-Plus_BeyondMimic, source/whole_body_tracking/
+        # whole_body_tracking/robots/pi_plus.py):
+        #   STIFFNESS_5047 = 80, DAMPING_5047 = 1.1  -> all leg + foot joints
+        #   STIFFNESS_4438 = 30, DAMPING_4438 = 0.6  -> all arm joints
+        # The same gains are hardcoded in that repo's MuJoCo sim2sim validation
+        # (scripts/sim2sim.py: PI_PLUS_LEG_KP/KD, PI_PLUS_ARM_KP/KD), i.e. they are the
+        # gains the working sim2real policy was trained and validated with.
+        # The head is fixed in BeyondMimic, so its gains stay at the bitbots_main MuJoCo
+        # values (bitbots_mujoco_sim/xml/pi_plus.xml, class "pi_actuator_head": kp=6, kv=0.6).
         control_type = 'P'
         stiffness = {
-            "hip_pitch": 110,
-            "hip_roll": 110,
-            "thigh":110,
-            "calf": 110,
-            "ankle_pitch": 210,
-            "ankle_roll": 110,
-            "shoulder_pitch": 6,
-            "shoulder_roll": 6,
-            "upper_arm": 6,
-            "elbow": 6,
+            "hip_pitch": 80,
+            "hip_roll": 80,
+            "thigh": 80,
+            "calf": 80,
+            "ankle_pitch": 80,
+            "ankle_roll": 80,
+            "shoulder_pitch": 30,
+            "shoulder_roll": 30,
+            "upper_arm": 30,
+            "elbow": 30,
             "head_yaw": 6,
-            "head_pitch":6,
+            "head_pitch": 6,
         }  # [N*m/rad]
         damping = {
             "hip_pitch": 1.1,
-            "hip_roll": 1.4,
+            "hip_roll": 1.1,
             "thigh": 1.1,
             "calf": 1.1,
             "ankle_pitch": 1.1,
@@ -104,7 +113,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             "elbow": 0.6,
             "head_yaw": 0.6,
             "head_pitch": 0.6,
-        }  # [N*m/rad]  # [N*m*s/rad]
+        }  # [N*m*s/rad]
         # action scale: target angle = actionRescale * action + cur_dof_pos
         action_scale = 1
         # decimation: Number of control action updates @ sim DT per policy DT
@@ -210,6 +219,22 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             "elbow":      0.01317,
             "head":       0.00249,
         }
+        # Passive DOF drive damping / Coulomb friction.
+        # pi_plus_correct_limits.urdf carries <dynamics damping="1.5"/> (legs),
+        # damping="0.66" friction="0.2" (arms) and damping="0.48" friction="0.1" (head),
+        # copied from the bitbots_main MuJoCo model. Isaac Gym loads those into
+        # dof_props["damping"]/["friction"], i.e. into the PhysX drive, where they can act
+        # *on top of* the explicit PD torques from `_compute_torques` - that would give the
+        # leg joints an effective kd of 1.1 + 1.5 = 2.6 instead of 1.1.
+        # The BeyondMimic setup this robot actually transfers with has no passive term at
+        # all: Isaac Lab ignores the URDF <dynamics> tag and imports the joint drive with
+        # stiffness=0/damping=0 (robots/pi_plus.py, UrdfConverterCfg.JointDriveCfg), so
+        # `control.stiffness`/`control.damping` are the complete actuator model there.
+        # Zeroing them here reproduces that; also what the Isaac Gym docs prescribe for
+        # DOF_MODE_EFFORT. Applied in `host_ground_prone._process_dof_props`.
+        # Set to None to keep the URDF values instead.
+        dof_damping = 0.0
+        dof_friction = 0.0
         thickness = 0.01
         self_collisions = 0 # 1 to disable, 0 to enable...bitwise filter
         flip_visual_attachments = False

@@ -11,8 +11,25 @@ USAGE:
 3. Open browser at: http://<server-ip>:7000/static/
 """
 import sys
+import socket
 from legged_gym import LEGGED_GYM_ROOT_DIR
 import os
+
+# Connect to already running meshcat-server
+# ZMQ port is 6000, Web port is 7000
+WEB_VIZ_PORT = 6000  # ZMQ port, not web port!
+WEB_VIZ_HOST = "127.0.0.1"
+MAX_ENV_DISPLAY = 1  # Nur 1 Env für bessere Performance
+
+# Preflight: meshcat.Visualizer blocks forever on a dead ZMQ port, so fail fast
+# before the expensive isaacgym import chain below.
+with socket.socket() as _s:
+    _s.settimeout(1)
+    if _s.connect_ex((WEB_VIZ_HOST, WEB_VIZ_PORT)) != 0:
+        sys.exit(
+            f"No meshcat-server on {WEB_VIZ_HOST}:{WEB_VIZ_PORT}.\n"
+            f"Start it first in a separate terminal:  meshcat-server"
+        )
 
 # Web Visualizer Setup - MUST be before isaacgym import
 from sim_web_visualizer.isaac_visualizer_client import (
@@ -20,12 +37,6 @@ from sim_web_visualizer.isaac_visualizer_client import (
     bind_visualizer_to_gym,
     set_gpu_pipeline
 )
-
-# Connect to already running meshcat-server
-# ZMQ port is 6000, Web port is 7000
-WEB_VIZ_PORT = 6000  # ZMQ port, not web port!
-WEB_VIZ_HOST = "127.0.0.1"
-MAX_ENV_DISPLAY = 1  # Nur 1 Env für bessere Performance
 
 create_isaac_visualizer(
     port=WEB_VIZ_PORT,

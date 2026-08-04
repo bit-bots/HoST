@@ -393,6 +393,13 @@ class LeggedRobot(BaseTask):
             # uniform value across all DOFs; without this override the head
             # joints would train with 4x too much rotor inertia.
             per_joint_armature = getattr(self.cfg.asset, "per_joint_armature", None)
+            # Passive drive damping / Coulomb friction from the URDF <dynamics> tag.
+            # They go into the PhysX drive and can act in addition to the PD torques
+            # computed in `_compute_torques`, so leaving them non-zero silently changes the
+            # actuator model. `control.stiffness`/`control.damping` are meant to be the
+            # whole model (as in the BeyondMimic Isaac Lab setup), hence the override.
+            dof_damping = getattr(self.cfg.asset, "dof_damping", None)
+            dof_friction = getattr(self.cfg.asset, "dof_friction", None)
             for i in range(len(props)):
                 self.dof_pos_limits[i, 0] = props["lower"][i].item()
                 self.dof_pos_limits[i, 1] = props["upper"][i].item()
@@ -407,6 +414,10 @@ class LeggedRobot(BaseTask):
                         if key in name:
                             props["armature"][i] = value
                             break
+                if dof_damping is not None:
+                    props["damping"][i] = dof_damping
+                if dof_friction is not None:
+                    props["friction"][i] = dof_friction
         return props
 
     def _process_rigid_body_props(self, props, env_id):

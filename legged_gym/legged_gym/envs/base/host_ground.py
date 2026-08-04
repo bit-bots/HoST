@@ -1292,7 +1292,9 @@ class LeggedRobot(BaseTask):
         left_ankle_pos = self.rigid_body_states[:, self.left_ankle_indices, 2].clone() * 10
         right_ankle_pos = self.rigid_body_states[:, self.right_ankle_indices, 2].clone() * 10
         var = torch.mean(torch.concat([left_ankle_pos.var(1).view(-1, 1), right_ankle_pos.var(1).view(-1, 1)], dim=-1), dim=-1)
-        reward = torch.clamp(1.0 - var / 0.15, min=0.0)  # linear: 1 bei var=0, 0 ab var=0.15
+        # Binary threshold, same as host_ground_prone: keeps the feet noticeably flatter
+        # during phase 1/2 than the linear ramp (1 - var/0.15) did.
+        reward = (var < 0.05).float()
 
         if self.cfg.constraints.post_task:
             standup  = self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3

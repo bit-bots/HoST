@@ -1340,6 +1340,28 @@ class LeggedRobot(BaseTask):
             return torch.zeros_like(reward)
         return reward
 
+    def _reward_feet_width(self):
+        # Guards the wide end of the stance, which `_reward_feet_distance` cannot: that
+        # Gaussian is numerically flat beyond ~0.35 m (sigma=5cm), so once the legs are
+        # splayed it gives no gradient back. Hinge shape as in
+        # `_reward_knee_hyperextension`, but quadratic: the overshoot stays cheap right
+        # above the threshold - the robot does need to spread its legs to push up out of
+        # the prone pose - and then grows fast, so extreme splay always has a slope back.
+        # Horizontal distance only, otherwise lifting one foot during the stand-up reads
+        # as a wide stance.
+        # Geometry (pi_plus_correct_limits.urdf): feet_distance ~ 0.163 + 0.565*sin(hip_roll),
+        # i.e. 0.50 m ~ 0.65 rad hip roll, still below the 0.9 rad `hip_roll_deviation` cut.
+        left_foot_pos = self.rigid_body_states[:, self.left_foot_indices, :2]
+        right_foot_pos = self.rigid_body_states[:, self.right_foot_indices, :2]
+        feet_width = torch.norm(left_foot_pos - right_foot_pos, dim=-1).squeeze(1)
+        over = (feet_width - self.cfg.constraints.feet_width_max).clamp(min=0.0)
+        # Normalized by feet_width_range so a fully-violating stance returns ~1, which puts
+        # the scale in the same units as the binary style penalties (which return 0 or 1).
+        reward = torch.square(over / self.cfg.constraints.feet_width_range)
+        if torch.isnan(reward).any() or torch.isinf(reward).any():
+            return torch.zeros_like(reward)
+        return reward
+
     def _reward_torques(self):
         # Penalize torques
         reward = torch.sum(torch.square(self.torques), dim=1)

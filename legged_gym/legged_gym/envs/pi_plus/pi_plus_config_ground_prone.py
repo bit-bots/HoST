@@ -261,7 +261,10 @@ class Pi_PlusCfg( LeggedRobotCfg ):
 
         reward_groups = ['task', 'regu', 'style', 'target']
         num_reward_groups = len(reward_groups)
-        reward_group_weights = [2.5, 0.1, 1, 1]
+        # style raised 1 -> 1.5 against the wide-splay stand-up. Advantages are normalized
+        # per group before this weighting (rsl_rl/storage/rollout_storage.py), so these are
+        # relative knobs; kept below the task weight so posture cannot outrank getting up.
+        reward_group_weights = [2.5, 0.1, 1.5, 1]
 
         class scales:
             task_orientation = 1
@@ -280,6 +283,12 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         target_dof_pos_sigma = -0.1
         # allowed knee overshoot past straight (rad) before style_knee_hyperextension bites
         knee_hyperextension_margin = 0.1
+        # Horizontal foot separation (m) that style_feet_width tolerates for free, and the
+        # overshoot beyond it that counts as fully violating (penalty ~= a binary style
+        # term). Quadratic in between: 0.40 m -> 0.05, 0.50 m -> 0.25, 0.60 m -> 0.61,
+        # 0.68 m -> 1.0. Pushing up out of prone needs some spread, so 0.50 m stays cheap.
+        feet_width_max = 0.32
+        feet_width_range = 0.36
         post_task = False
         
         class scales:
@@ -308,6 +317,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             style_shank_orientation = 10
             style_ground_parallel = 20
             style_feet_distance = 10
+            style_feet_width = -10
             style_style_ang_vel_xy = 1
             style_feet_parallel = 10
             #style_soft_symmetry_action=-10  #  updated to get better standing style

@@ -1266,6 +1266,21 @@ class LeggedRobot(BaseTask):
             return torch.zeros_like(reward)
         return reward
 
+    def _reward_knee_hyperextension(self):
+        # The knee axes are mirrored (l_calf is 0 -1 0, r_calf is 0 1 0), so the human
+        # bend direction is l_calf < 0 / r_calf > 0 (cf. target_joint_angles). Flipping
+        # the right knee makes a positive value mean "hyperextended" on both legs.
+        over_left = self.dof_pos[:, self.left_knee_joint_indices]
+        over_right = -self.dof_pos[:, self.right_knee_joint_indices]
+        over = torch.cat([over_left, over_right], dim=-1) - self.cfg.constraints.knee_hyperextension_margin
+        # Hinge: zero inside the allowed range, then linear in the overshoot in rad.
+        # Continuous on purpose, a binary version gives no gradient back out of the
+        # hyperextended region. Replaces the hard URDF limits on l_calf/r_calf.
+        reward = torch.sum(torch.clamp(over, min=0.0), dim=-1)
+        if torch.isnan(reward).any() or torch.isinf(reward).any():
+            return torch.zeros_like(reward)
+        return reward
+
     def _reward_shank_orientation(self):
         left_knee_pos = self.rigid_body_states[:, self.left_knee_indices, :3].clone()
         right_knee_pos = self.rigid_body_states[:, self.right_knee_indices, :3].clone()

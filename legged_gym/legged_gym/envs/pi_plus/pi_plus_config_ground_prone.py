@@ -278,6 +278,8 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         right_foot_displacement_sigma = -20#-200 updated to get better standing style
         hip_yaw_var_sigma = -2
         target_dof_pos_sigma = -0.1
+        # allowed knee overshoot past straight (rad) before style_knee_hyperextension bites
+        knee_hyperextension_margin = 0.1
         post_task = False
         
         class scales:
@@ -300,7 +302,8 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             style_shoulder_roll_deviation = -10
             style_left_foot_displacement = 7.5 #7.5 updated to get better standing style
             style_right_foot_displacement = 7.5 #7.5  updated to get better standing style
-            style_knee_deviation = -0.25
+            # style_knee_deviation = -0.25 
+            style_knee_hyperextension = -10
             #style_knee_deviation_pi_plus = -20
             style_shank_orientation = 10
             style_ground_parallel = 20

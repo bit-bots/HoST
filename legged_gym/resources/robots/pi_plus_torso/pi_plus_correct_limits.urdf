@@ -549,7 +549,7 @@
     <parent link="r_thigh_link" />
     <child link="r_calf_link" />
     <axis xyz="0 1 0" />
-    <limit lower="-0.1" upper="2.26" effort="20" velocity="5.45" />
+    <limit lower="-2.14" upper="2.26" effort="20" velocity="5.45" />
     <dynamics damping="1.5" friction="0.0"/>
   </joint>
   <link name="r_ankle_pitch_link">
@@ -761,7 +761,7 @@
     <parent link="l_thigh_link" />
     <child link="l_calf_link" />
     <axis xyz="0 -1 0" />
-    <limit lower="-2.26" upper="0.1" effort="20" velocity="5.45" />
+    <limit lower="-2.26" upper="2.14" effort="20" velocity="5.45" />
     <dynamics damping="1.5" friction="0.0"/>
   </joint>
   <link name="l_ankle_pitch_link">

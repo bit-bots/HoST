@@ -6,31 +6,35 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         pos = [0.0, 0.0, 0.351] # x,y,z [m], updated to match Piwaist
         rot = [0.0, 1, 0, 1.0] # x,y,z,w [quat]
         target_joint_angles = { # = target angles [rad] when action = 0.0
+            # Taken from the getup model's walkready_state (its home pose). That list is
+            # ordered arms (R,L) then legs (R,L); mapped by name here, since
+            # host_ground_prone.py builds target_dof_pos by joint name, not by index.
             # left leg (6 dof)
-            "l_hip_pitch_joint": -0.2,
+            "l_hip_pitch_joint": -0.6,
             "l_hip_roll_joint": 0.0,
             "l_thigh_joint": 0.0,
-            "l_calf_joint": -0.5,
-            "l_ankle_pitch_joint": -0.25,
-            "l_ankle_roll_joint": 0,
+            "l_calf_joint": -1.2,
+            "l_ankle_pitch_joint": -0.6,
+            "l_ankle_roll_joint": 0.0,
             #left arm (4 dof)
-            "l_shoulder_pitch_joint": -1.57,
-            "l_shoulder_roll_joint": -1.3,
+            "l_shoulder_pitch_joint": 1.571,
+            "l_shoulder_roll_joint": 1.222,
             "l_upper_arm_joint": 0.0,
-            "l_elbow_joint": -1.57,
+            "l_elbow_joint": 0.0,
             # right leg (6 dof)
-            "r_hip_pitch_joint": 0.2,
+            "r_hip_pitch_joint": 0.6,
             "r_hip_roll_joint": 0.0,
             "r_thigh_joint": 0.0,
-            "r_calf_joint": 0.5,
-            "r_ankle_pitch_joint": 0.25,
-            "r_ankle_roll_joint": 0,
+            "r_calf_joint": 1.2,
+            "r_ankle_pitch_joint": 0.6,
+            "r_ankle_roll_joint": 0.0,
             #right arm (4 dof)
-            "r_shoulder_pitch_joint": -1.57,
-            "r_shoulder_roll_joint": -1.3,
+            "r_shoulder_pitch_joint": -1.571,
+            "r_shoulder_roll_joint": -1.222,
             "r_upper_arm_joint": 0.0,
-            "r_elbow_joint": -1.57,
-            
+            "r_elbow_joint": 0.0,
+
+            # not part of walkready_state, left at neutral
             "head_yaw_joint": 0.0,
             "head_pitch_joint": 0.0,
         }

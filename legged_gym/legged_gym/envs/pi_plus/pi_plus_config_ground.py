@@ -283,6 +283,19 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         target_dof_pos_sigma = -0.1
         # allowed knee overshoot past straight (rad) before style_knee_hyperextension bites
         knee_hyperextension_margin = 0.1
+        # Coupled hip_pitch/calf limit, see _reward_hip_knee_coupling. The two points are
+        # (r_hip_pitch, r_calf) poses read off in the URDF viewer at which the heel reaches
+        # the bottom / the top of the torso; the line through them is the boundary. Forbidden
+        # is hip_pitch further negative and calf further positive. The left leg is the exact
+        # mirror of this (l_hip_pitch 1.28 / l_calf -1.76 and 2.03 / -1.00).
+        hip_knee_coupling_p1 = (-1.28, 1.76)   # heel at the bottom of the torso
+        hip_knee_coupling_p2 = (-2.03, 1.00)   # heel at the top of the torso
+        # The line IS the self-collision boundary, so keep clear of it: the effective boundary
+        # sits offset rad inside it (0.15 rad perpendicular ~ 12 deg of calf or hip alone), and
+        # the warning ramp starts another margin rad before that (~37 deg of calf in total).
+        hip_knee_coupling_offset = 0.15
+        hip_knee_coupling_margin = 0.3         # rad of warning zone before the boundary
+        hip_knee_coupling_soft = 0.4           # weight of that zone vs. the actual overshoot
         post_task = False
         
         class scales:
@@ -308,6 +321,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
             # style_knee_deviation = -0.25 
             # style_knee_hyperextension below.
             style_knee_hyperextension = -10
+            style_hip_knee_coupling = -10
             #style_knee_deviation_pi_plus = -20
             style_shank_orientation = 10
             style_ground_parallel = 25

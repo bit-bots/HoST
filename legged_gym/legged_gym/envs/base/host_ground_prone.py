@@ -1649,6 +1649,43 @@ class LeggedRobot(BaseTask):
             return torch.zeros_like(reward)
         return reward
 
+    def _reward_hip_knee_coupling(self):
+        # Coupled hip_pitch/calf limit: how far the knee may go depends on where the hip is,
+        # so a per-joint threshold cannot express it. cfg.constraints.hip_knee_coupling_p1/p2
+        # are two (hip_pitch, calf) poses at which the heel reaches the torso; the straight
+        # line through them bounds the admissible region in that 2D joint plane.
+        # Both points are given for the RIGHT leg. hip_pitch and calf are both mirrored
+        # (r_hip_pitch 0 -1 0 / l_hip_pitch 0 1 0, r_calf 0 1 0 / l_calf 0 -1 0), so negating
+        # both left coordinates puts the two legs into one common frame.
+        hip = torch.cat([ self.dof_pos[:, self.right_hip_pitch_joint_indices],
+                         -self.dof_pos[:, self.left_hip_pitch_joint_indices]], dim=-1)
+        knee = torch.cat([ self.dof_pos[:, self.right_knee_joint_indices],
+                          -self.dof_pos[:, self.left_knee_joint_indices]], dim=-1)
+
+        p1 = self.cfg.constraints.hip_knee_coupling_p1
+        p2 = self.cfg.constraints.hip_knee_coupling_p2
+        # Normal of the line p1->p2, flipped so that positive means "past the line". The sign
+        # is pinned by requiring the zero pose to be on the allowed side, which also makes the
+        # two forbidden directions (hip_pitch more negative, calf more positive) come out
+        # positive without having to hardcode either of them.
+        nh, nk = -(p2[1] - p1[1]), (p2[0] - p1[0])
+        if nh * (0.0 - p1[0]) + nk * (0.0 - p1[1]) > 0.0:
+            nh, nk = -nh, -nk
+        norm = (nh * nh + nk * nk) ** 0.5
+        dist = (nh * (hip - p1[0]) + nk * (knee - p1[1])) / norm  # signed perp. distance [rad]
+        # The line is where self-collision actually begins, so the effective boundary is pulled
+        # offset rad into the admissible region and the real one should never be reached.
+        dist = dist + self.cfg.constraints.hip_knee_coupling_offset
+
+        eps = self.cfg.constraints.hip_knee_coupling_margin
+        # Two-slope hinge: a shallow ramp over the last eps rad in front of the effective
+        # boundary, so approaching already costs something, then the real penalty past it.
+        reward = torch.sum(self.cfg.constraints.hip_knee_coupling_soft * torch.clamp(dist + eps, min=0.0)
+                           + torch.clamp(dist, min=0.0), dim=-1)
+        if torch.isnan(reward).any() or torch.isinf(reward).any():
+            return torch.zeros_like(reward)
+        return reward
+
     def _reward_shoulder_roll_deviation(self):
         hip_roll_dof = self.dof_pos[:, self.shoulder_roll_joint_indices]
         reward = ((self.dof_pos[:, self.shoulder_roll_joint_indices[0]] < -2.0) | (self.dof_pos[:, self.shoulder_roll_joint_indices[1]] > 0.13)).float()

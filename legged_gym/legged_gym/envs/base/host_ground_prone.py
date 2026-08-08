@@ -1673,8 +1673,8 @@ class LeggedRobot(BaseTask):
             nh, nk = -nh, -nk
         norm = (nh * nh + nk * nk) ** 0.5
         dist = (nh * (hip - p1[0]) + nk * (knee - p1[1])) / norm  # signed perp. distance [rad]
-        # The line is where self-collision actually begins, so the effective boundary is pulled
-        # offset rad into the admissible region and the real one should never be reached.
+        # Optional safety margin: shifts the effective boundary offset rad into the admissible
+        # region, for when the line itself (where self-collision starts) is already too late.
         dist = dist + self.cfg.constraints.hip_knee_coupling_offset
 
         eps = self.cfg.constraints.hip_knee_coupling_margin

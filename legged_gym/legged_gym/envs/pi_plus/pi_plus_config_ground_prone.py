@@ -300,12 +300,12 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         # mirror of this (l_hip_pitch 1.28 / l_calf -1.76 and 2.03 / -1.00).
         hip_knee_coupling_p1 = (-1.28, 1.76)   # heel at the bottom of the torso
         hip_knee_coupling_p2 = (-2.03, 1.00)   # heel at the top of the torso
-        # The line IS the self-collision boundary, so keep clear of it: the effective boundary
-        # sits offset rad inside it (0.15 rad perpendicular ~ 12 deg of calf or hip alone), and
-        # the warning ramp starts another margin rad before that (~37 deg of calf in total).
-        hip_knee_coupling_offset = 0.15
-        hip_knee_coupling_margin = 0.3         # rad of warning zone before the boundary
-        hip_knee_coupling_soft = 0.4           # weight of that zone vs. the actual overshoot
+        # The penalty starts on the line itself, with only a narrow warning ramp in front of it
+        # (margin 0.1 rad perpendicular ~ 8 deg of calf or hip alone). offset would pull the
+        # effective boundary that many rad inside the line; 0 means the line is the boundary.
+        hip_knee_coupling_offset = 0.0
+        hip_knee_coupling_margin = 0.1         # rad of warning zone before the boundary
+        hip_knee_coupling_soft = 0.1           # weight of that zone vs. the actual overshoot
         post_task = False
         
         class scales:

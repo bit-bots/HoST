@@ -214,6 +214,7 @@ class LeggedRobot(BaseTask):
         self.old_headheight[env_ids] = 0
         self.max_headheight[env_ids] = 0
         self.feet_ori[env_ids] = 0
+        self._resample_push_countdown(env_ids)
         # fill extras
         self.delay_buffer[:, env_ids, :] = 0.
         
@@ -468,8 +469,27 @@ class LeggedRobot(BaseTask):
         """ Callback called before computing terminations, rewards, and observations
             Default behaviour: Compute ang vel command based on target and heading, compute measured terrain heights and randomly push robots
         """
-        # 
+        #
         env_ids = (self.episode_length_buf % int(self.cfg.commands.resampling_time / self.dt)==0).nonzero(as_tuple=False).flatten()
+
+        if self.cfg.domain_rand.push_robots:
+            # Unlike host_ground.py the push is gated on the robot already standing (phase 3, the
+            # same height threshold the target/post-task rewards use) and it is timed *per env*
+            # instead of off the global common_step_counter: an env only reaches phase 3 somewhere
+            # in the middle of its episode, so a global interval would almost never coincide with a
+            # standing robot. push_countdown therefore ticks down only while that env is standing,
+            # i.e. push_interval_s is standing time, not wall-clock time.
+            # The upright test is the same one the pull force uses above, so a robot that merely
+            # flies past 0.35 m while tumbling does not count as standing.
+            # getattr: g1/x02 prone share this env and do not define the key in their config
+            upright_th = getattr(self.cfg.domain_rand, 'push_upright_threshold', 0.8)
+            standing = (self.root_states[:, 2] > self.cfg.rewards.target_base_height_phase3) & \
+                       (self.projected_gravity[:, 2] < -upright_th)
+            self.push_countdown -= standing.long()
+            push_ids = (standing & (self.push_countdown <= 0)).nonzero(as_tuple=False).flatten()
+            if len(push_ids) > 0:
+                self._push_robots(push_ids)
+                self._resample_push_countdown(push_ids)
 
     def _compute_torques(self, actions):
         """ Compute torques from actions.
@@ -564,12 +584,27 @@ class LeggedRobot(BaseTask):
                                                      gymtorch.unwrap_tensor(self.root_states),
                                                      gymtorch.unwrap_tensor(env_ids_int32), len(env_ids_int32))
 
-    def _push_robots(self):
-        """ Random pushes the robots. Emulates an impulse by setting a randomized base velocity. 
+    def _push_robots(self, env_ids):
+        """ Random pushes the given robots. Emulates an impulse by setting a randomized base
+            velocity. Only x/y (7:9) are touched - a z component would hand the robot a free
+            vertical boost and corrupt the head-height task. Written indexed, so envs that are
+            still getting up keep their velocity untouched.
         """
         max_vel = self.cfg.domain_rand.max_push_vel_xy
-        self.root_states[:, 7:10] = torch_rand_float(-max_vel, max_vel, (self.num_envs, 3), device=self.device) # lin vel x/y
-        self.gym.set_actor_root_state_tensor(self.sim, gymtorch.unwrap_tensor(self.root_states))
+        self.root_states[env_ids, 7:9] = torch_rand_float(-max_vel, max_vel, (len(env_ids), 2), device=self.device) # lin vel x/y
+        env_ids_int32 = env_ids.to(dtype=torch.int32)
+        self.gym.set_actor_root_state_tensor_indexed(self.sim,
+                                                     gymtorch.unwrap_tensor(self.root_states),
+                                                     gymtorch.unwrap_tensor(env_ids_int32), len(env_ids_int32))
+
+    def _resample_push_countdown(self, env_ids):
+        """ Steps of *standing* time until the next push for these envs, drawn from
+            [push_interval_s/2, push_interval_s] so that the envs are not all pushed in the same
+            step and no robot gets hit in the very step it first reaches phase 3.
+        """
+        interval = int(np.ceil(self.cfg.domain_rand.push_interval_s / self.dt))
+        self.push_countdown[env_ids] = torch.randint(max(interval // 2, 1), max(interval, 2),
+                                                     (len(env_ids),), device=self.device, dtype=torch.long)
 
     def _pull_robots(self):
         """ Random pushes the robots. Emulates an impulse by setting a randomized base velocity. 
@@ -667,7 +702,10 @@ class LeggedRobot(BaseTask):
         self.force = self.cfg.curriculum.force * torch.ones(self.num_envs, dtype=torch.float, device=self.device, requires_grad=False).unsqueeze(1)
         self.action_rescale = self.cfg.control.action_scale * torch.ones(self.num_envs, dtype=torch.float, device=self.device, requires_grad=False).unsqueeze(1)
         self.delay_buffer = torch.zeros(self.cfg.domain_rand.max_delay_timesteps, self.num_envs, self.num_actions, dtype=torch.float, device=self.device, requires_grad=False)
-        
+        # steps of standing time left until the next x/y push, see _post_physics_step_callback
+        self.push_countdown = torch.zeros(self.num_envs, dtype=torch.long, device=self.device, requires_grad=False)
+        self._resample_push_countdown(torch.arange(self.num_envs, device=self.device))
+
 
         # joint positions offsets and PD gains
         self.default_dof_pos = torch.zeros(self.num_dof, dtype=torch.float, device=self.device, requires_grad=False)

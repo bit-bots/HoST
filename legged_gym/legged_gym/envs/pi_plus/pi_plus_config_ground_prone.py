@@ -391,9 +391,18 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         arm_joint_pos_scale = [0.3, 1.5]
         arm_joint_pos_offset = [-0.4, 0.4]
 
-        push_robots = True 
-        push_interval_s = 10
+        # x/y pushes, only once the robot already stands (phase 3, target_base_height_phase3).
+        # push_interval_s counts *standing* time per env, not wall time - see
+        # host_ground_prone._post_physics_step_callback. The episode is 10 s and the robot needs a
+        # good part of that to get up, so the old 10 s would have left ~no push inside the standing
+        # window; 2 s gives a standing robot 1-3 hits per episode (interval drawn from
+        # [interval/2, interval]).
+        push_robots = True
+        push_interval_s = 2.0
         max_push_vel_xy = 0.5
+        # |projected_gravity_z| a robot must exceed to count as upright for the push gate. Same
+        # value the pull-force curriculum uses, so "standing" means the same thing in both places.
+        push_upright_threshold = 0.8
 
         delay = use_random
         max_delay_timesteps = 5

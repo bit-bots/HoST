@@ -399,7 +399,7 @@ class Pi_PlusCfg( LeggedRobotCfg ):
         # [interval/2, interval]).
         push_robots = True
         push_interval_s = 2.0
-        max_push_vel_xy = 0.5
+        max_push_vel_xy = 1
         # |projected_gravity_z| a robot must exceed to count as upright for the push gate. Same
         # value the pull-force curriculum uses, so "standing" means the same thing in both places.
         push_upright_threshold = 0.8
